@@ -1,4 +1,6 @@
-# React application with Express server
+# UET Management Platform: a React App with Express Server
+
+UET Management Platform is created for class managers to manage their students' info, results and provides a communication channel for both of them.
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app). Then an Express server was added in the `server` directory. The server is proxied via the `proxy` key in `package.json`.
 
