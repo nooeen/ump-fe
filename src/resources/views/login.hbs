@@ -1,6 +1,7 @@
 
 <div class="mt-4">
     <h3>Đăng ký user</h3>
+    <h1>{{email}}</h1>
      {{!-- action="/users/store --}}
     <form method="POST" name="form" action="/login/register">
         <div class="form-group">
@@ -34,10 +35,19 @@
     </form>
 </div>
 <div class="mt-4">
+    <h3>Đăng xuất user</h3>
+     {{!-- action="/users/store --}}
+    <form method="POST" name="form" action="/login/logout">
+        <button type="submit" class="btn btn-primary">Đăng xuất</button>
+        
+    </form>
+</div>
+<div class="mt-4">
     <table class="table mt-4">
         <thead>
             <tr>
                 <th scope="col">#</th>
+                <th scope="col">id</th>
                 <th scope="col">Tên đăng nhập</th>
                 <th scope="col">Password</th>
             </tr>
@@ -46,6 +56,7 @@
             {{#each users}}
             <tr>
                 <th scope="row">{{sum @index 1}}</th>
+                <td>{{this._id}}</td>
                 <td>{{this.email}}</td>
                 <td>{{this.passwordHash}}</td>
             </tr>

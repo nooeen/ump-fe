@@ -7,11 +7,19 @@ class loginController {
     // [GET] /login
     index(req, res) {
         let userQuerry = User.find({});
+        var email = "No user"
+        // console.log(email)
+        console.log(req.session)
+        if(req.session.User){
+            console.log("check",req.session.User.email)
+            email = req.session.User.email
+        }
         Promise.all([userQuerry, User.countDocumentsDeleted()])
             .then(([users, deletedCount]) =>
                 res.render('login', {
                     deletedCount,
                     users: mutipleMongooseToObject(users),
+                    email
                 }),
             )
             .catch();
@@ -38,7 +46,13 @@ class loginController {
                             res.send('Login fail');
                         } else {
                             console.log('The secret is...');
-                            res.send('Login successfully');
+                            req.session.User = {
+                                email: user[0].email,
+                                id: user[0]._id,
+
+                            }
+                            //res.send('Login successfully');
+                            res.redirect('/login')
                         }
                     },
                 );
@@ -54,6 +68,12 @@ class loginController {
         //     }
         // });
         //res.send(hashPass)
+    }
+    //[POST] /login/logout
+    logoutUser(req, res, next) {
+        req.session.destroy(function(err) {})
+        
+         res.redirect('/login');
     }
 
     // [POST] /register
