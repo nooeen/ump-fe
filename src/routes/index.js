@@ -1,5 +1,6 @@
-const express = require('express');
-const router = express.Router();
+//const express = require('express');
+//const router = express.Router();
+const rlogin = require('./login');
 
 function route(app) {
   
@@ -8,10 +9,10 @@ function route(app) {
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
     });
-
+    
+    app.use('/login', rlogin)
     app.get('/', (req, res) => {
-        res.send("home")
+        res.render("login")
     });
 }
-
 module.exports = route;

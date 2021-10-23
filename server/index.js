@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 const methodOverride = require('method-override');
@@ -28,6 +29,20 @@ app.use(pino);
 // app.get("/", (req, res) => {
 //   res.send("home")
 // })
+
+// Template engine
+app.engine(
+  'hbs',
+  handlebars({
+      extname: '.hbs',
+      helpers: {
+          sum: (a, b) => a + b,
+      },
+  }),
+);
+
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, '../src/resources', 'views'))
 
 route(app);
 
