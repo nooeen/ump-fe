@@ -77,18 +77,6 @@ class loginController {
                 .then(() => res.redirect('/login'))
                 .catch((error) => {});
         });
-        // Verifying a hash
-        password('quanvo308').verifyAgainst(
-            myuser.hash,
-            function (error, verified) {
-                if (error) throw new Error('Something went wrong!');
-                if (!verified) {
-                    console.log("Don't try! We got you!");
-                } else {
-                    console.log('The secret is...');
-                }
-            },
-        );
     }
 }
 
