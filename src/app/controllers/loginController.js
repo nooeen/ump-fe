@@ -25,10 +25,6 @@ class loginController {
             .catch();
     }
 
-    // [GET] /users/:slug
-    show(req, res) {
-        res.send('USERS TEST!!!');
-    }
 
     // [POST] /login/verifyLogin
     loginCheck(req, res, next) {
@@ -58,16 +54,6 @@ class loginController {
                 );
             })
             .catch();
-        // password(req.body.password).verifyAgainst(hashPass, function(error, verified) {
-        //     if(error)
-        //         throw new Error('Something went wrong!');
-        //     if(!verified) {
-        //         console.log("Don't try! We got you!");
-        //     } else {
-        //         console.log("The secret is...");
-        //     }
-        // });
-        //res.send(hashPass)
     }
     //[POST] /login/logout
     logoutUser(req, res, next) {
@@ -103,10 +89,6 @@ class loginController {
                 }
             },
         );
-    }
-    // [GET] /User/store
-    storeg(req, res) {
-        res.send('USERS REGISTER TEST!!!');
     }
 }
 
