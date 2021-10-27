@@ -14,28 +14,28 @@ export default function Sidebar() {
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Dashboard</h3>
+          <h3 className="sidebarTitle">BẢNG ĐIỀU KHIỂN</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
               <LineStyle className="sidebarIcon" />
-              Home
+              Trang chủ
             </li>
             <li className="sidebarListItem">
               <Timeline className="sidebarIcon" />
-              Analytics
+              Thông số
             </li>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">Quick Menu</h3>
+          <h3 className="sidebarTitle">MENU NHANH</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
               <PersonOutline className="sidebarIcon" />
-              Students
+              Học sinh
             </li>
             <li className="sidebarListItem">
               <GradeOutlined className="sidebarIcon" />
-              Grades
+              Điểm
             </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />
@@ -43,9 +43,12 @@ export default function Sidebar() {
             </li>
             <li className="sidebarListItem">
               <ForumOutlined className="sidebarIcon" />
-              Forum
+              Diễn đàn
             </li>
           </ul>
+        </div>
+        <div className="sidebarMenu">
+          <h3 className="sidebarTitle">NHẬP / XUẤT DỮ LIỆU</h3>
         </div>
       </div>
     </div>
