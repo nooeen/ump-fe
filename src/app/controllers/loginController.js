@@ -6,23 +6,35 @@ var myuser = [];
 class loginController {
     // [GET] /login
     index(req, res) {
-        let userQuerry = User.find({});
+        //let userQuerry = User.find({});
+        // var email = "No user"
+        // if(req.session.User){
+        //     //console.log("check",req.session.User.email)
+        //     email = req.session.User.email
+        // }
+        // Promise.all([userQuerry, User.countDocumentsDeleted()])
+        //     .then(([users, deletedCount]) =>
+        //         res.render('login', {
+        //             deletedCount,
+        //             users: mutipleMongooseToObject(users),
+        //             email
+        //         }),
+        //     )
+        //     .catch();
         var email = "No user"
-        // console.log(email)
-        console.log(req.session)
-        if(req.session.User){
-            console.log("check",req.session.User.email)
-            email = req.session.User.email
-        }
-        Promise.all([userQuerry, User.countDocumentsDeleted()])
-            .then(([users, deletedCount]) =>
-                res.render('login', {
-                    deletedCount,
-                    users: mutipleMongooseToObject(users),
-                    email
-                }),
-            )
-            .catch();
+        User.find({})
+                .then((users) => {
+                    console.log(users)
+                    if(req.session.User){
+                        //console.log("check",req.session.User.email)
+                        email = req.session.User.email
+                    }
+                    res.render('login', {
+                        email,
+                        users: mutipleMongooseToObject(users)
+                    });
+                })
+                .catch(err => {res.send(err.message)})
     }
 
 
@@ -45,7 +57,6 @@ class loginController {
                             req.session.User = {
                                 email: user[0].email,
                                 id: user[0]._id,
-
                             }
                             //res.send('Login successfully');
                             res.redirect('/login')

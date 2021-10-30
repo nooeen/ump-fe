@@ -12,7 +12,7 @@ function route(app) {
     
     app.use('/login', rlogin)
     app.get('/', (req, res) => {
-        res.render("login")
+        res.send("login")
     });
 }
 module.exports = route;
