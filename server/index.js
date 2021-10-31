@@ -4,17 +4,19 @@ const bodyParser = require('body-parser');
 const pino = require('express-pino-logger')();
 const methodOverride = require('method-override');
 const handlebars = require('express-handlebars');
-const route = require('../src/routes');
+const route = require('./routes');
 const session = require('express-session');
+const cookieParser = require('cookie-parser');
 
 
-const db = require('../src/config/db');
+const db = require('./config/db');
 db.connect();
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(pino);
 
+app.use(cookieParser());
 
 app.use(session({
   resave: true, 
