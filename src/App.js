@@ -5,6 +5,7 @@ import Home from "./pages/home/Home";
 import UserList from "./pages/userList/UserList";
 import SamplePage from "./pages/samplePage/SamplePage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import DataFetching from "./apis/studentApi";
 
 function App() {
   return (
@@ -25,6 +26,9 @@ function App() {
         </Switch>
       </div>
     </Router>
+    //   <div className={App}>
+    //     <DataFetching />
+    //   </div>
   );
 }
 
