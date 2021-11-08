@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 import axios from "axios";
 import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
@@ -17,6 +17,7 @@ const theme = createTheme();
 
 export default function SignIn() {
   const history = useHistory();
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -34,8 +35,7 @@ export default function SignIn() {
         }
       })
       .catch((err) => {
-        console.error(err);
-        alert("Đăng nhập không thành công!");
+        console.log("Đăng nhập thất bại!");
       });
   };
 
