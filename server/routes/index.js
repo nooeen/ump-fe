@@ -1,18 +1,26 @@
-//const express = require('express');
-//const router = express.Router();
-const rlogin = require('./login');
+const registerController = require("../controllers/register");
+const loginController = require("../controllers/login");
+const withAuth = require('../middleware');
 
 function route(app) {
-  
-    app.get('/api/greeting', (req, res) => {
-        const name = req.query.name || 'World';
-        res.setHeader('Content-Type', 'application/json');
-        res.send(JSON.stringify({ greeting: `Hello ${name}!` }));
-    });
-    
-    app.use('/login', rlogin)
-    app.get('/', (req, res) => {
-        res.send("login")
-    });
+  app.get("/api/home", function (req, res) {
+    res.send("Welcome!");
+  });
+
+  app.get("/api/secret", withAuth, function (req, res) {
+    res.send("The password is potato");
+  });
+
+  app.get('/verifyToken', withAuth, function(req, res) {
+    res.sendStatus(200);
+  });
+
+  app.post("/api/register", (req, res) =>
+    registerController.register(req, res)
+  );
+
+  app.post("/api/login", (req, res) =>
+    loginController.login(req, res)
+  );
 }
 module.exports = route;

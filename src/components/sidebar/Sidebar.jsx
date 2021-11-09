@@ -8,15 +8,29 @@ import {
   PersonOutline
 } from "@mui/icons-material";
 import "./Sidebar.css";
+import { useHistory } from "react-router-dom";
+
 
 export default function Sidebar() {
+  const history = useHistory();
+
+  const toHome = () =>{ 
+    let path = `/dashboard`; 
+    history.push(path);
+  }
+
+  const toStudents = () =>{ 
+    let path = `/students`; 
+    history.push(path);
+  }
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">BẢNG ĐIỀU KHIỂN</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
+            <li className="sidebarListItem" onClick={toHome}>
               <LineStyle className="sidebarIcon" />
               Trang chủ
             </li>
@@ -29,7 +43,7 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">MENU NHANH</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
+            <li className="sidebarListItem" onClick={toStudents}>
               <PersonOutline className="sidebarIcon" />
               Học sinh
             </li>
