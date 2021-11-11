@@ -1,34 +1,27 @@
-import "./App.css";
-import Sidebar from "./components/sidebar/Sidebar";
-import Topbar from "./components/topbar/Topbar";
-import Home from "./pages/home/Home";
-import UserList from "./pages/userList/UserList";
-import SamplePage from "./pages/samplePage/SamplePage";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import DataFetching from "./apis/studentApi";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import StudentsList from "./pages/StudentsList/StudentsList";
+import SignIn from "./pages/SignIn/SignIn";
+import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
 
 function App() {
   return (
     <Router>
-      <Topbar />
-      <div className="container">
-        <Sidebar />
-        <Switch>
-          <Route exact path="/">
-            <Home />
-          </Route>
-          <Route path="/users">
-            <UserList />
-          </Route>
-          <Route path="/sample">
-            <SamplePage />
-          </Route>
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact path="/login">
+          <SignIn />
+        </Route>
+        <Route exact path="/dashboard">
+          <Dashboard />
+        </Route>
+        <Route exact path="/studentdashboard">
+          <StudentDashboard />
+        </Route>
+        <Route exact path="/students">
+          <StudentsList />
+        </Route>
+      </Switch>
     </Router>
-    //   <div className={App}>
-    //     <DataFetching />
-    //   </div>
   );
 }
 
