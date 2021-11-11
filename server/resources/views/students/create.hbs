@@ -1,0 +1,36 @@
+<div class="mt-4">
+    <h3>Them sinh vien</h3>
+
+    <form method="POST" action="/dev/store">
+        <div class="form-group">
+            <label for="username">Username</label>
+            <input type="text" class="form-control" id="username" name="username">
+        </div>
+        <div class="form-group">
+            <label for="password">Password</label>
+            <input type="text" class="form-control" id="password" name="password">
+        </div>
+        <div class="form-group">
+            <label for="role" hidden="true">Role</label>
+            <input type="text" class="form-control" id="role" name="role" value="student" hidden="true">
+        </div>
+        <div class="form-group">
+            <label for="fullname">Fullname</label>
+            <input type="text" class="form-control" id="fullname" name="fullname">
+        </div>
+        <div class="form-group">
+            <label for="dob">dob</label>
+            <input type="date" class="form-control" id="dob" name="dob">
+        </div>
+        <div class="form-group">
+            <label for="class">Class</label>
+            <input type="text" class="form-control" id="class" name="class">
+        </div>
+        <div class="form-group">
+            <label for="hasPaid">HasPaid</label>
+            <input type="checkbox" class="form-control" id="hasPaid" name="hasPaid">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

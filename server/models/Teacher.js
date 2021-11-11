@@ -5,14 +5,19 @@ const bcrypt = require("bcrypt");
 const saltRounds = 10;
 
 
-const User = new mongoose.Schema({
-  username: { type: String, required: true, unique: true },
+
+const Teacher = new mongoose.Schema({
+  username: { type: String, required: true, unique: true},
   password: { type: String, required: true },
   role: { type: String, required: true },
+  fullname: { type: String, required: true },
+  dob: { type: Date },
+  classes: [String],
 });
 
 
-User.pre("save", function (next) {
+
+Teacher.pre("save", function (next) {
   if (this.isNew || this.isModified("password")) {
     const document = this;
     bcrypt.hash(document.password, saltRounds, function (err, hashedPassword) {
@@ -29,7 +34,7 @@ User.pre("save", function (next) {
 });
 
 
-User.methods.isCorrectPassword = function (password, callback) {
+Teacher.methods.isCorrectPassword = function (password, callback) {
   bcrypt.compare(password, this.password, function (err, same) {
     if (err) {
       callback(err);
@@ -40,4 +45,4 @@ User.methods.isCorrectPassword = function (password, callback) {
 };
 
 
-module.exports = mongoose.model('User', User,'users');
+module.exports = mongoose.model('Teacher', Teacher,'users');

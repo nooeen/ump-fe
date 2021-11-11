@@ -1,5 +1,6 @@
 const registerController = require("../controllers/register");
 const loginController = require("../controllers/login");
+const userController = require('../controllers/userController');
 const withAuth = require('../middleware');
 
 function route(app) {
@@ -22,5 +23,13 @@ function route(app) {
   app.post("/api/login", (req, res) =>
     loginController.login(req, res)
   );
+
+  /**
+   * vp
+   */
+  app.get("/dev/user", userController.show);
+  app.get("/dev/students/create", userController.createStudent);
+  app.get("/dev/teachers/create", userController.createTeacher)
+  app.post("/dev/store", userController.store);
 }
 module.exports = route;
