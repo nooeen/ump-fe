@@ -1,17 +1,22 @@
 const registerController = require("../controllers/register");
 const loginController = require("../controllers/login");
-const withAuth = require('../middleware');
+const isUser = require("../middlewares/isUser");
+const isManager = require("../middlewares/isManager");
 
 function route(app) {
-  app.get("/api/home", function (req, res) {
-    res.send("Welcome!");
+  app.get("/api/", function (req, res) {
+    res.send("Welcome to UMP's API Server!");
   });
 
-  app.get("/api/secret", withAuth, function (req, res) {
-    res.send("The password is potato");
+  app.get("/api/test/secretUser", isUser, function (req, res) {
+    res.send("You're an user!");
   });
 
-  app.get('/verifyToken', withAuth, function(req, res) {
+  app.get("/api/test/secretManager", isUser, isManager, function (req, res) {
+    res.send("You're a manager!");
+  });
+
+  app.get("/verifyToken", isUser, function (req, res) {
     res.sendStatus(200);
   });
 
@@ -19,8 +24,6 @@ function route(app) {
     registerController.register(req, res)
   );
 
-  app.post("/api/login", (req, res) =>
-    loginController.login(req, res)
-  );
+  app.post("/api/login", (req, res) => loginController.login(req, res));
 }
 module.exports = route;

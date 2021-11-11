@@ -19,6 +19,4 @@ const isUser = function (req, res, next) {
   }
 };
 
-const isManager = function (req, res, next) {};
-
 module.exports = isUser;

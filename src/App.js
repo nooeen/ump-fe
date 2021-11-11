@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import StudentsList from "./pages/StudentsList/StudentsList";
 import SignIn from "./pages/SignIn/SignIn";
+import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
 
 function App() {
   return (
@@ -12,6 +13,9 @@ function App() {
         </Route>
         <Route exact path="/dashboard">
           <Dashboard />
+        </Route>
+        <Route exact path="/studentdashboard">
+          <StudentDashboard />
         </Route>
         <Route exact path="/students">
           <StudentsList />
