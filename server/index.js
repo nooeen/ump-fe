@@ -5,7 +5,7 @@ const route = require("./routes");
 const db = require("./db");
 const handlebars = require('express-handlebars');
 const path = require('path');
-
+var bodyParser  = require('body-parser');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -17,6 +17,8 @@ app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+app.use(bodyParser.urlencoded({extended:false}));
+app.use(express.static(path.resolve(__dirname,'public')));
 
 db.connect();
 
