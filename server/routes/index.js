@@ -5,6 +5,7 @@ const withAuth = require('../middleware');
 const csvModel    = require('../models/Student');
 const csv         = require('csvtojson');
 const multer      = require('multer');
+const XLSX = require('xlsx');
 
 const storage = multer.diskStorage({
   destination:(req,file,cb)=>{
@@ -74,6 +75,23 @@ function route(app) {
             }
           });
         });
+  });
+
+  app.post('/exportdata',(req,res)=>{
+    var wb = XLSX.utils.book_new(); //new workbook
+    csvModel.find((err,data)=>{
+      if(err){
+        console.log(err)
+      }else{
+        var temp = JSON.stringify(data);
+        temp = JSON.parse(temp);
+        var ws = XLSX.utils.json_to_sheet(temp);
+        var down = process.cwd() + '/public/users.xlsx'
+        XLSX.utils.book_append_sheet(wb,ws,"sheet1");
+        XLSX.writeFile(wb,down);
+        res.download(down);
+      }
+    });
   });
 }
 
