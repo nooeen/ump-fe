@@ -1,8 +1,7 @@
 .container {
-    display: flex;
-  }
-  
-  .dashboard {
-    flex: 4;
-  }
-  
+  display: flex;
+}
+
+.dashboard {
+  flex: 4;
+}

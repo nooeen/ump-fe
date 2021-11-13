@@ -20,7 +20,7 @@ export default function Sidebar() {
   };
 
   const toStudents = () => {
-    let path = `/students`;
+    let path = `/student`;
     history.push(path);
   };
 
