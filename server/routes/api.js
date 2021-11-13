@@ -3,6 +3,7 @@ const router = express.Router();
 const registerController = require("../controllers/register");
 const loginController = require("../controllers/login");
 const testController = require("../controllers/test");
+const managerController = require("../controllers/manager");
 const isUser = require("../middlewares/isUser");
 const isManager = require("../middlewares/isManager");
 const apiRoutes = require("./api.js");
@@ -18,6 +19,8 @@ router.get("/test/secretUser", isUser, function (req, res) {
 router.get("/test/secretManager", isUser, isManager, function (req, res) {
     res.send("You're a manager!");
 });
+
+router.get("/test/findManager", managerController.managerList);
 
 router.post("/register",registerController.register);
 
