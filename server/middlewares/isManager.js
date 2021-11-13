@@ -3,7 +3,7 @@ const User = require("../models/User.js");
 require("dotenv").config();
 
 const isManager = function (req, res, next) {
-  User.findOne({ username: req.username }, (err, user) => {
+  User.findOne({ username: req.query.username }, (err, user) => {
     if (err) {
       res.status(500).send({ message: err });
       return;

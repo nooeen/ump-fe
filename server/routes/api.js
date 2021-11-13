@@ -20,7 +20,9 @@ router.get("/test/secretManager", isUser, isManager, function (req, res) {
     res.send("You're a manager!");
 });
 
-router.get("/test/findManager", managerController.managerList);
+router.get("/manager/list", managerController.managerList);
+
+router.get("/manager/find", managerController.managerFind);
 
 router.post("/register",registerController.register);
 
