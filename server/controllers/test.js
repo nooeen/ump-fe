@@ -1,7 +1,7 @@
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
-//onst loginHbs = require(".../src/resources/views/login.hbs");
+// const loginHbs = require(".../src/resources/views/login.hbs");
 
 function test(req, res, next) {
   res.send('test ok')
