@@ -4,7 +4,7 @@ const User = require("../models/User.js");
 
 class managerController {
 
-    // /api/manager/list
+    // api/manager/list
     managerList(req, res) {
         User.find({role: "manager"})
         .then( (users, err) => {
