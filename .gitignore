@@ -22,5 +22,6 @@ yarn-error.log*
 
 #idea
 /.idea
+.idea
 
 
