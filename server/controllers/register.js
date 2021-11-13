@@ -8,7 +8,7 @@ function register(req, res) {
       console.log(err);
       res.status(500).send("Error registering new user please try again.");
     } else {
-      res.status(200).send("Welcome to the club!");
+      res.status(200).json(user);
     }
   });
 }
