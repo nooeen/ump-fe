@@ -2,7 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 
-function login(req, res) {
+function login(req, res, next) {
   const { username, password } = req.body;
   const secret = process.env.SECRET;
   User.findOne({ username }, function (err, user) {
