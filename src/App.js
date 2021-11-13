@@ -4,6 +4,7 @@ import StudentsList from "./pages/StudentsList/StudentsList";
 import SignIn from "./pages/SignIn/SignIn";
 import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
 import Home from "./pages/Home/Home";
+import NewStudent from "./pages/NewStudent/NewStudent";
 
 function App() {
   return (
@@ -21,8 +22,11 @@ function App() {
         <Route exact path="/studentdashboard">
           <StudentDashboard />
         </Route>
-        <Route exact path="/students">
+        <Route exact path="/student">
           <StudentsList />
+        </Route>
+        <Route exact path="/student/add">
+          <NewStudent/>
         </Route>
       </Switch>
     </Router>
