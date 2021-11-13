@@ -14,30 +14,26 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
    npm install
    ```
 
-2. Create a `.env` file for environment variables in your server.
-
-   ```bash
-   touch .env
-   ```
+2. Create a `.env` file for environment variables in your server based on `.env.example`.
 
 3. Start the server
 
-   You can start the server on its own with the command:
+   You can start the Express API server on its own with the command:
 
    ```bash
-   npm run server
+   yarn server
    ```
 
    Run the React application on its own with the command:
 
    ```bash
-   npm start
+   yarn client
    ```
 
    Run both applications together with the command:
 
    ```bash
-   npm run dev
+   yarn dev
    ```
 
    The React application will run on port 3000 and the server port 3001.
