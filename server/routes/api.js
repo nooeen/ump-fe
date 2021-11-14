@@ -6,6 +6,19 @@ const middlewares = require("../middlewares");
 const classController = require("../controllers/class");
 const managerController = require("../controllers/manager");
 const studentController = require("../controllers/student");
+const dataController = require("../controllers/dataController");
+
+const multer = require("multer");
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "../public/uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+const uploads = multer({ storage: storage });
 
 router.get("/", function (req, res) {
   res.send("Welcome to UMP's API Server!");
@@ -43,5 +56,10 @@ router.get("/student/calGpa", studentController.studentGpa);
 router.get("/student/calTpa", studentController.studentTpa);
 
 router.get("/student/credits", studentController.studentCredit);
+
+router.get('/data/import', dataController.import);
+router.post('/data/importdata', uploads.single('csv'), dataController.importData);
+router.get('/data/export', dataController.export);
+router.post('/data/exportdata', dataController.exportData);
 
 module.exports = router;
