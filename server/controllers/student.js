@@ -54,36 +54,86 @@ class studentController {
         })
     }
 
-    //calculate current Tpa
-    // studentGpa(req, res) {
-    //     User.find({role: "student"})
-    //     .then( (users, err) => {
-    //         if(err){
-    //             res.status(500).send('Internal Server Error')
-    //             return
-    //         }
-    //         for(let i = 0; i < users.length; i++) {
-    //             users[i].currentGPA += users[i].history[2]['gpa'];
-    //         }
-    //         res.status(200).json(users[i].currentGPA)
-    //     })
-    //     .catch(() => {
-    //         res.status(404).json("No student in database")
-    //     })
-    // }
-
-    //calculate student total credits
-    studentCredit(req, res) {
-        User.find({role: "student"})
+    //calculate student GPA
+    studentGpa(req, res) {
+        User.find({class: req.query.class})
         .then( (users, err) => {
             if(err){
                 res.status(500).send('Internal Server Error')
                 return
             }
             for(let i = 0; i < users.length; i++) {
-                users[i].currentCredits += users[i].history[2].credit;
+                let totalGPA = 0;
+                let finalGPA = 0;
+                for(let j = 0;j < users[i].history.tpa.length;j++) {
+                    totalGPA += users[i].history.tpa[j];
+                    finalGPA = totalGPA / (j + 1);
+                }
+                users[i] = {
+                    _id: users[i]._id,
+                    username: users[i].username,
+                    fullname: users[i].fullname,
+                    TPA: finalGPA
+                }
             }
-            res.status(200).json(users[i].currentCredits)
+            res.status(200).json(users)
+        })
+        .catch(() => {
+            res.status(404).json("No student in database")
+        })
+    }
+
+    //calculate student TPA
+    studentTpa(req, res) {
+        User.find({class: req.query.class})
+        .then( (users, err) => {
+            if(err){
+                res.status(500).send('Internal Server Error')
+                return
+            }
+            for(let i = 0; i < users.length; i++) {
+                let totalGPA = 0;
+                let finalGPA = 0;
+                for(let j = 0;j < users[i].history.tpa.length;j++) {
+                    totalGPA += users[i].history.tpa[j];
+                    finalGPA = totalGPA / (j + 1);
+                }
+                users[i] = {
+                    _id: users[i]._id,
+                    username: users[i].username,
+                    fullname: users[i].fullname,
+                    TPA: finalGPA
+                }
+            }
+            res.status(200).json(users)
+        })
+        .catch(() => {
+            res.status(404).json("No student in database")
+        })
+    }
+
+
+    //calculate student total credits
+    studentCredit(req, res) {
+        User.find({class: req.query.class})
+        .then( (users, err) => {
+            if(err){
+                res.status(500).send('Internal Server Error')
+                return
+            }
+            for(let i = 0; i < users.length; i++) {
+                let totalCredit = 0;
+                for(let j = 0;j < users[i].history.credit.length;j++) {
+                    totalCredit += users[i].history.credit[j];
+                }
+                users[i] = {
+                    _id: users[i]._id,
+                    username: users[i].username,
+                    fullname: users[i].fullname,
+                    credit: totalCredit
+                }
+            }
+            res.status(200).json(users)
         })
         .catch(() => {
             res.status(404).json("No student in database")
