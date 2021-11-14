@@ -39,13 +39,13 @@ class studentController {
                 return
             }
             users[0] = {
-                _id: users[i]._id,
-                username: users[i].username,
-                fullname: users[i].fullname,
-                dob: users[i].dob,
-                history: users[i].history,
-                class: users[i].class,
-                hasPaid: users[i].hasPaid
+                _id: users[0]._id,
+                username: users[0].username,
+                fullname: users[0].fullname,
+                dob: users[0].dob,
+                history: users[0].history,
+                class: users[0].class,
+                hasPaid: users[0].hasPaid
             }
             res.status(200).json(users)
         })
