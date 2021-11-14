@@ -21,16 +21,9 @@ function App() {
         <Route exact path="/logout">
           {AuthService.logout}
         </Route>
-        {UserService.isManager ? (
-          <Route exact path="/dashboard">
-            <Dashboard />
-          </Route>
-        ) : null}
-        {UserService.isUser ? (
-          <Route exact path="/dashboard">
-            <StudentDashboard />
-          </Route>
-        ) : null}
+        <Route exact path="/dashboard">
+          {UserService.isManager() ? <Dashboard /> : UserService.isUser() ? <StudentDashboard /> : <SignIn />}
+        </Route>
         <Route exact path="/student">
           <StudentsList />
         </Route>
