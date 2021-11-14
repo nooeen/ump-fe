@@ -65,15 +65,15 @@ class studentController {
             for(let i = 0; i < users.length; i++) {
                 let totalGPA = 0;
                 let finalGPA = 0;
-                for(let j = 0;j < users[i].history.tpa.length;j++) {
-                    totalGPA += users[i].history.tpa[j];
+                for(let j = 0;j < users[i].history.gpa.length;j++) {
+                    totalGPA += parseFloat(users[i].history.gpa[j]);
                     finalGPA = totalGPA / (j + 1);
                 }
                 users[i] = {
                     _id: users[i]._id,
                     username: users[i].username,
                     fullname: users[i].fullname,
-                    TPA: finalGPA
+                    GPA: finalGPA
                 }
             }
             res.status(200).json(users)
