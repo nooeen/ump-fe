@@ -72,6 +72,7 @@ class studentController {
                 for(let j = 0;j < users[i].history.gpa.length;j++) {
                     totalGPA += parseFloat(users[i].history.gpa[j] * users[i].history.credit[j]);
                     finalGPA = totalGPA / totalCredit;
+                    finalGPA = Math.round(finalGPA * 100) / 100
                 }
                 users[i] = {
                     _id: users[i]._id,
