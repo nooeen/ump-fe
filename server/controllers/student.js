@@ -65,9 +65,13 @@ class studentController {
             for(let i = 0; i < users.length; i++) {
                 let totalGPA = 0;
                 let finalGPA = 0;
+                let totalCredit = 0;
+                for(let j = 0;j < users[i].history.credit.length;j++) {
+                    totalCredit += users[i].history.credit[j];
+                }
                 for(let j = 0;j < users[i].history.gpa.length;j++) {
-                    totalGPA += parseFloat(users[i].history.gpa[j]);
-                    finalGPA = totalGPA / (j + 1);
+                    totalGPA += parseFloat(users[i].history.gpa[j] * users[i].history.credit[j]);
+                    finalGPA = totalGPA / totalCredit;
                 }
                 users[i] = {
                     _id: users[i]._id,
