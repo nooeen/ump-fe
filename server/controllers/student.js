@@ -6,7 +6,7 @@ class studentController {
 
     // list all user with role student
     studentList(req, res) {
-        User.find({role: "student"})
+        User.find({class: req.query.class})
         .then( (users, err) => {
             if(err){
                 res.status(500).send('Internal Server Error')
@@ -14,14 +14,18 @@ class studentController {
             }
             for(let i = 0; i < users.length; i++) {
                 users[i] = {
+                    _id: users[i]._id,
                     username: users[i].username,
-                    _id: users[i]._id
+                    fullname: users[i].fullname,
+                    dob: users[i].dob,
+                    history: users[i].history,
+                    class: users[i].class
                 }
             }
             res.status(200).json(users)
         })
         .catch(() => {
-            res.status(404).json("No manager in database")
+            res.status(404).json("No student in database")
         })
     }
 
@@ -34,13 +38,17 @@ class studentController {
                 return
             }
             users[0] = {
-                username: users[0].username,
-                _id: users[0]._id
+                _id: users[i]._id,
+                username: users[i].username,
+                fullname: users[i].fullname,
+                dob: users[i].dob,
+                history: users[i].history,
+                class: users[i].class
             }
             res.status(200).json(users)
         })
         .catch(() => {
-            res.status(404).send('No manager match the name')
+            res.status(404).send('No student match the name')
         })
     }
 
