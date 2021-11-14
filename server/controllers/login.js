@@ -2,7 +2,7 @@ require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 
-function login(req, res) {
+function login(req, res, next) {
   const { username, password } = req.body;
   const secret = process.env.SECRET;
   User.findOne({ username }, function (err, user) {
@@ -30,7 +30,7 @@ function login(req, res) {
           const token = jwt.sign(payload, secret, {
             expiresIn: "1h",
           });
-          res.cookie("token", token, { httpOnly: true }).sendStatus(200);
+          res.status(200).json({ accessToken: token });
         }
       });
     }

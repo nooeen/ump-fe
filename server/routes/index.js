@@ -1,8 +1,5 @@
-const registerController = require("../controllers/register");
-const loginController = require("../controllers/login");
-const userController = require('../controllers/userController');
-const dataController = require('../controllers/dataController');
-const withAuth = require('../middleware');
+const apiRoutes = require("./api.js");
+const data = require("./data.js");
 
 const csv = require('csvtojson');
 const multer = require('multer');
@@ -21,42 +18,15 @@ const uploads = multer({storage:storage});
 
 
 function route(app) {
-  app.get("/api/home", function (req, res) {
-    res.send("Welcome!");
+  app.use(function (req, res, next) {
+    res.header(
+      "Access-Control-Allow-Headers",
+      "x-access-token, Origin, Content-Type, Accept"
+    );
+    next();
   });
-
-  app.get("/api/secret", withAuth, function (req, res) {
-    res.send("The password is potato");
-  });
-
-  app.get('/verifyToken', withAuth, function (req, res) {
-    res.sendStatus(200);
-  });
-
-  app.post("/api/register", (req, res) =>
-      registerController.register(req, res)
-  );
-
-  app.post("/api/login", (req, res) =>
-      loginController.login(req, res)
-  );
-
-  /**
-   * vp
-   */
-  app.get("/dev/user", userController.show);
-  app.get("/dev/students/create", userController.createStudent);
-  app.get("/dev/teachers/create", userController.createTeacher);
-  app.post("/dev/store", userController.store);
-
-
-  app.get('/api/data/import', dataController.import);
-  app.post('/api/data/importdata', uploads.single('csv'), dataController.importData);
-  app.get('/api/data/export', dataController.export);
-  app.post('/api/data/exportdata', dataController.exportData);
-
- 
-
+  app.use("/api", apiRoutes);
+  app.use("/data", data);
 }
 
 module.exports = route;

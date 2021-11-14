@@ -1,19 +1,12 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
-import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-
-const theme = createTheme();
+import { ThemeProvider, Typography } from "@mui/material";
+import { theme } from "../../theme";
+import AuthService from "../../services/auth.service";
 
 export default function SignIn() {
   const history = useHistory();
@@ -21,11 +14,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    axios
-      .post(`http://localhost:3001/api/login`, {
-        username: data.get("username"),
-        password: data.get("password"),
-      })
+    AuthService.login(data.get("username"), data.get("password"))
       .then((res) => {
         if (res.status === 200) {
           history.push("/dashboard");
@@ -41,66 +30,55 @@ export default function SignIn() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
-        <CssBaseline />
-        <Box
-          sx={{
-            marginTop: 8,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-            <LockOutlinedIcon />
-          </Avatar>
-          <Typography component="h1" variant="h5">
-            Đăng nhập
-          </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+      <Box
+        component="main"
+        sx={{
+          alignItems: "center",
+          display: "flex",
+          flexGrow: 1,
+          minHeight: "100%",
+        }}
+      >
+        <Container maxWidth="sm">
+          <form onSubmit={handleSubmit}>
+            <Box sx={{ my: 3 }}>
+              <Typography color="textPrimary" variant="h4">
+                Đăng nhập
+              </Typography>
+              <Typography color="textSecondary" gutterBottom variant="body2">
+                Đăng nhập vào UET Management Platform
+              </Typography>
+            </Box>
             <TextField
-              margin="normal"
-              required
               fullWidth
-              id="username"
               label="Tên đăng nhập"
+              margin="normal"
               name="username"
-              autoComplete="username"
-              autoFocus
+              id="username"
+              variant="outlined"
             />
             <TextField
-              margin="normal"
-              required
               fullWidth
-              name="password"
               label="Mật khẩu"
+              margin="normal"
+              name="password"
               type="password"
-              id="password"
-              autoComplete="current-password"
+              variant="outlined"
             />
-            <Button
-              type="submit"
-              fullWidth
-              variant="contained"
-              sx={{ mt: 3, mb: 2 }}
-            >
-              Đăng nhập
-            </Button>
-            <Grid container>
-              <Grid item>
-                <Link href="#" variant="body2">
-                  {"Đăng ký tài khoản"}
-                </Link>
-              </Grid>
-            </Grid>
-          </Box>
-        </Box>
-      </Container>
+            <Box sx={{ py: 2 }}>
+              <Button
+                color="primary"
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+              >
+                Đăng nhập
+              </Button>
+            </Box>
+          </form>
+        </Container>
+      </Box>
     </ThemeProvider>
   );
 }

@@ -4,7 +4,7 @@ require("dotenv").config();
 const secret = process.env.SECRET;
 
 const isUser = function (req, res, next) {
-  const token = req.cookies.token;
+  const token = req.headers["x-access-token"];
   if (!token) {
     res.status(401).send("Unauthorized: No token provided");
   } else {
@@ -18,7 +18,5 @@ const isUser = function (req, res, next) {
     });
   }
 };
-
-const isManager = function (req, res, next) {};
 
 module.exports = isUser;

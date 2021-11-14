@@ -6,12 +6,11 @@ import {
   ForumOutlined,
   GradeOutlined,
   PersonOutline,
-  ImportExport
 } from "@mui/icons-material";
-import "./Sidebar.css";
+import "./StudentSidebar.css";
 import { useHistory } from "react-router-dom";
 
-export default function Sidebar() {
+export default function StudentSidebar() {
   const history = useHistory();
 
   const toHome = () => {
@@ -20,7 +19,7 @@ export default function Sidebar() {
   };
 
   const toStudents = () => {
-    let path = `/student`;
+    let path = `/students`;
     history.push(path);
   };
 
@@ -41,11 +40,11 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">MENU NHANH</h3>
+          <h3 className="sidebarTitle">HỌC SINH</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem" onClick={toStudents}>
               <PersonOutline className="sidebarIcon" />
-              Học sinh
+              Thông tin
             </li>
             <li className="sidebarListItem">
               <GradeOutlined className="sidebarIcon" />
@@ -58,19 +57,6 @@ export default function Sidebar() {
             <li className="sidebarListItem">
               <ForumOutlined className="sidebarIcon" />
               Diễn đàn
-            </li>
-          </ul>
-        </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">NHẬP / XUẤT DỮ LIỆU</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <ImportExport className="sidebarIcon" />
-              Nhập dữ liệu
-            </li>
-            <li className="sidebarListItem">
-              <ImportExport className="sidebarIcon" />
-              Xuất dữ liệu
             </li>
           </ul>
         </div>
