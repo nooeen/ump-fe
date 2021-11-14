@@ -1,13 +1,12 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
-import axios from "axios";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import { createTheme } from "@mui/material/styles";
 import { ThemeProvider, Typography } from "@mui/material";
-import { theme } from "../../theme"
+import { theme } from "../../theme";
+import AuthService from "../../services/auth.service";
 
 export default function SignIn() {
   const history = useHistory();
@@ -15,11 +14,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    axios
-      .post(`http://localhost:3001/api/login`, {
-        username: data.get("username"),
-        password: data.get("password"),
-      })
+    AuthService.login(data.get("username"), data.get("password"))
       .then((res) => {
         if (res.status === 200) {
           history.push("/dashboard");
