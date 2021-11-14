@@ -7,8 +7,19 @@ const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, required: true },
+  fullname: {type: String},
+  dob: {type: String},
+  history: {
+    term: {type: String},
+    gpa: {type: Number},
+    tpa: {type: Number},
+    credit: {type: Number}
+  },
   class: { type: String},
-  fullname: {type: String}
+  hasPaid: {type: Boolean},
+  currentGPA: {type: Number},
+  currentTPA: {type: Number},
+  currentCredits: {type: Number}
 });
 
 UserSchema.pre("save", function (next) {

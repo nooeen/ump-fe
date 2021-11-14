@@ -19,7 +19,8 @@ class studentController {
                     fullname: users[i].fullname,
                     dob: users[i].dob,
                     history: users[i].history,
-                    class: users[i].class
+                    class: users[i].class,
+                    hasPaid: users[i].hasPaid
                 }
             }
             res.status(200).json(users)
@@ -43,7 +44,8 @@ class studentController {
                 fullname: users[i].fullname,
                 dob: users[i].dob,
                 history: users[i].history,
-                class: users[i].class
+                class: users[i].class,
+                hasPaid: users[i].hasPaid
             }
             res.status(200).json(users)
         })
@@ -53,7 +55,25 @@ class studentController {
     }
 
     //calculate current Tpa
-    studentTpa(req, res) {
+    // studentGpa(req, res) {
+    //     User.find({role: "student"})
+    //     .then( (users, err) => {
+    //         if(err){
+    //             res.status(500).send('Internal Server Error')
+    //             return
+    //         }
+    //         for(let i = 0; i < users.length; i++) {
+    //             users[i].currentGPA += users[i].history[2]['gpa'];
+    //         }
+    //         res.status(200).json(users[i].currentGPA)
+    //     })
+    //     .catch(() => {
+    //         res.status(404).json("No student in database")
+    //     })
+    // }
+
+    //calculate student total credits
+    studentCredit(req, res) {
         User.find({role: "student"})
         .then( (users, err) => {
             if(err){
@@ -61,9 +81,9 @@ class studentController {
                 return
             }
             for(let i = 0; i < users.length; i++) {
-                var currentGPA = users[i][history][3]['tpa'];
+                users[i].currentCredits += users[i].history[2].credit;
             }
-            res.status(200).json(currentGPA)
+            res.status(200).json(users[i].currentCredits)
         })
         .catch(() => {
             res.status(404).json("No student in database")

@@ -34,10 +34,10 @@ router.get("/student/list", studentController.studentList);
 
 router.get("/student/find", studentController.findStudent);
 
-// router.get("/student/calGpa", studentController.studentGpa);
+//router.get("/student/calGpa", studentController.studentGpa);
 
 //router.get("/student/calTpa", studentController.studentTpa);
 
-// router.get("/student/credits", studentController.studentCredit);
+router.get("/student/credits", studentController.studentCredit);
 
 module.exports = router;
