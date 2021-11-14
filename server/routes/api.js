@@ -6,6 +6,7 @@ const isUser = require("../middlewares/isUser");
 const isManager = require("../middlewares/isManager");
 const classController = require("../controllers/class");
 const managerController = require("../controllers/manager");
+const studentController = require("../controllers/student");
 
 router.get("/", function (req, res) {
   res.send("Welcome to UMP's API Server!");
@@ -28,5 +29,15 @@ router.get("/manager/list", managerController.managerList);
 router.get("/manager/find", managerController.managerFind);
 
 router.get("/class/list", classController.studentList);
+
+router.get("student/list", studentController.studentList);
+
+router.get("student/find", studentController.findStudent);
+
+// router.get("student/calGpa", studentController.studentGpa);
+
+//router.get("student/calTpa", studentController.studentTpa);
+
+// router.get("student/credits", studentController.studentCredit);
 
 module.exports = router;
