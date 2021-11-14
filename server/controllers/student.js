@@ -1,38 +1,94 @@
-var userDb = require('../models/User');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const User = require("../models/User.js");
 
-//list all user with the role student
-exports.list = (req, res) => {
+class studentController {
 
-}
-
-//find the student with username or fullname=...
-exports.find = (req, res) => {
-    if(req.query.username) {
-        const userName = req.query.username;
-        userDb.findById(userName)
-        .then(data => {
-            if(!data){
-                res.status(404).send({message: "Not found user with name " + userName})
-            } else {
-                res.send(data)
+    // list all user with role student
+    studentList(req, res) {
+        User.find({class: req.query.class})
+        .then( (users, err) => {
+            if(err){
+                res.status(500).send('Internal Server Error')
+                return
             }
+            for(let i = 0; i < users.length; i++) {
+                users[i] = {
+                    _id: users[i]._id,
+                    username: users[i].username,
+                    fullname: users[i].fullname,
+                    dob: users[i].dob,
+                    history: users[i].history,
+                    class: users[i].class,
+                    hasPaid: users[i].hasPaid
+                }
+            }
+            res.status(200).json(users)
         })
-    } else {
-    userDb.find()
-        .then(user => {
-            res.send(user)
+        .catch(() => {
+            res.status(404).json("No student in database")
         })
-        .catch(error => {
-            res.status(500).send({message: error.message || "error when retrieving"})
+    }
+
+    // find student with username and fullname
+    findStudent(req, res) {
+        User.find({username: req.query.username, fullname: req.query.fullname})
+        .then( (users, err) => {
+            if(err){
+                res.status(500).send('Internal Server Error')
+                return
+            }
+            users[0] = {
+                _id: users[i]._id,
+                username: users[i].username,
+                fullname: users[i].fullname,
+                dob: users[i].dob,
+                history: users[i].history,
+                class: users[i].class,
+                hasPaid: users[i].hasPaid
+            }
+            res.status(200).json(users)
+        })
+        .catch(() => {
+            res.status(404).send('No student match the name')
+        })
+    }
+
+    //calculate current Tpa
+    // studentGpa(req, res) {
+    //     User.find({role: "student"})
+    //     .then( (users, err) => {
+    //         if(err){
+    //             res.status(500).send('Internal Server Error')
+    //             return
+    //         }
+    //         for(let i = 0; i < users.length; i++) {
+    //             users[i].currentGPA += users[i].history[2]['gpa'];
+    //         }
+    //         res.status(200).json(users[i].currentGPA)
+    //     })
+    //     .catch(() => {
+    //         res.status(404).json("No student in database")
+    //     })
+    // }
+
+    //calculate student total credits
+    studentCredit(req, res) {
+        User.find({role: "student"})
+        .then( (users, err) => {
+            if(err){
+                res.status(500).send('Internal Server Error')
+                return
+            }
+            for(let i = 0; i < users.length; i++) {
+                users[i].currentCredits += users[i].history[2].credit;
+            }
+            res.status(200).json(users[i].currentCredits)
+        })
+        .catch(() => {
+            res.status(404).json("No student in database")
         })
     }
 }
 
-
-//calculate student's gpa
-
-
-//calculate student's tpa
-
-
-//calculate student's number of credits
+module.exports = new studentController;
