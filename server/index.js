@@ -2,18 +2,28 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const pino = require("express-pino-logger")();
 const route = require("./routes");
+const cors = require("cors");
 const db = require("./db");
 
 const app = express();
+
+var corsOptions = {
+  origin: "http://localhost:3000",
+};
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(pino);
 app.use(cookieParser());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   next();
 });
+app.use(cors(corsOptions));
 
 db.connect();
 

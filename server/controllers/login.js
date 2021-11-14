@@ -30,10 +30,7 @@ function login(req, res, next) {
           const token = jwt.sign(payload, secret, {
             expiresIn: "1h",
           });
-          res
-            .cookie("token", token, { httpOnly: true })
-            .status(200)
-            .json({ token: token });
+          res.status(200).json({ accessToken: token });
         }
       });
     }
