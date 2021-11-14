@@ -78,7 +78,7 @@ class studentController {
                     _id: users[i]._id,
                     username: users[i].username,
                     fullname: users[i].fullname,
-                    GPA: finalGPA
+                    GPA: Math.round(finalGPA * 100) / 100
                 }
             }
             res.status(200).json(users)
@@ -97,17 +97,17 @@ class studentController {
                 return
             }
             for(let i = 0; i < users.length; i++) {
-                let totalGPA = 0;
-                let finalGPA = 0;
+                let totalTPA = 0;
+                let finalTPA = 0;
                 for(let j = 0;j < users[i].history.tpa.length;j++) {
-                    totalGPA += users[i].history.tpa[j];
-                    finalGPA = totalGPA / (j + 1);
+                    totalTPA += users[i].history.tpa[j];
+                    finalTPA = totalTPA / (j + 1);
                 }
                 users[i] = {
                     _id: users[i]._id,
                     username: users[i].username,
                     fullname: users[i].fullname,
-                    TPA: finalGPA
+                    TPA: Math.round(finalTPA * 100) / 100
                 }
             }
             res.status(200).json(users)
