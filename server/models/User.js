@@ -16,10 +16,7 @@ const UserSchema = new mongoose.Schema({
     credit: {type: Number}
   },
   class: { type: String},
-  hasPaid: {type: Boolean},
-  currentGPA: {type: Number},
-  currentTPA: {type: Number},
-  currentCredits: {type: Number}
+  hasPaid: {type: Boolean}
 });
 
 UserSchema.pre("save", function (next) {
