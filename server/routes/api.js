@@ -34,13 +34,15 @@ router.get("/manager/find", managerController.managerFind);
 
 router.get("/class/list", classController.studentList);
 
+router.get("/student/listAll", studentController.studentListAll);
+
 router.get("/student/list", studentController.studentList);
 
 router.get("/student/find", studentController.findStudent);
 
-router.get("/student/calGpa", studentController.studentGpa);
+router.get("/student/calGPA", studentController.studentGpa);
 
-router.get("/student/calTpa", studentController.studentTpa);
+router.get("/student/calTPA", studentController.studentTpa);
 
 router.get("/student/credits", studentController.studentCredit);
 

@@ -24,6 +24,9 @@ function App() {
         <Route exact path="/dashboard">
           {UserService.isManager() ? <Dashboard /> : UserService.isUser() ? <StudentDashboard /> : <SignIn />}
         </Route>
+        <Route exact path="/studentdashboard">
+          <StudentDashboard />
+        </Route>
         <Route exact path="/student">
           <StudentsList />
         </Route>
