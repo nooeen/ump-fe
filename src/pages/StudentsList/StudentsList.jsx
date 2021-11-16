@@ -1,35 +1,48 @@
+import axios from "axios";
 import "./StudentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
-import { userRows } from "../../dummyData";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 
-export default function StudentsList() {
-  const [data, setData] = useState(userRows);
+const API_URL = process.env.REACT_APP_URL;
+
+function StudentsList() {
+  const [data, setData] = useState({ username: "0" });
+  const [isBusy, setBusy] = useState(true);
+
+  useEffect(() => {
+    axios
+      .get(API_URL + "/api/student/listAll")
+      .then((res) => res.data)
+      .then((resJson) => {
+        const result = resJson.map((row) => ({
+          id: row.username,
+          username: row.username,
+          fullname: row.fullname,
+          class: row.class,
+        }));
+        setData(result);
+        setBusy(false);
+      });
+  }, []);
 
   const handleDelete = (id) => {
     setData(data.filter((item) => item.id !== id));
   };
 
+  console.log(data);
+
   const columns = [
-    { field: "id", headerName: "MSV", width: 120 },
+    { field: "username", headerName: "MSV", width: 120 },
     {
-      field: "user",
+      field: "fullname",
       headerName: "TÊN SINH VIÊN",
       width: 200,
-      renderCell: (params) => {
-        return (
-          <div className="studentsListUser">
-            <img className="studentsListImg" src={params.row.avatar} alt="" />
-            {params.row.username}
-          </div>
-        );
-      },
     },
-    { field: "email", headerName: "EMAIL", width: 200 },
+    { field: "class", headerName: "LỚP", width: 200 },
     {
       field: "action",
       headerName: "HÀNH ĐỘNG",
@@ -52,19 +65,26 @@ export default function StudentsList() {
 
   return (
     <div>
-      <Topbar />
-      <div className="container">
-        <Sidebar />
-        <div className="studentsList">
-          <DataGrid
-            rows={data}
-            disableSelectionOnClick
-            columns={columns}
-            pageSize={8}
-            checkboxSelection
-          />
+      {isBusy ? null : (
+        <div>
+          <Topbar />
+          <div className="container">
+            <Sidebar />
+            <div className="studentsList">
+              <DataGrid
+                rows={data}
+                rowKey="username"
+                disableSelectionOnClick
+                columns={columns}
+                pageSize={20}
+                checkboxSelection
+              />
+            </div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
+
+export default StudentsList;
