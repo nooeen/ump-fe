@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 
 class studentController {
-  // list all user with role student
+  // list students within class with role student 
   studentList(req, res) {
     User.find({ class: req.query.class })
       .then((users, err) => {
