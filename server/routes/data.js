@@ -26,6 +26,7 @@ router.get("/", (req, res) => {
         res.send("no data");
       }
     }
+    return null;
   });
 });
 
@@ -62,6 +63,7 @@ router.post("/export", (req, res) => {
       xlsx.writeFile(wb, down);
       res.download(down);
     }
+    return null;
   });
 });
 

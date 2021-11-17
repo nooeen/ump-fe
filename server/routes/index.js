@@ -1,5 +1,8 @@
-const apiRoutes = require("./api.js");
+const test = require("./test.js");
+const auth = require("./auth.js");
 const data = require("./data.js");
+const student = require("./student.js");
+const manager = require("./manager.js");
 
 function route(app) {
   app.use(function (req, res, next) {
@@ -9,8 +12,10 @@ function route(app) {
     );
     next();
   });
-  app.use("/api", apiRoutes);
-  app.use("/data", data);
+  app.use("/api", auth);
+  app.use("/api/student", student);
+  app.use("/api/manager", manager);
+  app.use("/api/data", data);
 }
 
 module.exports = route;

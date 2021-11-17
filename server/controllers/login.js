@@ -26,11 +26,13 @@ function login(req, res, next) {
             error: "Incorrect username or password",
           });
         } else {
-          const payload = { username };
+          const payload = { username: username, role: user.role };
           const token = jwt.sign(payload, secret, {
             expiresIn: "1h",
           });
-          res.status(200).json({ accessToken: token });
+          res
+            .status(200)
+            .json({ accessToken: token, username: username, role: user.role });
         }
       });
     }

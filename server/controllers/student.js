@@ -30,7 +30,7 @@ class studentController {
   }
 
   studentListAll(req, res) {
-    User.find({})
+    User.find()
       .then((users, err) => {
         if (err) {
           res.status(500).send("Internal Server Error");

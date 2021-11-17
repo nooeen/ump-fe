@@ -12,7 +12,7 @@ import AuthService from "../../services/auth.service";
 export default function SignIn() {
   const history = useHistory();
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     AuthService.login(data.get("username"), data.get("password"))

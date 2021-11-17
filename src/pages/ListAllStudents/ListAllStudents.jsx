@@ -1,5 +1,5 @@
 import axios from "axios";
-import "./StudentsList.css";
+import "./ListAllStudents.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 
 const API_URL = process.env.REACT_APP_URL;
 
-function StudentsList() {
+function ListAllStudents() {
   const [data, setData] = useState({ username: "0" });
   const [isBusy, setBusy] = useState(true);
 
@@ -87,4 +87,4 @@ function StudentsList() {
   );
 }
 
-export default StudentsList;
+export default ListAllStudents;
