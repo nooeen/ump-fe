@@ -28,4 +28,4 @@ class classController {
     }
 }
 
-module.exports = new classController;
+module.exports = new classController();
