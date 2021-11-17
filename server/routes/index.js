@@ -1,6 +1,4 @@
 const apiRoutes = require("./api.js");
-const data = require("./data.js");
-
 const csv = require('csvtojson');
 const multer = require('multer');
 const XLSX = require('xlsx');
@@ -26,7 +24,6 @@ function route(app) {
     next();
   });
   app.use("/api", apiRoutes);
-  app.use("/data", data);
 }
 
 module.exports = route;
