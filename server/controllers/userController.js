@@ -1,4 +1,4 @@
-// const User = require('../models/User');
+const User = require('../models/User');
 const Student = require('../models/Student');
 const Teacher = require('../models/Teacher');
 // const { mongooseToObject } = require('../util/mongoose');

@@ -59,9 +59,9 @@ router.get("/student/calTPA", studentController.studentTpa);
 
 router.get("/student/credits", studentController.studentCredit);
 
-router.get('/data/import', dataController.import);
+//router.get('/data/import', dataController.import);
 router.post('/data/importdata', uploads.single('csv'), dataController.importData);
-router.get('/data/export', dataController.export);
+//router.get('/data/export', dataController.export);
 router.post('/data/exportdata', dataController.exportData);
 
 module.exports = router;
