@@ -12,10 +12,11 @@ function route(app) {
     );
     next();
   });
-  app.use("/api", auth);
+ 
   app.use("/api/student", student);
   app.use("/api/manager", manager);
-  app.use("/api/data", data);
+  app.use("/api/data", data); 
+  app.use("/api", auth);
 }
 
 module.exports = route;

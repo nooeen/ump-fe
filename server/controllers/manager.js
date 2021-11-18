@@ -12,6 +12,10 @@ class managerController {
                 res.status(500).send('Internal Server Error')
                 return
             }
+            if(users.length == 0){
+                res.status(404).json("No manager in database");
+                return;
+            }
             for(let i =0; i < users.length; i++) {
                 users[i] = {
                     username: users[i].username,
@@ -32,6 +36,10 @@ class managerController {
             if(err){
                 res.status(500).send('Internal Server Error')
                 return
+            }
+            if(users.length == 0){
+                res.status(404).json("No manager match the name");
+                return;
             }
             users[0] = {
                 username: users[0].username,

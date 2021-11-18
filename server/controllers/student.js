@@ -169,6 +169,50 @@ class studentController {
         res.status(404).json("No student in database");
       });
   }
+  //api/student/warn 
+  studentWarning(req, res) {
+    User.find({ username: req.query.username })
+      .then((users, err) => {
+        if (err) {
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        if(users.length == 0){
+          console.log('check2')
+          res.status(404).send("No student in database");
+          return;
+        }
+        let warning = ""
+        let totalGPA = 0
+        let totalCredit =0
+        let totalTPA = 0
+        for (let j = 0; j < users[0].history.gpa.length; j++) {
+          totalGPA += parseFloat(users[0].history.gpa[j] * users[0].history.credit[j]);
+          totalTPA += users[0].history.tpa[j]
+          totalCredit += users[0].history.credit[j];
+        }
+        totalGPA = totalGPA / totalCredit;
+        totalGPA = Math.round(totalGPA * 100) / 100;
+        totalTPA = totalTPA / users[0].history.gpa.length;
+        if (totalGPA < 2) {
+          warning += "Student's GPA is under 2.0. "
+        }
+        if (totalTPA < 50) {
+          warning += "Student's TPA is under 50. "
+        }
+        console.log('tpa', totalTPA, users[0].hasPaid)
+        if (users[0].hasPaid == false){
+          warning += "Student have not paid the fee. "
+        }
+        console.log('tpa', totalTPA)
+        res.status(200).send(warning);
+      })
+      .catch(() => {
+        res.status(500).send("Internal Server Error");
+      })
+  }
 }
+
+
 
 module.exports = new studentController();

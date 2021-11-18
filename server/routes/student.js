@@ -14,4 +14,6 @@ router.get("/calTPA", studentController.studentTpa);
 
 router.get("/credits", studentController.studentCredit);
 
+router.get("/warn", studentController.studentWarning);
+
 module.exports = router;
