@@ -200,15 +200,14 @@ class studentController {
 
         //check warning
         if (totalGPA < 2) {
-          warning += "Student's GPA is under 2.0. "
+          warning += "GPA của sinh viên dưới 2.0" + '\n'
         }
         if (totalTPA < 50) {
-          warning += "Student's TPA is under 50. "
+          warning += "Điểm rèn luyện của sinh viên dưới 50 "  + '\n'
         }
         if (users[0].hasPaid == false){
-          warning += "Student have not paid the fee. "
+          warning += "Sinh viên chưa đóng học phí"
         }
-
         
         res.status(200).send(warning);
       })
@@ -253,15 +252,15 @@ class studentController {
 
           //check warning
           if (totalGPA < 2) {
-            warning += "Student's GPA is under 2.0. "
+            warning += "GPA của sinh viên dưới 2.0"  + '\n'
             haveWarn = true
           }
           if (totalTPA < 50) {
-            warning += "Student's TPA is under 50. "
+            warning += "Điểm rèn luyện của sinh viên dưới 50 "  + '\n'
             haveWarn = true
           }
           if (users[i].hasPaid == false){
-            warning += "Student have not paid the fee. "
+            warning += "Sinh viên chưa đóng học phí"
             haveWarn = true
           }
 
@@ -273,10 +272,8 @@ class studentController {
               fullname: users[i].fullname,
               totalGpa: totalGPA,
               totalTpa: totalTPA,
-              dob: users[i].dob,
-              history: users[i].history,
               class: users[i].class,
-              hasPaid: users[i].hasPaid,
+              reason: warning
             };
             n += 1
           }
@@ -323,13 +320,9 @@ studentBonus(req, res) {
       totalTPA = totalTPA / users[0].history.gpa.length;
 
       //check bonus
-      if (totalGPA >= 3.6) {
-        bonus += "Student's GPA is higher than 3.6. "
+      if (totalGPA >= 3.6 && totalTPA >= 90) {
+        bonus += "Sinh viên đủ điều kiện để được khen thưởng"
       }
-      if (totalTPA >= 90) {
-        bonus += "Student's TPA is higher than 90. "
-      }
-      
       res.status(200).send(bonus);
     })
     .catch(() => {
@@ -373,15 +366,10 @@ studentBonus(req, res) {
           totalTPA = totalTPA / users[i].history.gpa.length;
 
           //check bonus
-          if (totalGPA >= 3.6) {
-            bonus += "Student's GPA is higher than 3.6. "
+          if (totalGPA >= 3.6 && totalTPA >= 90) {
+            bonus += "Sinh viên đủ điều kiện khen thưởng"
             haveBonus = true
           }
-          if (totalTPA >= 90) {
-            bonus += "Student's TPA is higher than 90. "
-            haveBonus = true
-          }
-
           
           //save student which has warning
           if (haveBonus == true){
@@ -401,7 +389,6 @@ studentBonus(req, res) {
           console.log('check3')
         }
         
-
         //remove student not have bonus
         for(let i = users.length -1; i >= n; i--) {
           users.pop()
