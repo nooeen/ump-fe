@@ -16,4 +16,6 @@ router.get("/credits", studentController.studentCredit);
 
 router.get("/warn", studentController.studentWarning);
 
+router.get("/listwarn", studentController.studentWarningList);
+
 module.exports = router;

@@ -169,6 +169,7 @@ class studentController {
         res.status(404).json("No student in database");
       });
   }
+
   //api/student/warn 
   studentWarning(req, res) {
     User.find({ username: req.query.username })
@@ -178,14 +179,16 @@ class studentController {
           return;
         }
         if(users.length == 0){
-          console.log('check2')
           res.status(404).send("No student in database");
           return;
         }
+
         let warning = ""
         let totalGPA = 0
         let totalCredit =0
         let totalTPA = 0
+
+        //calculate GPA TPA
         for (let j = 0; j < users[0].history.gpa.length; j++) {
           totalGPA += parseFloat(users[0].history.gpa[j] * users[0].history.credit[j]);
           totalTPA += users[0].history.tpa[j]
@@ -194,18 +197,95 @@ class studentController {
         totalGPA = totalGPA / totalCredit;
         totalGPA = Math.round(totalGPA * 100) / 100;
         totalTPA = totalTPA / users[0].history.gpa.length;
+
+        //check warning
         if (totalGPA < 2) {
           warning += "Student's GPA is under 2.0. "
         }
         if (totalTPA < 50) {
           warning += "Student's TPA is under 50. "
         }
-        console.log('tpa', totalTPA, users[0].hasPaid)
         if (users[0].hasPaid == false){
           warning += "Student have not paid the fee. "
         }
-        console.log('tpa', totalTPA)
+
+        
         res.status(200).send(warning);
+      })
+      .catch(() => {
+        res.status(500).send("Internal Server Error");
+      })
+  }
+
+  //api/student/listwarn
+  studentWarningList(req, res) {
+    User.find({ class: req.query.class })
+      .then((users, err) => {
+        if (err) {
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        if(users.length == 0){
+          res.status(404).send("No student in class");
+          return;
+        }
+
+        let n = 0;
+
+        //each student in class
+        for( let i = 0; i < users.length; i++){
+
+          let warning = ""
+          let totalGPA = 0
+          let totalCredit =0
+          let totalTPA = 0
+          let haveWarn = false;
+
+          //calculate GPA TPA
+          for (let j = 0; j < users[i].history.gpa.length; j++) {
+            totalGPA += parseFloat(users[i].history.gpa[j] * users[i].history.credit[j]);
+            totalTPA += users[i].history.tpa[j]
+            totalCredit += users[i].history.credit[j];
+          }
+          totalGPA = totalGPA / totalCredit;
+          totalGPA = Math.round(totalGPA * 100) / 100;
+          totalTPA = totalTPA / users[i].history.gpa.length;
+
+          //check warning
+          if (totalGPA < 2) {
+            warning += "Student's GPA is under 2.0. "
+            haveWarn = true
+          }
+          if (totalTPA < 50) {
+            warning += "Student's TPA is under 50. "
+            haveWarn = true
+          }
+          if (users[i].hasPaid == false){
+            warning += "Student have not paid the fee. "
+            haveWarn = true
+          }
+
+          //save student which has warning
+          if (haveWarn == true){
+            users[n] = {
+              _id: users[i]._id,
+              username: users[i].username,
+              fullname: users[i].fullname,
+              dob: users[i].dob,
+              history: users[i].history,
+              class: users[i].class,
+              hasPaid: users[i].hasPaid,
+            };
+            n += 1
+          }
+        }
+
+        //remove student not havae warning
+        for(let i = users.length -1; i >= n; i--) {
+          users.pop()
+        }
+
+        res.status(200).json(users);
       })
       .catch(() => {
         res.status(500).send("Internal Server Error");
