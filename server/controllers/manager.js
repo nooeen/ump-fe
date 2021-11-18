@@ -25,7 +25,7 @@ class managerController {
             res.status(200).json(users)
         })
         .catch(() => {
-            res.status(404).json("No manager in database")
+            res.status(404).json("Internal Server Error")
         })
     }
 
@@ -48,7 +48,7 @@ class managerController {
             res.status(200).json(users)
         })
         .catch(() => {
-            res.status(404).send('No manager match the name')
+            res.status(404).send('Internal Server Error')
         })
     }
 }
