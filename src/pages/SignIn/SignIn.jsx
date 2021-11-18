@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useHistory } from "react-router-dom";
+import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
@@ -10,6 +11,8 @@ import { theme } from "../../theme";
 import AuthService from "../../services/auth.service";
 
 export default function SignIn() {
+  const [fail, setFail] = React.useState(false);
+
   const history = useHistory();
 
   const handleSubmit = async (event) => {
@@ -25,6 +28,7 @@ export default function SignIn() {
         }
       })
       .catch((err) => {
+        setFail(true);
         console.log("Đăng nhập thất bại!");
       });
   };
@@ -42,6 +46,11 @@ export default function SignIn() {
         <Grid item xs={3}>
           <Box>
             <Container maxWidth="sm">
+              {fail ? (
+                <Alert severity="error">
+                  Đăng nhập thất bại, hãy kiểm tra lại thông tin!
+                </Alert>
+              ) : null}
               <form onSubmit={handleSubmit}>
                 <Box sx={{ my: 3 }}>
                   <Typography color="textPrimary" variant="h4">
