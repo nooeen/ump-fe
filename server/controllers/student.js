@@ -1,5 +1,3 @@
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 
 class studentController {
@@ -29,6 +27,7 @@ class studentController {
       });
   }
 
+  //List all students
   studentListAll(req, res) {
     User.find()
       .then((users, err) => {

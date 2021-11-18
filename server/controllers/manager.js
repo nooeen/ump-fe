@@ -1,5 +1,3 @@
-require("dotenv").config();
-const jwt = require("jsonwebtoken");
 const User = require("../models/User.js");
 
 class managerController {
@@ -53,4 +51,4 @@ class managerController {
     }
 }
 
-module.exports = new managerController;
+module.exports = new managerController();
