@@ -132,6 +132,7 @@ export const theme = createTheme({
     }
   },
   palette: {
+    // @ts-ignore
     neutral: {
       100: '#F3F4F6',
       200: '#E5E7EB',
@@ -152,7 +153,7 @@ export const theme = createTheme({
       disabled: 'rgba(55, 65, 81, 0.26)'
     },
     background: {
-      default: '#F9FAFC',
+      default: 'white',
       paper: '#FFFFFF'
     },
     divider: '#E6E8F0',
