@@ -271,6 +271,8 @@ class studentController {
               _id: users[i]._id,
               username: users[i].username,
               fullname: users[i].fullname,
+              totalGpa: totalGPA,
+              totalTpa: totalTPA,
               dob: users[i].dob,
               history: users[i].history,
               class: users[i].class,
@@ -280,7 +282,7 @@ class studentController {
           }
         }
 
-        //remove student not havae warning
+        //remove student not have warning
         for(let i = users.length -1; i >= n; i--) {
           users.pop()
         }
@@ -291,6 +293,7 @@ class studentController {
         res.status(500).send("Internal Server Error");
       })
   }
+  
 //api/student/bonus 
 studentBonus(req, res) {
   User.find({ username: req.query.username })
@@ -332,6 +335,83 @@ studentBonus(req, res) {
     .catch(() => {
       res.status(500).send("Internal Server Error");
     })
+  }
+
+  //api/student/listbonus
+  studentBonusList(req, res) {
+    User.find({ class: req.query.class })
+      .then((users, err) => {
+        if (err) {
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        if(users.length == 0){
+          res.status(404).send("No student in class");
+          return;
+        }
+
+        let n = 0;
+        
+
+        //each student in class
+        for( let i = 0; i < users.length; i++){
+
+          let bonus = ""
+          let totalGPA = 0
+          let totalCredit =0
+          let totalTPA = 0
+          let haveBonus= false;
+
+          //calculate GPA TPA
+          for (let j = 0; j < users[i].history.gpa.length; j++) {
+            totalGPA += parseFloat(users[i].history.gpa[j] * users[i].history.credit[j]);
+            totalTPA += users[i].history.tpa[j]
+            totalCredit += users[i].history.credit[j];
+          }
+          totalGPA = totalGPA / totalCredit;
+          totalGPA = Math.round(totalGPA * 100) / 100;
+          totalTPA = totalTPA / users[i].history.gpa.length;
+
+          //check bonus
+          if (totalGPA >= 3.6) {
+            bonus += "Student's GPA is higher than 3.6. "
+            haveBonus = true
+          }
+          if (totalTPA >= 90) {
+            bonus += "Student's TPA is higher than 90. "
+            haveBonus = true
+          }
+
+          
+          //save student which has warning
+          if (haveBonus == true){
+            users[n] = {
+              _id: users[i]._id,
+              username: users[i].username,
+              fullname: users[i].fullname,
+              totalGpa: totalGPA,
+              totalTpa: totalTPA,
+              dob: users[i].dob,
+              history: users[i].history,
+              class: users[i].class,
+              hasPaid: users[i].hasPaid,
+            };
+            n += 1
+          }
+          console.log('check3')
+        }
+        
+
+        //remove student not have bonus
+        for(let i = users.length -1; i >= n; i--) {
+          users.pop()
+        }
+
+        res.status(200).json(users);
+      })
+      .catch(() => {
+        res.status(500).send("Internal Server Error");
+      })
   }
 }
 
