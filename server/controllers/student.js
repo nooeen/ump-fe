@@ -291,6 +291,48 @@ class studentController {
         res.status(500).send("Internal Server Error");
       })
   }
+//api/student/bonus 
+studentBonus(req, res) {
+  User.find({ username: req.query.username })
+    .then((users, err) => {
+      if (err) {
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      if(users.length == 0){
+        res.status(404).send("No student in database");
+        return;
+      }
+
+      let bonus = ""
+      let totalGPA = 0
+      let totalCredit =0
+      let totalTPA = 0
+
+      //calculate GPA TPA
+      for (let j = 0; j < users[0].history.gpa.length; j++) {
+        totalGPA += parseFloat(users[0].history.gpa[j] * users[0].history.credit[j]);
+        totalTPA += users[0].history.tpa[j]
+        totalCredit += users[0].history.credit[j];
+      }
+      totalGPA = totalGPA / totalCredit;
+      totalGPA = Math.round(totalGPA * 100) / 100;
+      totalTPA = totalTPA / users[0].history.gpa.length;
+
+      //check bonus
+      if (totalGPA >= 3.6) {
+        bonus += "Student's GPA is higher than 3.6. "
+      }
+      if (totalTPA >= 90) {
+        bonus += "Student's TPA is higher than 90. "
+      }
+      
+      res.status(200).send(bonus);
+    })
+    .catch(() => {
+      res.status(500).send("Internal Server Error");
+    })
+  }
 }
 
 

@@ -18,4 +18,6 @@ router.get("/warn", studentController.studentWarning);
 
 router.get("/listwarn", studentController.studentWarningList);
 
+router.get("/bonus", studentController.studentBonus);
+
 module.exports = router;
