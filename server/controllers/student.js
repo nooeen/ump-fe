@@ -234,7 +234,7 @@ class studentController {
         //each student in class
         for( let i = 0; i < users.length; i++){
 
-          let warning = ""
+          let warning = []
           let totalGPA = 0
           let totalCredit =0
           let totalTPA = 0
@@ -252,15 +252,15 @@ class studentController {
 
           //check warning
           if (totalGPA < 2) {
-            warning += "GPA của sinh viên dưới 2.0"  + '\n'
+            warning.push("GPA của sinh viên dưới 2.0")
             haveWarn = true
           }
           if (totalTPA < 50) {
-            warning += "Điểm rèn luyện của sinh viên dưới 50 "  + '\n'
+            warning.push("Điểm rèn luyện của sinh viên dưới 50 ")
             haveWarn = true
           }
           if (users[i].hasPaid == false){
-            warning += "Sinh viên chưa đóng học phí"
+            warning.push("Sinh viên chưa đóng học phí")
             haveWarn = true
           }
 
