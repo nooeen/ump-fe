@@ -2,8 +2,10 @@ const express = require("express");
 const router = express.Router();
 const managerController = require("../controllers/manager");
 
-router.get("/list", managerController.managerList);
+router.get("/list", managerController.listManager);
 
-router.get("/find", managerController.managerFind);
+router.get("/find", managerController.findManager);
+
+router.get("/list/classes", managerController.listManagerClasses);
 
 module.exports = router;

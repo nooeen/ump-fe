@@ -1,11 +1,12 @@
+import React from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Dashboard from "./pages/Dashboard/Dashboard";
-import ListAllStudents from "./pages/ListAllStudents/ListAllStudents";
 import SignIn from "./pages/SignIn/SignIn";
 import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
 import Home from "./pages/Home/Home";
 import NewStudent from "./pages/NewStudent/NewStudent";
 import SignOut from "./pages/SignOut/SignOut";
+import ViewStudentsList from "pages/ViewStudentsList/ViewStudentsList";
 
 function App() {
   return (
@@ -25,7 +26,7 @@ function App() {
           <StudentDashboard />
         </Route>
         <Route exact path="/student">
-          <ListAllStudents />
+          <ViewStudentsList />
         </Route>
         <Route exact path="/student/add">
           <NewStudent />

@@ -1,12 +1,11 @@
 import React from "react";
 import {
   LineStyle,
-  Timeline,
   ChatBubbleOutline,
   ForumOutlined,
   GradeOutlined,
   PersonOutline,
-  ImportExport
+  NotInterested
 } from "@mui/icons-material";
 import "./Sidebar.css";
 import { useHistory } from "react-router-dom";
@@ -34,23 +33,28 @@ export default function Sidebar() {
               <LineStyle className="sidebarIcon" />
               Trang chủ
             </li>
+          </ul>
+        </div>
+        <div className="sidebarMenu">
+          <h3 className="sidebarTitle">SINH VIÊN</h3>
+          <ul className="sidebarList">
+            <li className="sidebarListItem" onClick={toStudents}>
+              <PersonOutline className="sidebarIcon" />
+              Sinh viên
+            </li>
             <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Thông số
+              <GradeOutlined className="sidebarIcon" />
+              Tiêu biểu
+            </li>
+            <li className="sidebarListItem">
+              <NotInterested className="sidebarIcon" />
+              Cảnh cáo
             </li>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">MENU NHANH</h3>
+          <h3 className="sidebarTitle">GIAO TIẾP</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem" onClick={toStudents}>
-              <PersonOutline className="sidebarIcon" />
-              Học sinh
-            </li>
-            <li className="sidebarListItem">
-              <GradeOutlined className="sidebarIcon" />
-              Điểm
-            </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />
               Chat
@@ -58,19 +62,6 @@ export default function Sidebar() {
             <li className="sidebarListItem">
               <ForumOutlined className="sidebarIcon" />
               Diễn đàn
-            </li>
-          </ul>
-        </div>
-        <div className="sidebarMenu">
-          <h3 className="sidebarTitle">NHẬP / XUẤT DỮ LIỆU</h3>
-          <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <ImportExport className="sidebarIcon" />
-              Nhập dữ liệu
-            </li>
-            <li className="sidebarListItem">
-              <ImportExport className="sidebarIcon" />
-              Xuất dữ liệu
             </li>
           </ul>
         </div>

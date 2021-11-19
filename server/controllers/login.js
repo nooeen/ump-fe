@@ -30,9 +30,7 @@ function login(req, res, next) {
           const token = jwt.sign(payload, secret, {
             expiresIn: "1h",
           });
-          res
-            .status(200)
-            .json({ accessToken: token, username: username, role: user.role });
+          res.status(200).json({ accessToken: token });
         }
       });
     }

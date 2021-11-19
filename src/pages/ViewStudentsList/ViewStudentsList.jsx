@@ -1,53 +1,41 @@
-import axios from "axios";
-import "./ListAllStudents.css";
+import React from "react";
+import "./ViewStudentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import React from "react";
+import StudentService from "../../services/student.service";
 
-const API_URL = process.env.REACT_APP_URL;
-
-function ListAllStudents() {
-  const [data, setData] = useState({});
+export default function ViewStudentsList() {
+  const [data, setData] = useState([]);
   const [isBusy, setBusy] = useState(true);
 
-  useEffect(() => {
-    axios
-      .get(API_URL + "/api/student/listAll")
-      .then((res) => res.data)
-      .then((resJson) => {
-        const result = resJson.map((row) => ({
-          id: row.username,
-          username: row.username,
-          fullname: row.fullname,
-          class: row.class,
-        }));
-        setData(result);
-        setBusy(false);
-      });
-  }, []);
-
-  const handleDelete = (id) => {
-    setData(data.filter((item) => item.id !== id));
+  const fetchData = async () => {
+    const result = await StudentService.getAllStudents();
+    setData(result);
   };
 
-  console.log(data);
+  useEffect(() => {
+    fetchData();
+    setBusy(false);
+  }, []);
+
+  const handleDelete = (id) => {};
 
   const columns = [
-    { field: "username", headerName: "MSV", width: 120 },
+    { field: "username", headerName: "Mã sinh viên", width: 150 },
     {
       field: "fullname",
-      headerName: "TÊN SINH VIÊN",
+      headerName: "Họ và tên",
       width: 200,
     },
-    { field: "class", headerName: "LỚP", width: 200 },
+    { field: "class", headerName: "Lớp", width: 180 },
     {
       field: "action",
-      headerName: "HÀNH ĐỘNG",
-      width: 150,
+      headerName: "Hành động",
+      width: 180,
       renderCell: (params) => {
         return (
           <>
@@ -73,11 +61,11 @@ function ListAllStudents() {
             <Sidebar />
             <div className="studentsList">
               <DataGrid
-                autoHeight
+                columns={columns}
                 rows={data}
                 rowKey="username"
+                autoHeight
                 disableSelectionOnClick
-                columns={columns}
                 pageSize={10}
                 checkboxSelection
               />
@@ -88,5 +76,3 @@ function ListAllStudents() {
     </div>
   );
 }
-
-export default ListAllStudents;

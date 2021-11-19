@@ -29,7 +29,6 @@ export default function SignIn() {
       })
       .catch((err) => {
         setFail(true);
-        console.log("Đăng nhập thất bại!");
       });
   };
 
