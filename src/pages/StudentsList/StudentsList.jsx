@@ -1,9 +1,8 @@
 import React from "react";
 import "./StudentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
-import { DeleteOutline } from "@mui/icons-material";
+import { DeleteOutline, Create, Search } from "@mui/icons-material";
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
@@ -17,12 +16,21 @@ export default function StudentsList() {
     setData(result);
   };
 
+  const handleView = (id) => {
+    console.log(id);
+  };
+
+  const handleEdit = (id) => {
+    console.log(id);
+  };
+  const handleDelete = (id) => {
+    console.log(id);
+  };
+
   useEffect(() => {
     fetchData();
     setBusy(false);
   }, []);
-
-  const handleDelete = (id) => {};
 
   const columns = [
     { field: "username", headerName: "Mã sinh viên", width: 150 },
@@ -35,13 +43,18 @@ export default function StudentsList() {
     {
       field: "action",
       headerName: "Hành động",
-      width: 180,
+      width: 150,
       renderCell: (params) => {
         return (
           <>
-            <Link to={"/user/" + params.row.id}>
-              <button className="userListEdit">Edit</button>
-            </Link>
+            <Search
+              className="studentsListView"
+              onClick={() => handleView(params.row.id)}
+            />
+            <Create
+              className="studentsListEdit"
+              onClick={() => handleEdit(params.row.id)}
+            />
             <DeleteOutline
               className="studentsListDelete"
               onClick={() => handleDelete(params.row.id)}

@@ -5,7 +5,8 @@ import {
   ForumOutlined,
   GradeOutlined,
   PersonOutline,
-  NotInterested
+  NotInterested,
+  NotificationsNone,
 } from "@mui/icons-material";
 import "./Sidebar.css";
 import { useHistory } from "react-router-dom";
@@ -55,6 +56,10 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">GIAO TIẾP</h3>
           <ul className="sidebarList">
+            <li className="sidebarListItem">
+              <NotificationsNone className="sidebarIcon" />
+              Thông báo
+            </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />
               Chat
