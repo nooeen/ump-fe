@@ -1,13 +1,13 @@
 import "./FeaturedInfo.css";
 import { ArrowDownward, ArrowUpward } from "@mui/icons-material";
 
-export default function FeaturedInfo() {
+export default function FeaturedInfo(props) {
   return (
     <div className="featured">
       <div className="featuredItem">
         <span className="featuredTitle">Sinh viên</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">88</span>
+          <span className="featuredMoney">{props.studentsNumber}</span>
         </div>
       </div>
       <div className="featuredItem">

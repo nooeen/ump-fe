@@ -51,7 +51,7 @@ class AuthService {
     const query = JSON.parse(localStorage.getItem("user"));
     if (query) {
       const user = jwt(query.accessToken);
-      console.log(user);
+      // console.log(user);
       if (user.role === "manager") {
         return true;
       }

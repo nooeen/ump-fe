@@ -1,41 +1,53 @@
-import React from "react";
-import "./ViewStudentsList.css";
+import axios from "axios";
+import "./StudentsAllList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
-import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
-import StudentService from "../../services/student.service";
+import React from "react";
 
-export default function ViewStudentsList() {
-  const [data, setData] = useState([]);
+const API_URL = process.env.REACT_APP_URL;
+
+function StudentsAllList() {
+  const [data, setData] = useState({});
   const [isBusy, setBusy] = useState(true);
 
-  const fetchData = async () => {
-    const result = await StudentService.getAllStudents();
-    setData(result);
-  };
-
   useEffect(() => {
-    fetchData();
-    setBusy(false);
+    axios
+      .get(API_URL + "/api/student/listAll")
+      .then((res) => res.data)
+      .then((resJson) => {
+        const result = resJson.map((row) => ({
+          id: row.username,
+          username: row.username,
+          fullname: row.fullname,
+          class: row.class,
+        }));
+        setData(result);
+        setBusy(false);
+      });
   }, []);
 
-  const handleDelete = (id) => {};
+  const handleDelete = (id) => {
+    setData(data.filter((item) => item.id !== id));
+  };
+
+  console.log(data);
 
   const columns = [
-    { field: "username", headerName: "Mã sinh viên", width: 150 },
+    { field: "username", headerName: "MSV", width: 120 },
     {
       field: "fullname",
-      headerName: "Họ và tên",
+      headerName: "TÊN SINH VIÊN",
       width: 200,
     },
-    { field: "class", headerName: "Lớp", width: 180 },
+    { field: "class", headerName: "LỚP", width: 200 },
     {
       field: "action",
-      headerName: "Hành động",
-      width: 180,
+      headerName: "HÀNH ĐỘNG",
+      width: 150,
       renderCell: (params) => {
         return (
           <>
@@ -61,11 +73,11 @@ export default function ViewStudentsList() {
             <Sidebar />
             <div className="studentsList">
               <DataGrid
-                columns={columns}
+                autoHeight
                 rows={data}
                 rowKey="username"
-                autoHeight
                 disableSelectionOnClick
+                columns={columns}
                 pageSize={10}
                 checkboxSelection
               />
@@ -76,3 +88,5 @@ export default function ViewStudentsList() {
     </div>
   );
 }
+
+export default StudentsAllList;

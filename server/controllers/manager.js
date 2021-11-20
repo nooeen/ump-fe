@@ -28,21 +28,17 @@ class managerController {
 
   // api/manager/find?username=sth
   findManager(req, res) {
-    User.find({ username: req.query.username })
-      .then((users, err) => {
+    User.findOne({ username: req.query.username })
+      .then((user, err) => {
         if (err) {
           res.status(500).send("Internal Server Error");
           return;
         }
-        if (users.length === 0) {
+        if (user.length === 0) {
           res.status(404).json("No manager match the name");
           return;
         }
-        users[0] = {
-          username: users[0].username,
-          _id: users[0]._id,
-        };
-        res.status(200).json(users);
+        res.status(200).json(user);
       })
       .catch(() => {
         res.status(404).send("Internal Server Error");
