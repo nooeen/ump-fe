@@ -1,5 +1,5 @@
 import axios from "axios";
-import "./ListAllStudents.css";
+import "./StudentsAllList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
 import { Link } from "react-router-dom";
@@ -10,7 +10,7 @@ import React from "react";
 
 const API_URL = process.env.REACT_APP_URL;
 
-function ListAllStudents() {
+function StudentsAllList() {
   const [data, setData] = useState({});
   const [isBusy, setBusy] = useState(true);
 
@@ -89,4 +89,4 @@ function ListAllStudents() {
   );
 }
 
-export default ListAllStudents;
+export default StudentsAllList;

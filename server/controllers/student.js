@@ -1,7 +1,7 @@
 const User = require("../models/User.js");
 
 class studentController {
-  // list students within class with role student 
+  // list students within class with role student
   studentList(req, res) {
     User.find({ class: req.query.class })
       .then((users, err) => {
@@ -10,14 +10,14 @@ class studentController {
           return;
         }
         for (let i = 0; i < users.length; i++) {
-            users[i] = {
-              _id: users[i]._id,
-              username: users[i].username,
-              fullname: users[i].fullname,
-              dob: users[i].dob,
-              history: users[i].history,
-              class: users[i].class,
-              hasPaid: users[i].hasPaid,
+          users[i] = {
+            _id: users[i]._id,
+            username: users[i].username,
+            fullname: users[i].fullname,
+            dob: users[i].dob,
+            history: users[i].history,
+            class: users[i].class,
+            hasPaid: users[i].hasPaid,
           };
         }
         res.status(200).json(users);
@@ -36,14 +36,14 @@ class studentController {
           return;
         }
         for (let i = 0; i < users.length; i++) {
-            users[i] = {
-              _id: users[i]._id,
-              username: users[i].username,
-              fullname: users[i].fullname,
-              dob: users[i].dob,
-              history: users[i].history,
-              class: users[i].class,
-              hasPaid: users[i].hasPaid,
+          users[i] = {
+            _id: users[i]._id,
+            username: users[i].username,
+            fullname: users[i].fullname,
+            dob: users[i].dob,
+            history: users[i].history,
+            class: users[i].class,
+            hasPaid: users[i].hasPaid,
           };
         }
         res.status(200).json(users);
@@ -169,7 +169,7 @@ class studentController {
       });
   }
 
-  //api/student/warn 
+  //api/student/warn
   studentWarning(req, res) {
     User.find({ username: req.query.username })
       .then((users, err) => {
@@ -177,20 +177,22 @@ class studentController {
           res.status(500).send("Internal Server Error");
           return;
         }
-        if(users.length == 0){
+        if (users.length === 0) {
           res.status(404).send("No student in database");
           return;
         }
 
-        let warning = ""
-        let totalGPA = 0
-        let totalCredit =0
-        let totalTPA = 0
+        let warning = "";
+        let totalGPA = 0;
+        let totalCredit = 0;
+        let totalTPA = 0;
 
         //calculate GPA TPA
         for (let j = 0; j < users[0].history.gpa.length; j++) {
-          totalGPA += parseFloat(users[0].history.gpa[j] * users[0].history.credit[j]);
-          totalTPA += users[0].history.tpa[j]
+          totalGPA += parseFloat(
+            users[0].history.gpa[j] * users[0].history.credit[j]
+          );
+          totalTPA += users[0].history.tpa[j];
           totalCredit += users[0].history.credit[j];
         }
         totalGPA = totalGPA / totalCredit;
@@ -199,20 +201,20 @@ class studentController {
 
         //check warning
         if (totalGPA < 2) {
-          warning += "GPA của sinh viên dưới 2.0" + '\n'
+          warning += "GPA của sinh viên dưới 2.0" + "\n";
         }
         if (totalTPA < 50) {
-          warning += "Điểm rèn luyện của sinh viên dưới 50 "  + '\n'
+          warning += "Điểm rèn luyện của sinh viên dưới 50 " + "\n";
         }
-        if (users[0].hasPaid == false){
-          warning += "Sinh viên chưa đóng học phí"
+        if (users[0].hasPaid === false) {
+          warning += "Sinh viên chưa đóng học phí";
         }
-        
+
         res.status(200).send(warning);
       })
       .catch(() => {
         res.status(500).send("Internal Server Error");
-      })
+      });
   }
 
   //api/student/listwarn
@@ -223,7 +225,7 @@ class studentController {
           res.status(500).send("Internal Server Error");
           return;
         }
-        if(users.length == 0){
+        if (users.length === 0) {
           res.status(404).send("No student in class");
           return;
         }
@@ -231,18 +233,19 @@ class studentController {
         let n = 0;
 
         //each student in class
-        for( let i = 0; i < users.length; i++){
-
-          let warning = []
-          let totalGPA = 0
-          let totalCredit =0
-          let totalTPA = 0
+        for (let i = 0; i < users.length; i++) {
+          let warning = [];
+          let totalGPA = 0;
+          let totalCredit = 0;
+          let totalTPA = 0;
           let haveWarn = false;
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.gpa.length; j++) {
-            totalGPA += parseFloat(users[i].history.gpa[j] * users[i].history.credit[j]);
-            totalTPA += users[i].history.tpa[j]
+            totalGPA += parseFloat(
+              users[i].history.gpa[j] * users[i].history.credit[j]
+            );
+            totalTPA += users[i].history.tpa[j];
             totalCredit += users[i].history.credit[j];
           }
           totalGPA = totalGPA / totalCredit;
@@ -251,20 +254,20 @@ class studentController {
 
           //check warning
           if (totalGPA < 2) {
-            warning.push("GPA của sinh viên dưới 2.0")
-            haveWarn = true
+            warning.push("GPA của sinh viên dưới 2.0");
+            haveWarn = true;
           }
           if (totalTPA < 50) {
-            warning.push("Điểm rèn luyện của sinh viên dưới 50 ")
-            haveWarn = true
+            warning.push("Điểm rèn luyện của sinh viên dưới 50 ");
+            haveWarn = true;
           }
-          if (users[i].hasPaid == false){
-            warning.push("Sinh viên chưa đóng học phí")
-            haveWarn = true
+          if (users[i].hasPaid === false) {
+            warning.push("Sinh viên chưa đóng học phí");
+            haveWarn = true;
           }
 
           //save student which has warning
-          if (haveWarn == true){
+          if (haveWarn === true) {
             users[n] = {
               _id: users[i]._id,
               username: users[i].username,
@@ -272,61 +275,63 @@ class studentController {
               totalGpa: totalGPA,
               totalTpa: totalTPA,
               class: users[i].class,
-              reason: warning
+              reason: warning,
             };
-            n += 1
+            n += 1;
           }
         }
 
         //remove student not have warning
-        for(let i = users.length -1; i >= n; i--) {
-          users.pop()
+        for (let i = users.length - 1; i >= n; i--) {
+          users.pop();
         }
 
         res.status(200).json(users);
       })
       .catch(() => {
         res.status(500).send("Internal Server Error");
-      })
+      });
   }
-  
-//api/student/bonus 
-studentBonus(req, res) {
-  User.find({ username: req.query.username })
-    .then((users, err) => {
-      if (err) {
+
+  //api/student/bonus
+  studentBonus(req, res) {
+    User.find({ username: req.query.username })
+      .then((users, err) => {
+        if (err) {
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        if (users.length === 0) {
+          res.status(404).send("No student in database");
+          return;
+        }
+
+        let bonus = "";
+        let totalGPA = 0;
+        let totalCredit = 0;
+        let totalTPA = 0;
+
+        //calculate GPA TPA
+        for (let j = 0; j < users[0].history.gpa.length; j++) {
+          totalGPA += parseFloat(
+            users[0].history.gpa[j] * users[0].history.credit[j]
+          );
+          totalTPA += users[0].history.tpa[j];
+          totalCredit += users[0].history.credit[j];
+        }
+        totalGPA = totalGPA / totalCredit;
+        totalGPA = Math.round(totalGPA * 100) / 100;
+        totalTPA = totalTPA / users[0].history.gpa.length;
+
+        //check bonus
+        if (totalGPA >= 3.6 && totalTPA >= 90) {
+          bonus += "Sinh viên đủ điều kiện để được khen thưởng";
+        }
+        res.status(200).send(bonus);
+      })
+      .catch(() => {
         res.status(500).send("Internal Server Error");
-        return;
-      }
-      if(users.length == 0){
-        res.status(404).send("No student in database");
-        return;
-      }
-
-      let bonus = ""
-      let totalGPA = 0
-      let totalCredit =0
-      let totalTPA = 0
-
-      //calculate GPA TPA
-      for (let j = 0; j < users[0].history.gpa.length; j++) {
-        totalGPA += parseFloat(users[0].history.gpa[j] * users[0].history.credit[j]);
-        totalTPA += users[0].history.tpa[j]
-        totalCredit += users[0].history.credit[j];
-      }
-      totalGPA = totalGPA / totalCredit;
-      totalGPA = Math.round(totalGPA * 100) / 100;
-      totalTPA = totalTPA / users[0].history.gpa.length;
-
-      //check bonus
-      if (totalGPA >= 3.6 && totalTPA >= 90) {
-        bonus += "Sinh viên đủ điều kiện để được khen thưởng"
-      }
-      res.status(200).send(bonus);
-    })
-    .catch(() => {
-      res.status(500).send("Internal Server Error");
-    })
+      });
   }
 
   //api/student/listbonus
@@ -337,27 +342,27 @@ studentBonus(req, res) {
           res.status(500).send("Internal Server Error");
           return;
         }
-        if(users.length == 0){
+        if (users.length === 0) {
           res.status(404).send("No student in class");
           return;
         }
 
         let n = 0;
-        
 
         //each student in class
-        for( let i = 0; i < users.length; i++){
-
-          let bonus = ""
-          let totalGPA = 0
-          let totalCredit =0
-          let totalTPA = 0
-          let haveBonus= false;
+        for (let i = 0; i < users.length; i++) {
+          let bonus = "";
+          let totalGPA = 0;
+          let totalCredit = 0;
+          let totalTPA = 0;
+          let haveBonus = false;
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.gpa.length; j++) {
-            totalGPA += parseFloat(users[i].history.gpa[j] * users[i].history.credit[j]);
-            totalTPA += users[i].history.tpa[j]
+            totalGPA += parseFloat(
+              users[i].history.gpa[j] * users[i].history.credit[j]
+            );
+            totalTPA += users[i].history.tpa[j];
             totalCredit += users[i].history.credit[j];
           }
           totalGPA = totalGPA / totalCredit;
@@ -366,12 +371,12 @@ studentBonus(req, res) {
 
           //check bonus
           if (totalGPA >= 3.6 && totalTPA >= 90) {
-            bonus += "Sinh viên đủ điều kiện khen thưởng"
-            haveBonus = true
+            bonus += "Sinh viên đủ điều kiện khen thưởng";
+            haveBonus = true;
           }
-          
+
           //save student which has warning
-          if (haveBonus == true){
+          if (haveBonus === true) {
             users[n] = {
               _id: users[i]._id,
               username: users[i].username,
@@ -383,24 +388,22 @@ studentBonus(req, res) {
               class: users[i].class,
               hasPaid: users[i].hasPaid,
             };
-            n += 1
+            n += 1;
           }
-          console.log('check3')
+          console.log("check3");
         }
-        
+
         //remove student not have bonus
-        for(let i = users.length -1; i >= n; i--) {
-          users.pop()
+        for (let i = users.length - 1; i >= n; i--) {
+          users.pop();
         }
 
         res.status(200).json(users);
       })
       .catch(() => {
         res.status(500).send("Internal Server Error");
-      })
+      });
   }
 }
-
-
 
 module.exports = new studentController();

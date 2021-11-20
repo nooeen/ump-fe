@@ -1,5 +1,5 @@
 import React from "react";
-import "./ViewStudentsList.css";
+import "./StudentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline } from "@mui/icons-material";
 import { useState, useEffect } from "react";
@@ -8,12 +8,12 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
 
-export default function ViewStudentsList() {
+export default function StudentsList() {
   const [data, setData] = useState([]);
   const [isBusy, setBusy] = useState(true);
 
   const fetchData = async () => {
-    const result = await StudentService.getAllStudents();
+    const result = await StudentService.getStudentsByClass();
     setData(result);
   };
 
