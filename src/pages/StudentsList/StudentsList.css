@@ -33,3 +33,11 @@
   color: red;
   cursor: pointer;
 }
+
+.studentsListWarning {
+  color: red;
+}
+
+.studentsListBonus {
+  color: yellow;
+}

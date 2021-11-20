@@ -5,15 +5,23 @@ import "./Dashboard.css";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { useState, useEffect } from "react";
+import StudentService from "../../services/student.service";
 import AuthService from "../../services/auth.service";
 
 export default function Dashboard() {
   const [show, setShow] = useState(false);
+  const [studentsNumber, setStudentsNumber] = useState();
+
+  const fetchStudentsNumber = async () => {
+    const raw = await StudentService.getNumberOfStudentsByClass();
+    setStudentsNumber(raw);
+  };
 
   useEffect(() => {
     setShow(false);
     if (AuthService.isManager()) {
       setShow(true);
+      fetchStudentsNumber();
     }
   }, []);
 
@@ -25,7 +33,7 @@ export default function Dashboard() {
           <div className="container">
             <Sidebar />
             <div className="dashboard">
-              <FeaturedInfo />
+              <FeaturedInfo studentsNumber={studentsNumber} />
               <Chart
                 data={gradeData}
                 title="Điểm trung bình lớp theo thời gian"

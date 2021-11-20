@@ -16,9 +16,9 @@ router.get("/credits", studentController.studentCredit);
 
 router.get("/warn", studentController.studentWarning);
 
-router.get("/listwarn", studentController.studentWarningList);
-
 router.get("/bonus", studentController.studentBonus);
+
+router.get("/listwarn", studentController.studentWarningList);
 
 router.get("/listbonus", studentController.studentBonusList);
 

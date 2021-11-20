@@ -171,13 +171,13 @@ class studentController {
 
   //api/student/warn
   studentWarning(req, res) {
-    User.find({ username: req.query.username })
-      .then((users, err) => {
+    User.findOne({ username: req.query.username })
+      .then((user, err) => {
         if (err) {
           res.status(500).send("Internal Server Error");
           return;
         }
-        if (users.length === 0) {
+        if (!user) {
           res.status(404).send("No student in database");
           return;
         }
@@ -188,26 +188,24 @@ class studentController {
         let totalTPA = 0;
 
         //calculate GPA TPA
-        for (let j = 0; j < users[0].history.gpa.length; j++) {
-          totalGPA += parseFloat(
-            users[0].history.gpa[j] * users[0].history.credit[j]
-          );
-          totalTPA += users[0].history.tpa[j];
-          totalCredit += users[0].history.credit[j];
+        for (let j = 0; j < user.history.gpa.length; j++) {
+          totalGPA += parseFloat(user.history.gpa[j] * user.history.credit[j]);
+          totalTPA += user.history.tpa[j];
+          totalCredit += user.history.credit[j];
         }
         totalGPA = totalGPA / totalCredit;
         totalGPA = Math.round(totalGPA * 100) / 100;
-        totalTPA = totalTPA / users[0].history.gpa.length;
+        totalTPA = totalTPA / user.history.gpa.length;
 
         //check warning
         if (totalGPA < 2) {
-          warning += "GPA của sinh viên dưới 2.0" + "\n";
+          warning = warning + "GPA của sinh viên dưới 2.0 \n";
         }
         if (totalTPA < 50) {
-          warning += "Điểm rèn luyện của sinh viên dưới 50 " + "\n";
+          warning = warning + "Điểm rèn luyện của sinh viên dưới 50 \n";
         }
-        if (users[0].hasPaid === false) {
-          warning += "Sinh viên chưa đóng học phí";
+        if (user.hasPaid === false) {
+          warning = warning + "Sinh viên chưa đóng học phí";
         }
 
         res.status(200).send(warning);
@@ -295,13 +293,13 @@ class studentController {
 
   //api/student/bonus
   studentBonus(req, res) {
-    User.find({ username: req.query.username })
-      .then((users, err) => {
+    User.findOne({ username: req.query.username })
+      .then((user, err) => {
         if (err) {
           res.status(500).send("Internal Server Error");
           return;
         }
-        if (users.length === 0) {
+        if (user.length === 0) {
           res.status(404).send("No student in database");
           return;
         }
@@ -312,16 +310,14 @@ class studentController {
         let totalTPA = 0;
 
         //calculate GPA TPA
-        for (let j = 0; j < users[0].history.gpa.length; j++) {
-          totalGPA += parseFloat(
-            users[0].history.gpa[j] * users[0].history.credit[j]
-          );
-          totalTPA += users[0].history.tpa[j];
-          totalCredit += users[0].history.credit[j];
+        for (let j = 0; j < user.history.gpa.length; j++) {
+          totalGPA += parseFloat(user.history.gpa[j] * user.history.credit[j]);
+          totalTPA += user.history.tpa[j];
+          totalCredit += user.history.credit[j];
         }
         totalGPA = totalGPA / totalCredit;
         totalGPA = Math.round(totalGPA * 100) / 100;
-        totalTPA = totalTPA / users[0].history.gpa.length;
+        totalTPA = totalTPA / user.history.gpa.length;
 
         //check bonus
         if (totalGPA >= 3.6 && totalTPA >= 90) {
@@ -351,7 +347,7 @@ class studentController {
 
         //each student in class
         for (let i = 0; i < users.length; i++) {
-          let bonus = "";
+          // let bonus = "";
           let totalGPA = 0;
           let totalCredit = 0;
           let totalTPA = 0;
@@ -371,7 +367,7 @@ class studentController {
 
           //check bonus
           if (totalGPA >= 3.6 && totalTPA >= 90) {
-            bonus += "Sinh viên đủ điều kiện khen thưởng";
+            // bonus += "Sinh viên đủ điều kiện khen thưởng";
             haveBonus = true;
           }
 

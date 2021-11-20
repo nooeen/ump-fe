@@ -3,6 +3,9 @@ import "./StudentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline, Create, Search } from "@mui/icons-material";
 import { useState, useEffect } from "react";
+import { ThemeProvider } from "@mui/material";
+import { theme } from "../../theme";
+import Button from "@mui/material/Button";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
@@ -37,9 +40,26 @@ export default function StudentsList() {
     {
       field: "fullname",
       headerName: "Họ và tên",
-      width: 200,
+      width: 180,
     },
     { field: "class", headerName: "Lớp", width: 180 },
+    { field: "currentGPA", headerName: "GPA", width: 100 },
+    { field: "currentTPA", headerName: "TPA", width: 100 },
+    { field: "credits", headerName: "Tín chỉ", width: 120 },
+    {
+      field: "status",
+      headerName: "Trạng thái",
+      width: 150,
+      renderCell: (params) => {
+        if (params.row.status === "CẢNH BÁO") {
+          return <div className="studentsListWarning">{params.row.status}</div>;
+        } else if (params.row.status === "KHEN THƯỞNG") {
+          return <div className="studentsListBonus">{params.row.status}</div>;
+        } else {
+          return <div>{params.row.status}</div>;
+        }
+      },
+    },
     {
       field: "action",
       headerName: "Hành động",
@@ -73,14 +93,24 @@ export default function StudentsList() {
           <div className="container">
             <Sidebar />
             <div className="studentsList">
+              <ThemeProvider theme={theme}>
+                <Button
+                  href="/login"
+                  variant="outlined"
+                  sx={{ marginTop: "7px" }}
+                >
+                  Tìm hiểu thêm
+                </Button>
+              </ThemeProvider>
+
               <DataGrid
                 columns={columns}
                 rows={data}
                 rowKey="username"
                 autoHeight
                 disableSelectionOnClick
+                rowsPerPageOptions={[10]}
                 pageSize={10}
-                checkboxSelection
               />
             </div>
           </div>
