@@ -1,8 +1,16 @@
 import React from "react";
 import "./Topbar.css";
-import { NotificationsNone, Settings } from "@mui/icons-material";
+import { useHistory } from "react-router-dom";
+import { NotificationsNone, ExitToApp } from "@mui/icons-material";
 
 export default function Topbar() {
+  const history = useHistory();
+
+  const toLogOut = () => {
+    const path = "/logout";
+    history.push(path);
+  };
+
   return (
     <div className="topbar">
       <div className="topbarWrapper">
@@ -10,8 +18,8 @@ export default function Topbar() {
           <span className="logo">UET Management Platform</span>
         </div>
         <div className="topRight">
-          <div className="topbarIconContainer">
-            <Settings />
+          <div className="topbarIconContainer" onClick={toLogOut}>
+            <ExitToApp />
           </div>
           <div className="topbarIconContainer">
             <NotificationsNone />

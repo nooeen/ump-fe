@@ -1,7 +1,7 @@
 import React from "react";
-import "./StudentsList.css";
+import "./StudentsBonusList.css";
 import { DataGrid } from "@mui/x-data-grid";
-import { DeleteOutline, Create, Search } from "@mui/icons-material";
+import { DeleteOutline, Create, Search, Email } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Stack from "@mui/material/Stack";
@@ -9,13 +9,13 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
 
-export default function StudentsList() {
+export default function StudentsBonusList() {
   const [data, setData] = useState([]);
   const [isBusy, setBusy] = useState(true);
   const history = useHistory();
 
   const fetchData = async () => {
-    const result = await StudentService.getStudentsByClass();
+    const result = await StudentService.getBonusStudentsByClass();
     setData(result);
   };
 
@@ -28,6 +28,10 @@ export default function StudentsList() {
   };
 
   const handleDelete = (id) => {
+    console.log(id);
+  };
+
+  const handleEmail = (id) => {
     console.log(id);
   };
 
@@ -52,20 +56,6 @@ export default function StudentsList() {
     { field: "currentTPA", headerName: "TPA", width: 100 },
     { field: "credits", headerName: "Tín chỉ", width: 120 },
     {
-      field: "status",
-      headerName: "Trạng thái",
-      width: 150,
-      renderCell: (params) => {
-        if (params.row.status === "CẢNH BÁO") {
-          return <div className="studentsListWarning">{params.row.status}</div>;
-        } else if (params.row.status === "KHEN THƯỞNG") {
-          return <div className="studentsListBonus">{params.row.status}</div>;
-        } else {
-          return <div>{params.row.status}</div>;
-        }
-      },
-    },
-    {
       field: "action",
       headerName: "Hành động",
       width: 150,
@@ -84,6 +74,10 @@ export default function StudentsList() {
               className="studentsListDelete"
               onClick={() => handleDelete(params.row.id)}
             />
+            <Email
+              className="studentsListEmail"
+              onClick={() => handleEmail(params.row.id)}
+            />
           </>
         );
       },
@@ -99,7 +93,7 @@ export default function StudentsList() {
             <Sidebar />
             <div className="studentsList">
               <Stack direction="row" spacing={2} className="stack">
-                <button class="button">THÊM SINH VIÊN</button>
+                <button class="button">GỬI EMAIL KHEN THƯỞNG</button>
                 <button class="button" onClick={handleRefresh}>
                   LÀM MỚI TRANG
                 </button>

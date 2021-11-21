@@ -33,7 +33,7 @@ export default function Home() {
           <Typography variant="h5" color="inherit" noWrap sx={{ flexGrow: 1 }}>
             UET Management Platform
           </Typography>
-          <Button href="/login" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
+          <Button href="/dashboard" variant="outlined" sx={{ my: 1, mx: 1.5 }}>
             Đăng nhập
           </Button>
         </Toolbar>
@@ -46,7 +46,7 @@ export default function Home() {
           className="homepage-grid"
         >
           <Grid item xs={4}>
-            <h1>Quản lí sinh viên</h1>
+            <h1>Quản lý sinh viên</h1>
             <p>
               UET Management Platform là một nền tảng giúp cố vấn học tập quản
               lý sinh viên thuộc phạm vi quản lý của mình. Với việc xây dựng
@@ -54,8 +54,8 @@ export default function Home() {
               tập sự tiện lợi trong việc quản lý quá trình học tập của sinh
               viên.
             </p>
-            <Button href="/login" variant="outlined" sx={{ marginTop: "7px" }}>
-              Tìm hiểu thêm
+            <Button href="/dashboard" variant="outlined" sx={{ marginTop: "7px" }}>
+              Vào trang quản lý
             </Button>
           </Grid>
           <Grid item xs={8}>
