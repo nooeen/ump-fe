@@ -19,8 +19,8 @@
   margin-right: 10px;
 }
 
-.studentsListView {
-  color: black;
+.studentsListEdit {
+  color: green;
   cursor: pointer;
 }
 
@@ -31,6 +31,11 @@
 
 .studentsListDelete {
   color: red;
+  cursor: pointer;
+}
+
+.studentsListEmail {
+  color: black;
   cursor: pointer;
 }
 

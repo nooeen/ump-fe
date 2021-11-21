@@ -7,6 +7,7 @@ import {
   PersonOutline,
   NotInterested,
   NotificationsNone,
+  Person,
 } from "@mui/icons-material";
 import "./Sidebar.css";
 import { useHistory } from "react-router-dom";
@@ -19,10 +20,25 @@ export default function Sidebar() {
     history.push(path);
   };
 
-  const toStudents = () => {
-    let path = `/student`;
+  const toWarningStudents = () => {
+    let path = "/students/warning";
     history.push(path);
   };
+
+  const toBonusStudents = () => {
+    let path = "/students/bonus";
+    history.push(path);
+  };
+
+  const toStudents = () => {
+    let path = `/students`;
+    history.push(path);
+  };
+
+  const toManager = () => {
+    let path = '/manager';
+    history.push(path);
+  }
 
   return (
     <div className="sidebar">
@@ -37,17 +53,26 @@ export default function Sidebar() {
           </ul>
         </div>
         <div className="sidebarMenu">
+          <h3 className="sidebarTitle">CỐ VẤN</h3>
+          <ul className="sidebarList">
+            <li className="sidebarListItem" onClick={toManager}>
+              <Person className="sidebarIcon" />
+              Cố vấn
+            </li>
+          </ul>
+        </div>
+        <div className="sidebarMenu">
           <h3 className="sidebarTitle">SINH VIÊN</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem" onClick={toStudents}>
               <PersonOutline className="sidebarIcon" />
               Sinh viên
             </li>
-            <li className="sidebarListItem">
+            <li className="sidebarListItem" onClick={toBonusStudents}>
               <GradeOutlined className="sidebarIcon" />
               Tiêu biểu
             </li>
-            <li className="sidebarListItem">
+            <li className="sidebarListItem" onClick={toWarningStudents}>
               <NotInterested className="sidebarIcon" />
               Cảnh cáo
             </li>
