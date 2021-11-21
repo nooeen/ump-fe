@@ -1,9 +1,8 @@
-import "./StudentNew.css";
+import "./StudentAdd.css";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 
-
-export default function StudentNew() {
+export default function StudentAdd() {
   return (
     <div>
       <Topbar />

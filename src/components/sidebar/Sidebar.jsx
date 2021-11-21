@@ -40,6 +40,11 @@ export default function Sidebar() {
     history.push(path);
   }
 
+  const toNotifications = () => {
+    let path = '/notifications';
+    history.push(path);
+  }
+
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
@@ -82,7 +87,7 @@ export default function Sidebar() {
           <h3 className="sidebarTitle">GIAO TIẾP</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem">
-              <NotificationsNone className="sidebarIcon" />
+              <NotificationsNone className="sidebarIcon" onClick={toNotifications}/>
               Thông báo
             </li>
             <li className="sidebarListItem">

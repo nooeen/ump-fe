@@ -11,6 +11,11 @@ export default function Topbar() {
     history.push(path);
   };
 
+  const toNotifications = () => {
+    const path = "/notifications";
+    history.push(path);
+  }
+
   return (
     <div className="topbar">
       <div className="topbarWrapper">
@@ -21,7 +26,7 @@ export default function Topbar() {
           <div className="topbarIconContainer" onClick={toLogOut}>
             <ExitToApp />
           </div>
-          <div className="topbarIconContainer">
+          <div className="topbarIconContainer" onClick={toNotifications}>
             <NotificationsNone />
           </div>
         </div>

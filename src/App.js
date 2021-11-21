@@ -8,7 +8,7 @@ import SignOut from "./pages/SignOut/SignOut";
 import StudentsList from "pages/StudentsList/StudentsList";
 import StudentsWarningList from "pages/StudentsWarningList/StudentsWarningList";
 import StudentsBonusList from "pages/StudentsBonusList/StudentsBonusList";
-import StudentNew from "./pages/StudentNew/StudentNew";
+import StudentAdd from "./pages/StudentAdd/StudentAdd";
 
 function App() {
   return (
@@ -38,8 +38,9 @@ function App() {
         </Route>
         <Route exact path="/student/info"></Route>
         <Route exact path="/student/add">
-          <StudentNew />
+          <StudentAdd />
         </Route>
+        <Route exact path="/notifications"></Route>
       </Switch>
     </Router>
   );
