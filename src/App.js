@@ -4,11 +4,11 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import SignIn from "./pages/SignIn/SignIn";
 import StudentDashboard from "./pages/StudentDashboard/StudentDashboard";
 import Home from "./pages/Home/Home";
-import NewStudent from "./pages/NewStudent/NewStudent";
 import SignOut from "./pages/SignOut/SignOut";
 import StudentsList from "pages/StudentsList/StudentsList";
 import StudentsWarningList from "pages/StudentsWarningList/StudentsWarningList";
 import StudentsBonusList from "pages/StudentsBonusList/StudentsBonusList";
+import StudentNew from "./pages/StudentNew/StudentNew";
 
 function App() {
   return (
@@ -36,8 +36,9 @@ function App() {
         <Route exact path="/students/bonus">
           <StudentsBonusList />
         </Route>
+        <Route exact path="/student/info"></Route>
         <Route exact path="/student/add">
-          <NewStudent />
+          <StudentNew />
         </Route>
       </Switch>
     </Router>
