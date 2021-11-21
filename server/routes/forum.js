@@ -7,6 +7,7 @@ router.post("/store", forumController.store);
 router.get("/post/:id/edit", forumController.edit);
 router.post("/post/:id/update", forumController.update);
 router.post("/post/:id/comment", forumController.comment);
-router.get("/post/:id", forumController.commentForm);
+router.get("/posts", forumController.listPosts);
+router.get("/post/:id", forumController.show);
 
 module.exports = router;

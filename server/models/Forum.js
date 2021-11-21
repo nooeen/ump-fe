@@ -11,8 +11,8 @@ const ForumSchema = new mongoose.Schema(
     created_at: { type: Date , default: Date.now },
     content: { type: String },
     contents: {
-      created_by: {type: String},
-      created_at: {type: Date, default: Date.now },
+      created_by: {type: String },
+      created_at: {type: Date },
       content: {type: String },
     },
   },
