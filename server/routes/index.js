@@ -11,15 +11,16 @@ function route(app) {
     res.header(
       "Access-Control-Allow-Headers",
       "x-access-token, Origin, Content-Type, Accept"
-      );
-      next();
-    });
+    );
+    next();
+  });
   app.use("/api/student", student);
   app.use("/api/manager", manager);
-  app.use("/api/data", data); 
+  app.use("/api/data", data);
   app.use("/api/email", email);
   app.use("/api/forum", forum);
   app.use("/api", auth);
+  app.use("/api", test);
 }
 
 module.exports = route;

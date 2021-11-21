@@ -22,7 +22,7 @@ class StudentService {
     const query = JSON.parse(localStorage.getItem("user"));
     const username = jwt(query.accessToken).username;
     const result = await axios
-      .get(API_URL + "/api/manager/find?username=" + username)
+      .get(API_URL + "/api/manager/find?username=" + username, { headers: authHeader() })
       .then((res) => res.data.classes)
       .then(async (classes) => {
         let result = 0;
@@ -43,7 +43,7 @@ class StudentService {
     const query = JSON.parse(localStorage.getItem("user"));
     const username = jwt(query.accessToken).username;
     const result = await axios
-      .get(API_URL + "/api/manager/find?username=" + username)
+      .get(API_URL + "/api/manager/find?username=" + username, { headers: authHeader() })
       .then((res) => res.data.classes)
       .then(async (classes) => {
         let raw = [];
@@ -100,7 +100,7 @@ class StudentService {
     const query = JSON.parse(localStorage.getItem("user"));
     const username = jwt(query.accessToken).username;
     const result = await axios
-      .get(API_URL + "/api/manager/find?username=" + username)
+      .get(API_URL + "/api/manager/find?username=" + username, { headers: authHeader() })
       .then((res) => res.data.classes)
       .then(async (classes) => {
         let raw = [];
@@ -153,7 +153,7 @@ class StudentService {
     const query = JSON.parse(localStorage.getItem("user"));
     const username = jwt(query.accessToken).username;
     const result = await axios
-      .get(API_URL + "/api/manager/find?username=" + username)
+      .get(API_URL + "/api/manager/find?username=" + username, { headers: authHeader() })
       .then((res) => res.data.classes)
       .then(async (classes) => {
         let raw = [];
