@@ -35,6 +35,18 @@ export default function StudentsList() {
     history.go(0);
   };
 
+  const handleAdd = () => {
+    history.go(0);
+  };
+
+  const handleImport = () => {
+    history.go(0);
+  };
+
+  const handleExport = () => {
+    history.go(0);
+  };
+
   useEffect(() => {
     fetchData();
     setBusy(false);
@@ -100,7 +112,9 @@ export default function StudentsList() {
             <Sidebar />
             <div className="studentsList">
               <Stack direction="row" spacing={2} className="stack">
-                <button className="button">THÊM SINH VIÊN</button>
+                <button className="button" onClick={handleAdd}>THÊM SINH VIÊN</button>
+                <button className="button" onClick={handleImport}>NHẬP DỮ LIỆU</button>
+                <button className="button" onClick={handleExport}>XUẤT DỮ LIỆU</button>
                 <button className="button" onClick={handleRefresh}>
                   LÀM MỚI TRANG
                 </button>

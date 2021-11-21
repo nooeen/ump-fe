@@ -32,6 +32,11 @@ export default function SignIn() {
       });
   };
 
+  const toHome = () => {
+    const path = "/";
+    history.push(path);
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <Grid
@@ -88,6 +93,16 @@ export default function SignIn() {
                     variant="contained"
                   >
                     Đăng nhập
+                  </Button>
+                  <Button
+                    color="secondary"
+                    fullWidth
+                    size="large"
+                    onClick={toHome}
+                    variant="contained"
+                    sx={{marginTop: '5px'}}
+                  >
+                    Quay về trang chủ
                   </Button>
                 </Box>
               </form>
