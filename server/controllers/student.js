@@ -78,7 +78,7 @@ class studentController {
   }
 
   //calculate student GPA
-  studentGpa(req, res) {
+  studentGPA(req, res) {
     User.find({ class: req.query.class })
       .then((users, err) => {
         if (err) {
@@ -114,7 +114,7 @@ class studentController {
   }
 
   //calculate student TPA
-  studentTpa(req, res) {
+  studentTPA(req, res) {
     User.find({ class: req.query.class })
       .then((users, err) => {
         if (err) {
@@ -184,16 +184,14 @@ class studentController {
 
         let warning = "";
         let totalGPA = 0;
-        let totalCredit = 0;
         let totalTPA = 0;
 
         //calculate GPA TPA
         for (let j = 0; j < user.history.gpa.length; j++) {
-          totalGPA += parseFloat(user.history.gpa[j] * user.history.credit[j]);
+          totalGPA += parseFloat(user.history.gpa[j]);
           totalTPA += user.history.tpa[j];
-          totalCredit += user.history.credit[j];
         }
-        totalGPA = totalGPA / totalCredit;
+        totalGPA = totalGPA / user.history.gpa.length;
         totalGPA = Math.round(totalGPA * 100) / 100;
         totalTPA = totalTPA / user.history.gpa.length;
 
@@ -234,19 +232,17 @@ class studentController {
         for (let i = 0; i < users.length; i++) {
           let warning = [];
           let totalGPA = 0;
-          let totalCredit = 0;
           let totalTPA = 0;
           let haveWarn = false;
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.gpa.length; j++) {
             totalGPA += parseFloat(
-              users[i].history.gpa[j] * users[i].history.credit[j]
+              users[i].history.gpa[j]
             );
             totalTPA += users[i].history.tpa[j];
-            totalCredit += users[i].history.credit[j];
           }
-          totalGPA = totalGPA / totalCredit;
+          totalGPA = totalGPA / users[i].history.gpa.length;
           totalGPA = Math.round(totalGPA * 100) / 100;
           totalTPA = totalTPA / users[i].history.gpa.length;
 
@@ -306,16 +302,14 @@ class studentController {
 
         let bonus = "";
         let totalGPA = 0;
-        let totalCredit = 0;
         let totalTPA = 0;
 
         //calculate GPA TPA
         for (let j = 0; j < user.history.gpa.length; j++) {
-          totalGPA += parseFloat(user.history.gpa[j] * user.history.credit[j]);
+          totalGPA += parseFloat(user.history.gpa[j]);
           totalTPA += user.history.tpa[j];
-          totalCredit += user.history.credit[j];
         }
-        totalGPA = totalGPA / totalCredit;
+        totalGPA = totalGPA / user.history.gpa.length;
         totalGPA = Math.round(totalGPA * 100) / 100;
         totalTPA = totalTPA / user.history.gpa.length;
 
@@ -349,19 +343,17 @@ class studentController {
         for (let i = 0; i < users.length; i++) {
           // let bonus = "";
           let totalGPA = 0;
-          let totalCredit = 0;
           let totalTPA = 0;
           let haveBonus = false;
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.gpa.length; j++) {
             totalGPA += parseFloat(
-              users[i].history.gpa[j] * users[i].history.credit[j]
+              users[i].history.gpa[j]
             );
             totalTPA += users[i].history.tpa[j];
-            totalCredit += users[i].history.credit[j];
           }
-          totalGPA = totalGPA / totalCredit;
+          totalGPA = totalGPA / users[i].history.gpa.length;
           totalGPA = Math.round(totalGPA * 100) / 100;
           totalTPA = totalTPA / users[i].history.gpa.length;
 

@@ -31,16 +31,26 @@ router.get(
   studentController.studentBonusList
 );
 
+router.get(
+  "/warn",
+  middlewares.isUser,
+  middlewares.isManager,
+  studentController.studentWarning
+);
+
+router.get(
+  "/bonus",
+  middlewares.isUser,
+  middlewares.isManager,
+  studentController.studentBonus
+);
+
 router.get("/find", studentController.findStudent);
 
-router.get("/calGPA", studentController.studentGpa);
+router.get("/calGPA", studentController.studentGPA);
 
-router.get("/calTPA", studentController.studentTpa);
+router.get("/calTPA", studentController.studentTPA);
 
 router.get("/credits", studentController.studentCredit);
-
-router.get("/warn", studentController.studentWarning);
-
-router.get("/bonus", studentController.studentBonus);
 
 module.exports = router;

@@ -33,9 +33,8 @@ class emailController {
     const htmlContent =
       "<p>Xin ch&agrave;o,</p>\n<p>Đ&acirc;y l&agrave; tin nhắn cảnh b&aacute;o học vụ tự động đến từ hệ thống UET Management Platform.</p>\n<p><b>Sinh vi&ecirc;n&nbsp;" +
       username +
-      " đã bị cảnh báo vì lý do " +
+      " đã bị cảnh báo vì lý do: </b></p> " +
       context +
-      "</b></p>" +
       "<p></p>\n<p>UET Management Platform gửi tới qu&yacute; phụ huynh!</p>";
     const mailData = {
       from: "uetmanagementplatform@gmail.com",

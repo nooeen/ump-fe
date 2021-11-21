@@ -5,9 +5,13 @@ import { DeleteOutline, Create, Search, Email } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Stack from "@mui/material/Stack";
+import Snackbar from "@mui/material/Snackbar";
+import IconButton from "@mui/material/IconButton";
+import CloseIcon from "@mui/icons-material/Close";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
+import EmailService from "../../services/email.service";
 
 export default function StudentsBonusList() {
   const [data, setData] = useState([]);
@@ -27,21 +31,48 @@ export default function StudentsBonusList() {
     console.log(id);
   };
 
+  const handleRefresh = () => {
+    history.go(0);
+  };
+
   const handleDelete = (id) => {
     console.log(id);
   };
 
-  const handleEmail = (id) => {
-    console.log(id);
+  const [emailSnackbar, setEmailSnackbar] = useState(false);
+
+  const handleEmailSnackbar = () => {
+    setEmailSnackbar(false);
   };
 
-  const handleRefresh = () => {
-    history.go(0);
+  const emailSnackbarAction = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleEmailSnackbar}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
+
+  const handleEmail = async (id) => {
+    await EmailService.sendBonusEmail(id);
+    setEmailSnackbar(true);
+  };
+
+  const handleEmailAll = async () => {
+    data.forEach((e) => {
+      handleEmail(e.username);
+    });
   };
 
   useEffect(() => {
     fetchData();
     setBusy(false);
+    return;
   }, []);
 
   const columns = [
@@ -93,8 +124,10 @@ export default function StudentsBonusList() {
             <Sidebar />
             <div className="studentsList">
               <Stack direction="row" spacing={2} className="stack">
-                <button class="button">GỬI EMAIL KHEN THƯỞNG</button>
-                <button class="button" onClick={handleRefresh}>
+                <button className="button" onClick={handleEmailAll}>
+                  GỬI EMAIL KHEN THƯỞNG
+                </button>
+                <button className="button" onClick={handleRefresh}>
                   LÀM MỚI TRANG
                 </button>
               </Stack>
@@ -106,6 +139,13 @@ export default function StudentsBonusList() {
                 disableSelectionOnClick
                 rowsPerPageOptions={[10]}
                 pageSize={10}
+              />
+              <Snackbar
+                open={emailSnackbar}
+                autoHideDuration={6000}
+                onClose={handleEmailSnackbar}
+                message="Đã gửi email!"
+                action={emailSnackbarAction}
               />
             </div>
           </div>

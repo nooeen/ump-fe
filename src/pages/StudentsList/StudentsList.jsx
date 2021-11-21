@@ -38,6 +38,7 @@ export default function StudentsList() {
   useEffect(() => {
     fetchData();
     setBusy(false);
+    return;
   }, []);
 
   const columns = [
@@ -99,8 +100,8 @@ export default function StudentsList() {
             <Sidebar />
             <div className="studentsList">
               <Stack direction="row" spacing={2} className="stack">
-                <button class="button">THÊM SINH VIÊN</button>
-                <button class="button" onClick={handleRefresh}>
+                <button className="button">THÊM SINH VIÊN</button>
+                <button className="button" onClick={handleRefresh}>
                   LÀM MỚI TRANG
                 </button>
               </Stack>
