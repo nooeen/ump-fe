@@ -10,33 +10,33 @@ export default function StudentAdd() {
         <Sidebar />
         <div className="dashboard">
           <div className="newStudent">
-            <h1 className="newStudentTitle">New User</h1>
+            <h1 className="newStudentTitle">Thêm sinh viên</h1>
             <form className="newStudentForm">
               <div className="newStudentItem">
-                <label>Username</label>
-                <input type="text" placeholder="john" />
-              </div>
-              <div className="newStudentItem">
-                <label>Full Name</label>
-                <input type="text" placeholder="John Smith" />
-              </div>
-              <div className="newStudentItem">
-                <label>Email</label>
-                <input type="email" placeholder="john@gmail.com" />
+                <label>Mã sinh viên</label>
+                <input type="text" placeholder="19021000" />
               </div>
               <div className="newStudentItem">
                 <label>Password</label>
                 <input type="password" placeholder="password" />
               </div>
               <div className="newStudentItem">
-                <label>Phone</label>
-                <input type="text" placeholder="+1 123 456 78" />
+                <label>Họ và tên</label>
+                <input type="text" placeholder="Nguyễn Văn A" />
               </div>
               <div className="newStudentItem">
-                <label>Address</label>
-                <input type="text" placeholder="New York | USA" />
+                <label>Lớp</label>
+                <input type="text" placeholder="QH-2020-I/CQ-E" />
               </div>
               <div className="newStudentItem">
+                <label>Số điện thoại</label>
+                <input type="text" placeholder="0966779508" />
+              </div>
+              <div className="newStudentItem">
+                <label>Địa chỉ</label>
+                <input type="text" placeholder="Thôn 2, Hoàng Cương, Thanh Ba, Phú Thọ" />
+              </div>
+              {/* <div className="newStudentItem">
                 <label>Gender</label>
                 <div className="newStudentGender">
                   <input type="radio" name="gender" id="male" value="male" />
@@ -51,15 +51,15 @@ export default function StudentAdd() {
                   <input type="radio" name="gender" id="other" value="other" />
                   <label for="other">Other</label>
                 </div>
-              </div>
-              <div className="newStudentItem">
+              </div> */}
+              {/* <div className="newStudentItem">
                 <label>Active</label>
                 <select className="newStudentSelect" name="active" id="active">
                   <option value="yes">Yes</option>
                   <option value="no">No</option>
                 </select>
-              </div>
-              <button className="newStudentButton">Create</button>
+              </div> */}
+              <button className="newStudentButton">Thêm sinh viên</button>
             </form>
           </div>
         </div>

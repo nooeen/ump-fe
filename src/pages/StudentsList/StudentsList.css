@@ -35,7 +35,10 @@
 }
 
 .studentsListWarning {
-  color: red;
+  border-color: coral;
+  border-radius: 0.25rem;
+  color: white;
+  /* color: red; */
 }
 
 .studentsListBonus {

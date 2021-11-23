@@ -5,7 +5,8 @@ import { DeleteOutline, Create, Search } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Stack from "@mui/material/Stack";
-import CircularProgress from '@mui/material/CircularProgress';
+import Chip from "@mui/material/Chip";
+import CircularProgress from "@mui/material/CircularProgress";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
@@ -37,7 +38,8 @@ export default function StudentsList() {
   };
 
   const handleAdd = () => {
-    history.go(0);
+    const path = "/student/add";
+    history.push(path);
   };
 
   const handleImport = () => {
@@ -68,14 +70,14 @@ export default function StudentsList() {
     {
       field: "status",
       headerName: "Trạng thái",
-      width: 150,
+      width: 140,
       renderCell: (params) => {
         if (params.row.status === "CẢNH BÁO") {
-          return <div className="studentsListWarning">{params.row.status}</div>;
+          return <Chip label="Cảnh báo" color="error"/>;
         } else if (params.row.status === "KHEN THƯỞNG") {
-          return <div className="studentsListBonus">{params.row.status}</div>;
+          return <Chip label="Khen thưởng" color="primary"/>;
         } else {
-          return <div>{params.row.status}</div>;
+          return <Chip label="Bình thường" color="default"/>;
         }
       },
     },
@@ -106,16 +108,24 @@ export default function StudentsList() {
 
   return (
     <div>
-      {isBusy ? <CircularProgress /> : (
+      {isBusy ? (
+        <CircularProgress />
+      ) : (
         <div>
           <Topbar />
           <div className="container">
             <Sidebar />
             <div className="studentsList">
               <Stack direction="row" spacing={2} className="stack">
-                <button className="button" onClick={handleAdd}>THÊM SINH VIÊN</button>
-                <button className="button" onClick={handleImport}>NHẬP DỮ LIỆU</button>
-                <button className="button" onClick={handleExport}>XUẤT DỮ LIỆU</button>
+                <button className="button" onClick={handleAdd}>
+                  THÊM SINH VIÊN
+                </button>
+                <button className="button" onClick={handleImport}>
+                  NHẬP DỮ LIỆU
+                </button>
+                <button className="button" onClick={handleExport}>
+                  XUẤT DỮ LIỆU
+                </button>
                 <button className="button" onClick={handleRefresh}>
                   LÀM MỚI TRANG
                 </button>
