@@ -4,11 +4,12 @@ import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline, Create, Search, Email } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
-import CircularProgress from '@mui/material/CircularProgress';
+import CircularProgress from "@mui/material/CircularProgress";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
@@ -21,15 +22,13 @@ export default function StudentsBonusList() {
 
   const fetchData = async () => {
     const result = await StudentService.getBonusStudentsByClass();
-    setData(result);
+    await setData(result);
+    await setBusy(false);
   };
 
-  const handleView = (id) => {
-    console.log(id);
-  };
-
-  const handleEdit = (id) => {
-    console.log(id);
+  const handleViewEdit = (id) => {
+    const path = "/student/info?username=" + id;
+    history.push(path);
   };
 
   const handleRefresh = () => {
@@ -72,7 +71,6 @@ export default function StudentsBonusList() {
 
   useEffect(() => {
     fetchData();
-    setBusy(false);
     return;
   }, []);
 
@@ -96,11 +94,11 @@ export default function StudentsBonusList() {
           <>
             <Search
               className="studentsListView"
-              onClick={() => handleView(params.row.id)}
+              onClick={() => handleViewEdit(params.row.id)}
             />
             <Create
               className="studentsListEdit"
-              onClick={() => handleEdit(params.row.id)}
+              onClick={() => handleViewEdit(params.row.id)}
             />
             <DeleteOutline
               className="studentsListDelete"
@@ -118,7 +116,20 @@ export default function StudentsBonusList() {
 
   return (
     <div>
-      {isBusy ? <CircularProgress /> : (
+      {isBusy ? (
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "95vh" }}
+        >
+          <Stack alignItems="center">
+            <CircularProgress />
+          </Stack>
+        </Grid>
+      ) : (
         <div>
           <Topbar />
           <div className="container">

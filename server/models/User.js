@@ -3,26 +3,34 @@ const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
 
-const historySchema = new mongoose.Schema({
-  term: {type: String},
-  gpa: {type: Number},
-  tpa: {type: Number},
-  credit: {type: Number}
-}, { _id: false });
+const historySchema = new mongoose.Schema(
+  {
+    term: { type: String },
+    gpa: { type: Number },
+    tpa: { type: Number },
+    credit: { type: Number },
+  },
+  { _id: false }
+);
 
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   role: { type: String, required: true },
-  fullname: {type: String},
-  dob: {type: String},
+  fullname: { type: String },
+  dob: { type: String },
   student_phone: { type: String },
   parents_phone: { type: String },
   address: { type: String },
   avatar: { type: String },
-  history: [historySchema],
-  class: { type: String},
-  hasPaid: {type: Boolean}
+  history: {
+    term: { type: String },
+    gpa: { type: Number },
+    tpa: { type: Number },
+    credit: { type: Number },
+  },
+  class: { type: String },
+  hasPaid: { type: Boolean },
 });
 
 UserSchema.pre("save", function (next) {

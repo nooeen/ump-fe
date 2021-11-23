@@ -37,6 +37,12 @@
   border-radius: 5px;
 }
 
+.newStudentItem > select {
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
 .newStudentGender > input {
   margin-top: 15px;
 }

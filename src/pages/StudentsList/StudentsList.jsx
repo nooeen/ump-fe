@@ -4,6 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { DeleteOutline, Create, Search } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
+import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Chip from "@mui/material/Chip";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -18,19 +19,8 @@ export default function StudentsList() {
 
   const fetchData = async () => {
     const result = await StudentService.getStudentsByClass();
-    setData(result);
-  };
-
-  const handleView = (id) => {
-    console.log(id);
-  };
-
-  const handleEdit = (id) => {
-    console.log(id);
-  };
-
-  const handleDelete = (id) => {
-    console.log(id);
+    await setData(result);
+    await setBusy(false);
   };
 
   const handleRefresh = () => {
@@ -40,6 +30,15 @@ export default function StudentsList() {
   const handleAdd = () => {
     const path = "/student/add";
     history.push(path);
+  };
+
+  const handleViewEdit = (id) => {
+    const path = "/student/info?username=" + id;
+    history.push(path);
+  };
+
+  const handleDelete = (id) => {
+    console.log(id);
   };
 
   const handleImport = () => {
@@ -52,7 +51,6 @@ export default function StudentsList() {
 
   useEffect(() => {
     fetchData();
-    setBusy(false);
     return;
   }, []);
 
@@ -73,11 +71,11 @@ export default function StudentsList() {
       width: 140,
       renderCell: (params) => {
         if (params.row.status === "CẢNH BÁO") {
-          return <Chip label="Cảnh báo" color="error"/>;
+          return <Chip label="Cảnh báo" color="error" />;
         } else if (params.row.status === "KHEN THƯỞNG") {
-          return <Chip label="Khen thưởng" color="primary"/>;
+          return <Chip label="Khen thưởng" color="primary" />;
         } else {
-          return <Chip label="Bình thường" color="default"/>;
+          return <Chip label="Bình thường" color="default" />;
         }
       },
     },
@@ -90,11 +88,11 @@ export default function StudentsList() {
           <>
             <Search
               className="studentsListView"
-              onClick={() => handleView(params.row.id)}
+              onClick={() => handleViewEdit(params.row.id)}
             />
             <Create
               className="studentsListEdit"
-              onClick={() => handleEdit(params.row.id)}
+              onClick={() => handleViewEdit(params.row.id)}
             />
             <DeleteOutline
               className="studentsListDelete"
@@ -109,7 +107,18 @@ export default function StudentsList() {
   return (
     <div>
       {isBusy ? (
-        <CircularProgress />
+        <Grid
+          container
+          spacing={0}
+          direction="column"
+          alignItems="center"
+          justifyContent="center"
+          style={{ minHeight: "95vh" }}
+        >
+          <Stack alignItems="center">
+            <CircularProgress />
+          </Stack>
+        </Grid>
       ) : (
         <div>
           <Topbar />

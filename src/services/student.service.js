@@ -5,6 +5,15 @@ import jwt from "jwt-decode";
 const API_URL = process.env.REACT_APP_URL;
 
 class StudentService {
+  async getStudent(username) {
+    const result = await axios
+      .get(API_URL + "/api/student/find?username=" + username, {
+        headers: authHeader(),
+      })
+      .then((res) => res.data);
+    return result;
+  }
+
   async getAllStudents() {
     const raw = await axios
       .get(API_URL + "/api/student/listAll", { headers: authHeader() })

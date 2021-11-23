@@ -9,6 +9,7 @@ import StudentsList from "pages/StudentsList/StudentsList";
 import StudentsWarningList from "pages/StudentsWarningList/StudentsWarningList";
 import StudentsBonusList from "pages/StudentsBonusList/StudentsBonusList";
 import StudentAdd from "./pages/StudentAdd/StudentAdd";
+import StudentInfo from "pages/StudentInfo/StudentInfo";
 
 function App() {
   return (
@@ -36,7 +37,9 @@ function App() {
         <Route exact path="/students/bonus">
           <StudentsBonusList />
         </Route>
-        <Route exact path="/student/info"></Route>
+        <Route exact path="/student/info">
+          <StudentInfo />
+        </Route>
         <Route exact path="/student/add">
           <StudentAdd />
         </Route>

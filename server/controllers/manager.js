@@ -46,7 +46,8 @@ class managerController {
   }
 
   listManagerClasses(req, res) {
-    User.findOne({ username: req.query.username }).select({classes: 1})
+    User.findOne({ username: req.query.username })
+      .select({ classes: 1, _id: 0 })
       .then((user, err) => {
         if (err) {
           res.status(500).send("Internal Server Error");

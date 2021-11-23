@@ -1,7 +1,6 @@
 const User = require("../models/User.js");
 
 class studentController {
-
   add(req, res) {
     const student = new User();
     student.username = req.body.username;
@@ -14,35 +13,35 @@ class studentController {
     student.parents_phone = req.body.parents_phone;
     student.avatar = req.body.avatar;
     student.hasPaid = false;
-    
+
     var his = new Array();
-    var yearStr = '20' + student.username.substring(0,2);
+    var yearStr = "20" + student.username.substring(0, 2);
     var year = parseInt(yearStr);
-    var now= parseInt(new Date().getFullYear());
+    var now = parseInt(new Date().getFullYear());
     var noy = now - year;
     now = now % 100;
-    for (let i=0; i<noy; i++){
+    for (let i = 0; i < noy; i++) {
       var history1 = new Object();
-      history1.term = (now-noy+i) + '_' + (now-noy+i+1) + '_' + '1';
+      history1.term = now - noy + i + "_" + (now - noy + i + 1) + "_" + "1";
       history1.gpa = 0;
       history1.tpa = 0;
       history1.credit = 0;
       var history2 = new Object();
-      history2.term = (now-noy+i) + '_' + (now-noy+i+1) + '_' + '2';
+      history2.term = now - noy + i + "_" + (now - noy + i + 1) + "_" + "2";
       history2.gpa = 0;
       history2.tpa = 0;
       history2.credit = 0;
       his.push(history1);
       his.push(history2);
-
     }
     student.history = his;
     student
-          .save()
-          .then(() => res.json(student))
-          .catch((error) => {res.status(200).send("Username already exists");});
+      .save()
+      .then(() => res.json(student))
+      .catch((error) => {
+        res.status(200).send("Username already exists");
+      });
   }
-
 
   // list students within class with role student
   studentList(req, res) {
@@ -98,22 +97,13 @@ class studentController {
 
   // find student with username and fullname
   findStudent(req, res) {
-    User.find({ username: req.query.username, fullname: req.query.fullname })
-      .then((users, err) => {
+    User.findOne({ username: req.query.username })
+      .then((user, err) => {
         if (err) {
           res.status(500).send("Internal Server Error");
           return;
         }
-        users[0] = {
-          _id: users[0]._id,
-          username: users[0].username,
-          fullname: users[0].fullname,
-          dob: users[0].dob,
-          history: users[0].history,
-          class: users[0].class,
-          hasPaid: users[0].hasPaid,
-        };
-        res.status(200).json(users);
+        res.status(200).json(user);
       })
       .catch(() => {
         res.status(404).send("No student match the name");
@@ -280,9 +270,7 @@ class studentController {
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.gpa.length; j++) {
-            totalGPA += parseFloat(
-              users[i].history.gpa[j]
-            );
+            totalGPA += parseFloat(users[i].history.gpa[j]);
             totalTPA += users[i].history.tpa[j];
           }
           totalGPA = totalGPA / users[i].history.gpa.length;
@@ -391,9 +379,7 @@ class studentController {
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.gpa.length; j++) {
-            totalGPA += parseFloat(
-              users[i].history.gpa[j]
-            );
+            totalGPA += parseFloat(users[i].history.gpa[j]);
             totalTPA += users[i].history.tpa[j];
           }
           totalGPA = totalGPA / users[i].history.gpa.length;
