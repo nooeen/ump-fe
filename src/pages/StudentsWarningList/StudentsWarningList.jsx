@@ -8,6 +8,7 @@ import Stack from "@mui/material/Stack";
 import Snackbar from "@mui/material/Snackbar";
 import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
+import CircularProgress from '@mui/material/CircularProgress';
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
@@ -119,7 +120,7 @@ export default function StudentsWarningList() {
 
   return (
     <div>
-      {isBusy ? null : (
+      {isBusy ? <CircularProgress /> : (
         <div>
           <Topbar />
           <div className="container">

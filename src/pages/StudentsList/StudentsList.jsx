@@ -5,6 +5,7 @@ import { DeleteOutline, Create, Search } from "@mui/icons-material";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import Stack from "@mui/material/Stack";
+import CircularProgress from '@mui/material/CircularProgress';
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
@@ -105,7 +106,7 @@ export default function StudentsList() {
 
   return (
     <div>
-      {isBusy ? null : (
+      {isBusy ? <CircularProgress /> : (
         <div>
           <Topbar />
           <div className="container">
