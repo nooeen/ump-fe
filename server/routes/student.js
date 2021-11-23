@@ -5,6 +5,8 @@ const middlewares = require("../middlewares");
 
 router.post(
   "/add",
+  middlewares.isUser,
+  middlewares.isManager,
   studentController.add
 );
 
