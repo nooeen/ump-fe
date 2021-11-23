@@ -9,6 +9,10 @@ const UserSchema = new mongoose.Schema({
   role: { type: String, required: true },
   fullname: {type: String},
   dob: {type: String},
+  student_phone: { type: String },
+  parents_phone: { type: String },
+  address: { type: String },
+  avatar: { type: String },
   history: {
     term: {type: String},
     gpa: {type: Number},

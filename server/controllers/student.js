@@ -1,6 +1,26 @@
 const User = require("../models/User.js");
 
 class studentController {
+
+  add(req, res) {
+    const student = new Student();
+    student.username = req.body.username;
+    student.password = req.body.password;
+    student.role = "student";
+    student.fullname = req.body.fullname;
+    student.dob = req.body.dob;
+    student.class = req.body.class;
+    student.student_phone = req.body.student_phone;
+    student.parents_phone = req.body.parents_phone;
+    student.avatar = req.body.avatar;
+    student.hasPaid = req.body.hasPaid;
+    student
+          .save()
+          .then(() => res.json(student))
+          .catch((error) => {});
+  }
+
+
   // list students within class with role student
   studentList(req, res) {
     User.find({ class: req.query.class })
