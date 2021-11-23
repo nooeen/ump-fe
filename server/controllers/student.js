@@ -3,7 +3,7 @@ const User = require("../models/User.js");
 class studentController {
 
   add(req, res) {
-    const student = new Student();
+    const student = new User();
     student.username = req.body.username;
     student.password = req.body.password;
     student.role = "student";
@@ -13,11 +13,34 @@ class studentController {
     student.student_phone = req.body.student_phone;
     student.parents_phone = req.body.parents_phone;
     student.avatar = req.body.avatar;
-    student.hasPaid = req.body.hasPaid;
+    student.hasPaid = false;
+    
+    var his = new Array();
+    var yearStr = '20' + student.username.substring(0,2);
+    var year = parseInt(yearStr);
+    var now= parseInt(new Date().getFullYear());
+    var noy = now - year;
+    now = now % 100;
+    for (let i=0; i<noy; i++){
+      var history1 = new Object();
+      history1.term = (now-noy+i) + '_' + (now-noy+i+1) + '_' + '1';
+      history1.gpa = 0;
+      history1.tpa = 0;
+      history1.credit = 0;
+      var history2 = new Object();
+      history2.term = (now-noy+i) + '_' + (now-noy+i+1) + '_' + '2';
+      history2.gpa = 0;
+      history2.tpa = 0;
+      history2.credit = 0;
+      his.push(history1);
+      his.push(history2);
+
+    }
+    student.history = his;
     student
           .save()
           .then(() => res.json(student))
-          .catch((error) => {});
+          .catch((error) => {res.status(200).send("Username already exists");});
   }
 
 

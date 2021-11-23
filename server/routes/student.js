@@ -3,6 +3,11 @@ const router = express.Router();
 const studentController = require("../controllers/student");
 const middlewares = require("../middlewares");
 
+router.post(
+  "/add",
+  studentController.add
+);
+
 router.get(
   "/listAll",
   middlewares.isUser,
