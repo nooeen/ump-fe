@@ -15,9 +15,9 @@ const storage = multer.diskStorage({
 
 const uploads = multer({storage:storage});
 
-router.get('/api/data/import', dataController.import);
-router.post('/api/data/importdata', uploads.single('csv'), dataController.importData);
-router.get('/api/data/export', dataController.export);
-router.post('/api/data/exportdata', dataController.exportData);
+router.get('/import', dataController.import);
+router.post('/importdata', uploads.single('csv'), dataController.importData);
+router.get('/export', dataController.export);
+router.get('/exportdata', dataController.exportData);
 
 module.exports = router;

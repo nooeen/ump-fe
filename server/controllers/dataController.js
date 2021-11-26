@@ -29,34 +29,23 @@ class DataController {
 
     // [POST] /api/data/importData
     importData(req,res,next){
-            // .fromFile(req.file.path)
-            // .then((jsonObj)=>{
-            //   console.log(jsonObj);
-            //   csvModel.insertMany(jsonObj,(err,data)=>{
-            //     if(err){
-            //       console.log(err);
-            //     }else{
-            //       res.redirect('/api/data/import');
-            //     }
-            //   });
-            // });
-
-        fs.readFile(req.file.path, 'utf8', function (err, data) {
-            if (err) throw err;
-            console.log(data);
-            var json = JSON.parse(data);
-
-            csvModel.insertMany(json, function (err) {
-                if(err){
-                  console.log(err);
-                }else{
-                  res.redirect('/api/data/import');
-                }
-            });
-        });
+        // fs.readFile(req.file.path, 'utf8', function (err, data) {
+        //     if (err) throw err;
+        //     console.log(data);
+        //     var json = JSON.parse(data);
+        //
+        //     csvModel.insertMany(json, function (err) {
+        //         if(err){
+        //           console.log(err);
+        //         }else{
+        //           res.redirect('/api/data/import');
+        //         }
+        //     });
+        // });
+        res.json("importdata");
     }
 
-    // [POST] /api/data/exportdata
+    // [GET] /api/data/exportdata
     exportData(req,res,next){
         var wb = XLSX.utils.book_new(); //new workbook
         csvModel.find((err,data)=>{
