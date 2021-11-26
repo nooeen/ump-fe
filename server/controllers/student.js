@@ -14,20 +14,20 @@ class studentController {
     student.avatar = req.body.avatar;
     student.hasPaid = false;
 
-    var his = new Array();
+    var his = [];
     var yearStr = "20" + student.username.substring(0, 2);
     var year = parseInt(yearStr);
     var now = parseInt(new Date().getFullYear());
     var noy = now - year;
     now = now % 100;
     for (let i = 0; i < noy; i++) {
-      var history1 = new Object();
-      history1.term = now - noy + i + "_" + (now - noy + i + 1) + "_" + "1";
+      var history1 = {};
+      history1.term = now - noy + i + "_" + (now - noy + i + 1) + "_1";
       history1.gpa = 0;
       history1.tpa = 0;
       history1.credit = 0;
-      var history2 = new Object();
-      history2.term = now - noy + i + "_" + (now - noy + i + 1) + "_" + "2";
+      var history2 = {};
+      history2.term = now - noy + i + "_" + (now - noy + i + 1) + "_2";
       history2.gpa = 0;
       history2.tpa = 0;
       history2.credit = 0;

@@ -9,6 +9,7 @@ export default function StudentAdd() {
   const history = useHistory();
   const [classes, setClasses] = useState([]);
   const [isBusy, setBusy] = useState(true);
+  const [isComplete, setComplete] = useState(true);
 
   const fetchData = async () => {
     const data = await ManagerService.getManagerClasses();
@@ -31,6 +32,20 @@ export default function StudentAdd() {
     const parent_phone = event.target.parent_phone.value;
     const student_address = event.target.address.value;
     const student_avatar = event.target.avatar.value;
+    if (
+      !student_username ||
+      !student_password ||
+      !student_fullname ||
+      !student_class ||
+      !student_dob ||
+      !student_phone ||
+      !parent_phone ||
+      !student_address ||
+      !student_avatar
+    ) {
+      setComplete(false);
+      console.log(isComplete);
+    }
     console.log(
       student_username,
       student_password,

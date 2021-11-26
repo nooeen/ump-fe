@@ -14,21 +14,17 @@ export default function FeaturedInfo(props) {
         <span className="featuredTitle">Điểm trung bình toàn trường</span>
         <div className="featuredMoneyContainer">
           <span className="featuredMoney">7.2</span>
-          <span className="featuredMoneyRate">
-            -1.4 <ArrowDownward className="featuredIcon negative"/>
-          </span>
         </div>
-        <span className="featuredSub">So với kỳ trước</span>
       </div>
       <div className="featuredItem">
         <span className="featuredTitle">Điểm trung bình lớp</span>
         <div className="featuredMoneyContainer">
           <span className="featuredMoney">8.0</span>
           <span className="featuredMoneyRate">
-            +2.4 <ArrowUpward className="featuredIcon"/>
+            +0.8 <ArrowUpward className="featuredIcon" />
           </span>
         </div>
-        <span className="featuredSub">So với kỳ trước</span>
+        <span className="featuredSub">So với điểm toàn trường</span>
       </div>
     </div>
   );
