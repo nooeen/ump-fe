@@ -42,13 +42,13 @@ class studentController {
       his.push(history2);
     }
     student.history = his;
-    res.json(student);
-    // student
-    //   .save()
-    //   .then(() => res.json(student))
-    //   .catch((error) => {
-    //     res.status(200).send("Username already exists");
-    //   });
+    // res.json(student);
+    student
+      .save()
+      .then(() => res.json(student))
+      .catch((error) => {
+        res.status(200).send("Username already exists");
+      });
   }
 
   // list students within class with role student
