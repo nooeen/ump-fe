@@ -18,6 +18,7 @@ const UserSchema = new mongoose.Schema({
     gpa: { type: Number },
     tpa: { type: Number },
     credit: { type: Number },
+    _id : false,
   }],
   class: { type: String },
   hasPaid: { type: Boolean },
