@@ -1,5 +1,12 @@
 const User = require("../models/User.js");
 
+
+function rand_between(min, max) {  
+  return Math.floor(
+    Math.random() * (max - min + 1) + min
+  )
+}
+
 class studentController {
   add(req, res) {
     const student = new User();
@@ -23,24 +30,25 @@ class studentController {
     for (let i = 0; i < noy; i++) {
       var history1 = {};
       history1.term = now - noy + i + "_" + (now - noy + i + 1) + "_1";
-      history1.gpa = 0;
-      history1.tpa = 0;
-      history1.credit = 0;
+      history1.gpa = rand_between(0, 40)*1.0/10;
+      history1.tpa = rand_between(0, 100);
+      history1.credit = rand_between(10, 20);
       var history2 = {};
       history2.term = now - noy + i + "_" + (now - noy + i + 1) + "_2";
-      history2.gpa = 0;
-      history2.tpa = 0;
-      history2.credit = 0;
+      history2.gpa = rand_between(0, 40)*1.0/10;
+      history2.tpa = rand_between(0, 100);
+      history2.credit = rand_between(10, 20);
       his.push(history1);
       his.push(history2);
     }
     student.history = his;
-    student
-      .save()
-      .then(() => res.json(student))
-      .catch((error) => {
-        res.status(200).send("Username already exists");
-      });
+    res.json(student);
+    // student
+    //   .save()
+    //   .then(() => res.json(student))
+    //   .catch((error) => {
+    //     res.status(200).send("Username already exists");
+    //   });
   }
 
   // list students within class with role student
