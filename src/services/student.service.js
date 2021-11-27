@@ -68,13 +68,14 @@ class StudentService {
             .then((res) => res.data);
           raw = raw.concat(students);
         }
+        // console.log(raw);
         for (let i = 0; i < raw.length; i++) {
           let totalGPA = 0;
           let totalTPA = 0;
           let totalCredits = 0;
           for (let j = 0; j < raw[i].history.length; j++) {
             totalTPA += raw[i].history[j].tpa;
-            totalGPA += parseFloat(raw[i].history[j].gpa.$numberDecimal);
+            totalGPA += parseFloat(raw[i].history[j].gpa);
             totalCredits += raw[i].history[j].credit;
           }
           raw[i].currentGPA = totalGPA / raw[i].history.length;
@@ -134,7 +135,7 @@ class StudentService {
           let totalCredits = 0;
           for (let j = 0; j < raw[i].history.length; j++) {
             totalTPA += raw[i].history[j].tpa;
-            totalGPA += parseFloat(raw[i].history[j].gpa.$numberDecimal);
+            totalGPA += parseFloat(raw[i].history[j].gpa);
             totalCredits += raw[i].history[j].credit;
           }
           raw[i].currentGPA = totalGPA / raw[i].history.length;
@@ -189,7 +190,7 @@ class StudentService {
           let totalCredits = 0;
           for (let j = 0; j < raw[i].history.length; j++) {
             totalTPA += raw[i].history[j].tpa;
-            totalGPA += parseFloat(raw[i].history[j].gpa.$numberDecimal);
+            totalGPA += parseFloat(raw[i].history[j].gpa);
             totalCredits += raw[i].history[j].credit;
           }
           raw[i].currentGPA = totalGPA / raw[i].history.length;
