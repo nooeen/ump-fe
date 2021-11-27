@@ -6,6 +6,11 @@ import { NotificationsNone, ExitToApp } from "@mui/icons-material";
 export default function Topbar() {
   const history = useHistory();
 
+  const toHome = () => {
+    const path = "/";
+    history.push(path);
+  };
+
   const toLogOut = () => {
     const path = "/logout";
     history.push(path);
@@ -14,13 +19,15 @@ export default function Topbar() {
   const toNotifications = () => {
     const path = "/notifications";
     history.push(path);
-  }
+  };
 
   return (
     <div className="topbar">
       <div className="topbarWrapper">
         <div className="topLeft">
-          <span className="logo">UET Management Platform</span>
+          <span className="logo" onClick={toHome}>
+            UET Management Platform
+          </span>
         </div>
         <div className="topRight">
           <div className="topbarIconContainer" onClick={toLogOut}>
