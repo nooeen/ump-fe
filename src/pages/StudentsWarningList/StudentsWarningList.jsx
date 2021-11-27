@@ -83,10 +83,15 @@ export default function StudentsWarningList() {
       headerName: "Họ và tên",
       width: 180,
     },
-    { field: "class", headerName: "Lớp", width: 180 },
-    { field: "currentGPA", headerName: "GPA", width: 100 },
-    { field: "currentTPA", headerName: "TPA", width: 100 },
-    { field: "credits", headerName: "Tín chỉ", width: 120 },
+    { field: "class", headerName: "Lớp", width: 150 },
+    { field: "currentGPA", headerName: "GPA", width: 100, hide: true },
+    { field: "currentTPA", headerName: "TPA", width: 100, hide: true },
+    { field: "credits", headerName: "Tín chỉ", width: 120, hide: true },
+    {
+      field: "warningcontext",
+      headerName: "Lý do",
+      width: 480,
+    },
     {
       field: "action",
       headerName: "Hành động",
@@ -115,6 +120,8 @@ export default function StudentsWarningList() {
       },
     },
   ];
+
+  console.log(data);
 
   return (
     <div>
@@ -146,6 +153,10 @@ export default function StudentsWarningList() {
                 </button>
               </Stack>
               <DataGrid
+                style={{
+                  whiteSpace: "normal",
+                  wordWrap: "break-word",
+                }}
                 columns={columns}
                 rows={data}
                 rowKey="username"

@@ -10,7 +10,23 @@ class StudentService {
       .get(API_URL + "/api/student/find?username=" + username, {
         headers: authHeader(),
       })
-      .then((res) => res.data);
+      .then((res) => res.data)
+      .then((res) => {
+        let totalGPA = 0;
+        let totalTPA = 0;
+        let totalCredits = 0;
+        for (let i = 0; i < res.history.length; i++) {
+          totalTPA += res.history[i].tpa;
+          totalGPA += parseFloat(res.history[i].gpa);
+          totalCredits += res.history[i].credit;
+        }
+        res.currentGPA = totalGPA / res.history.length;
+        res.currentTPA = totalTPA / res.history.length;
+        res.currentCredits = totalCredits.toFixed(0);
+        res.currentGPA = res.currentGPA.toFixed(2);
+        res.currentTPA = res.currentTPA.toFixed(0);
+        return res;
+      });
     return result;
   }
 
@@ -141,13 +157,24 @@ class StudentService {
           raw[i].currentGPA = totalGPA / raw[i].history.length;
           raw[i].currentTPA = totalTPA / raw[i].history.length;
           raw[i].credits = totalCredits.toFixed(0);
-          if (
-            !raw[i].hasPaid ||
-            raw[i].currentGPA < 2.0 ||
-            raw[i].currentTPA < 50
-          ) {
+
+          let warningcontext = "";
+
+          if (!raw[i].hasPaid) {
+            warningcontext += "Sinh viên chưa đóng học phí \n";
+          }
+          if (raw[i].currentGPA < 2.0) {
+            warningcontext += "GPA của sinh viên dưới 2.0 \n";
+          }
+          if (raw[i].currentTPA < 50) {
+            warningcontext += "Điểm rèn luyện của sinh viên dưới 50 \n";
+          }
+
+          if (warningcontext !== "") {
+            raw[i].warningcontext = warningcontext;
             warning = warning.concat(raw[i]);
           }
+
           raw[i].currentGPA = raw[i].currentGPA.toFixed(2);
           raw[i].currentTPA = raw[i].currentTPA.toFixed(0);
         }
@@ -159,6 +186,7 @@ class StudentService {
           currentGPA: row.currentGPA,
           currentTPA: row.currentTPA,
           credits: row.credits,
+          warningcontext: row.warningcontext
         }));
         return result;
       });

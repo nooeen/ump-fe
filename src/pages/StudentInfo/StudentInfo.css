@@ -110,13 +110,12 @@
 
 .userUpdateForm {
   display: flex;
-  margin-top: 20px;
 }
 
 .userUpdateItem {
   display: flex;
   flex-direction: column;
-  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .userUpdateItem > label {

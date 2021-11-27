@@ -34,8 +34,6 @@ export default function StudentInfo() {
     return;
   }, []);
 
-  console.log(user);
-
   return (
     <div>
       {isBusy ? (
@@ -95,24 +93,76 @@ export default function StudentInfo() {
                     </div>
                     <span className="userShowTitle">Tình trạng</span>
                     <div className="userShowInfo">
-                      <span><b>GPA: </b></span>
-                      <span className="userShowInfoTitle">{user.address}</span>
+                      <span>
+                        <b>GPA: </b>
+                      </span>
+                      <span className="userShowInfoTitle">
+                        {user.currentGPA}
+                      </span>
                     </div>
                     <div className="userShowInfo">
-                      <span><b>Điểm chuyên cần: </b></span>
-                      <span className="userShowInfoTitle">{user.address}</span>
+                      <span>
+                        <b>Điểm chuyên cần: </b>
+                      </span>
+                      <span className="userShowInfoTitle">
+                        {user.currentTPA}
+                      </span>
                     </div>
                     <div className="userShowInfo">
-                      <span><b>Số tín chỉ: </b></span>
-                      <span className="userShowInfoTitle">{user.address}</span>
+                      <span>
+                        <b>Số tín chỉ: </b>
+                      </span>
+                      <span className="userShowInfoTitle">
+                        {user.currentCredits}
+                      </span>
                     </div>
                   </div>
                 </div>
                 <div className="userStatus">
-                  <span className="userUpdateTitle">Tình hình học tập</span>
+                  <h1 className="userUpdateTitle">Tình hình học tập</h1>
+                  {user
+                    ? user.history.map((term) => {
+                        const name =
+                          "20" +
+                          term.term.split("_")[0] +
+                          " - 20" +
+                          term.term.split("_")[1] +
+                          " | HK" +
+                          term.term.split("_")[2];
+                        return (
+                          <div key={term.term}>
+                            <span className="userShowTitle">{name}</span>
+                            <div className="userShowInfo">
+                              <span>
+                                <b>GPA: </b>
+                              </span>
+                              <span className="userShowInfoTitle">
+                                {term.gpa}
+                              </span>
+                            </div>
+                            <div className="userShowInfo">
+                              <span>
+                                <b>Chuyên cần: </b>
+                              </span>
+                              <span className="userShowInfoTitle">
+                                {term.tpa}
+                              </span>
+                            </div>
+                            <div className="userShowInfo">
+                              <span>
+                                <b>Số tín chỉ: </b>
+                              </span>
+                              <span className="userShowInfoTitle">
+                                {term.credits}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })
+                    : null}
                 </div>
                 <div className="userUpdate">
-                  <span className="userUpdateTitle">Cập nhật thông tin</span>
+                  <h1 className="userUpdateTitle">Cập nhật thông tin</h1>
                   <form className="userUpdateForm">
                     <div className="userUpdateLeft">
                       <div className="userUpdateItem">

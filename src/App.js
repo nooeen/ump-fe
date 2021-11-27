@@ -10,7 +10,6 @@ import StudentsWarningList from "pages/StudentsWarningList/StudentsWarningList";
 import StudentsBonusList from "pages/StudentsBonusList/StudentsBonusList";
 import StudentAdd from "./pages/StudentAdd/StudentAdd";
 import StudentInfo from "pages/StudentInfo/StudentInfo";
-import chatChannel from "./pages/Chat/Chat";
 
 function App() {
   return (
@@ -46,7 +45,6 @@ function App() {
         </Route>
         <Route exact path="/notifications"></Route>
         <Route exact path="/chat">
-          <chatChannel />
         </Route>
       </Switch>
     </Router>
