@@ -1,10 +1,15 @@
 import axios from "axios";
 import jwt from "jwt-decode";
-// import authHeader from "./auth-header";
 
 const API_URL = process.env.REACT_APP_URL;
 
 class AuthService {
+  getUsername() {
+    const query = JSON.parse(localStorage.getItem("user"));
+    const user = jwt(query.accessToken);
+    return user.username;
+  }
+
   login(username, password) {
     return axios
       .post(API_URL + "/api/login", {

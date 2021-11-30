@@ -1,11 +1,9 @@
 import React from "react";
 import {
-  LineStyle,
-  Timeline,
   ChatBubbleOutline,
   ForumOutlined,
-  GradeOutlined,
   PersonOutline,
+  NotificationsNone,
 } from "@mui/icons-material";
 import "./StudentSidebar.css";
 import { useHistory } from "react-router-dom";
@@ -13,13 +11,13 @@ import { useHistory } from "react-router-dom";
 export default function StudentSidebar() {
   const history = useHistory();
 
-  const toHome = () => {
+  const toStudentHome = () => {
     let path = `/dashboard`;
     history.push(path);
   };
 
-  const toStudents = () => {
-    let path = `/students`;
+  const toNotifications = () => {
+    let path = "/notifications";
     history.push(path);
   };
 
@@ -27,28 +25,20 @@ export default function StudentSidebar() {
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">BẢNG ĐIỀU KHIỂN</h3>
+          <h3 className="sidebarTitle">HỒ SƠ SINH VIÊN</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem" onClick={toHome}>
-              <LineStyle className="sidebarIcon" />
-              Trang chủ
-            </li>
-            <li className="sidebarListItem">
-              <Timeline className="sidebarIcon" />
-              Thông số
+            <li className="sidebarListItem" onClick={toStudentHome}>
+              <PersonOutline className="sidebarIcon" />
+              Hồ sơ
             </li>
           </ul>
         </div>
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">HỌC SINH</h3>
+          <h3 className="sidebarTitle">GIAO TIẾP</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem" onClick={toStudents}>
-              <PersonOutline className="sidebarIcon" />
-              Thông tin
-            </li>
-            <li className="sidebarListItem">
-              <GradeOutlined className="sidebarIcon" />
-              Điểm
+            <li className="sidebarListItem" onClick={toNotifications}>
+              <NotificationsNone className="sidebarIcon" />
+              Thông báo
             </li>
             <li className="sidebarListItem">
               <ChatBubbleOutline className="sidebarIcon" />
