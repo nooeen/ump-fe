@@ -5,7 +5,7 @@ function rand_between(min, max) {
 }
 
 class studentController {
-  add(req, res) {
+  addStudent(req, res) {
     const student = new User();
     student.username = req.body.username;
     student.password = req.body.password;
