@@ -11,9 +11,10 @@ class studentController {
     student.password = req.body.password;
     student.role = "student";
     student.fullname = req.body.fullname;
-    student.dob = req.body.dob;
+    student.dob = new Date(req.body.dob);
     student.class = req.body.class;
     student.student_phone = req.body.student_phone;
+    student.address = req.body.address;
     student.parents_phone = req.body.parents_phone;
     student.avatar = req.body.avatar;
     student.hasPaid = false;

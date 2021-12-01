@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
   avatar: { type: String },
   history: [{
     term: { type: String },
-    gpa: { type: Number },
+    gpa: { type: mongoose.Types.Decimal128 },
     tpa: { type: Number },
     credit: { type: Number },
     _id : false,
