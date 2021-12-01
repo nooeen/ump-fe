@@ -27,9 +27,7 @@ function login(req, res, next) {
           });
         } else {
           const payload = { username: username, role: user.role };
-          const token = jwt.sign(payload, secret, {
-            expiresIn: "1h",
-          });
+          const token = jwt.sign(payload, secret, {});
           res.status(200).json({ accessToken: token });
         }
       });
