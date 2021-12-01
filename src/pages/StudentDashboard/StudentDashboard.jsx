@@ -37,7 +37,7 @@ export default function StudentDashboard() {
     const fetchData = async () => {
       const result = await StudentService.getStudent(username);
       await setUser(result);
-      await setUserDOB(new Date(result.dob).toLocaleDateString("vn-VN"));
+      await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
       await setBusy(false);
     };
     fetchData();
