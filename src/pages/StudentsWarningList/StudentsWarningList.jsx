@@ -121,8 +121,6 @@ export default function StudentsWarningList() {
     },
   ];
 
-  console.log(data);
-
   return (
     <div>
       {isBusy ? (

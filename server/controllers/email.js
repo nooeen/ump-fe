@@ -59,7 +59,7 @@ class emailController {
     const mailData = {
       from: "uetmanagementplatform@gmail.com",
       to: "duyngoc.nguyen2001@gmail.com",
-      subject: "[UMP]CẢNH BÁO HỌC VỤ",
+      subject: "[UMP]THÔNG BÁO KHEN THƯỞNG",
       html: htmlContent,
     };
 

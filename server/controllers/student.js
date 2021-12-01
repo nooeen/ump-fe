@@ -132,7 +132,8 @@ class studentController {
           }
           for (let j = 0; j < users[i].history.length; j++) {
             totalGPA += parseFloat(
-              users[i].history[j].gpa * users[i].history[j].credit
+              users[i].history[j].gpa.toJSON()["$numberDecimal"] *
+                users[i].history[j].credit
             );
             finalGPA = totalGPA / totalCredit;
             finalGPA = Math.round(finalGPA * 100) / 100;
@@ -225,13 +226,15 @@ class studentController {
         let totalTPA = 0;
 
         //calculate GPA TPA
-        for (let j = 0; j < user.history.gpa.length; j++) {
-          totalGPA += parseFloat(user.history[j].gpa);
+        for (let j = 0; j < user.history.length; j++) {
+          totalGPA += parseFloat(
+            user.history[j].gpa.toJSON()["$numberDecimal"]
+          );
           totalTPA += user.history[j].tpa;
         }
-        totalGPA = totalGPA / user.history.gpa.length;
+        totalGPA = totalGPA / user.history.length;
         totalGPA = Math.round(totalGPA * 100) / 100;
-        totalTPA = totalTPA / user.history.gpa.length;
+        totalTPA = totalTPA / user.history.length;
 
         //check warning
         if (totalGPA < 2) {
@@ -275,7 +278,9 @@ class studentController {
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.length; j++) {
-            totalGPA += parseFloat(users[i].history[j].gpa);
+            totalGPA += parseFloat(
+              users[i].history[j].gpa.toJSON()["$numberDecimal"]
+            );
             totalTPA += users[i].history[j].tpa;
           }
           totalGPA = totalGPA / users[i].history.length;
@@ -342,7 +347,9 @@ class studentController {
 
         //calculate GPA TPA
         for (let j = 0; j < user.history.length; j++) {
-          totalGPA += parseFloat(user.history[j].gpa);
+          totalGPA += parseFloat(
+            user.history[j].gpa.toJSON()["$numberDecimal"]
+          );
           totalTPA += user.history[j].tpa;
         }
         totalGPA = totalGPA / user.history.length;
@@ -384,7 +391,9 @@ class studentController {
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.length; j++) {
-            totalGPA += parseFloat(users[i].history[j].gpa);
+            totalGPA += parseFloat(
+              users[i].history[j].gpa.toJSON()["$numberDecimal"]
+            );
             totalTPA += users[i].history[j].tpa;
           }
           totalGPA = totalGPA / users[i].history.length;
