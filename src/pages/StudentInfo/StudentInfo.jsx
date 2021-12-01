@@ -26,6 +26,7 @@ export default function StudentInfo() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await StudentService.getStudent(username);
+      console.log(result);
       await setUser(result);
       await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
       await setBusy(false);
@@ -91,7 +92,7 @@ export default function StudentInfo() {
                       <LocationSearching className="userShowIcon" />
                       <span className="userShowInfoTitle">{user.address}</span>
                     </div>
-                    <span className="userShowTitle">Tình trạng</span>
+                    <span className="userShowTitle">Tình trạng hiện tại</span>
                     <div className="userShowInfo">
                       <span>
                         <b>GPA: </b>
@@ -102,7 +103,7 @@ export default function StudentInfo() {
                     </div>
                     <div className="userShowInfo">
                       <span>
-                        <b>Điểm chuyên cần: </b>
+                        <b>Điểm rèn luyện: </b>
                       </span>
                       <span className="userShowInfoTitle">
                         {user.currentTPA}
@@ -142,7 +143,7 @@ export default function StudentInfo() {
                             </div>
                             <div className="userShowInfo">
                               <span>
-                                <b>Chuyên cần: </b>
+                                <b>Điểm rèn luyện: </b>
                               </span>
                               <span className="userShowInfoTitle">
                                 {term.tpa}
@@ -153,7 +154,7 @@ export default function StudentInfo() {
                                 <b>Số tín chỉ: </b>
                               </span>
                               <span className="userShowInfoTitle">
-                                {term.credits}
+                                {term.credit}
                               </span>
                             </div>
                           </div>

@@ -140,7 +140,7 @@ export default function StudentsBonusList() {
                   GỬI EMAIL KHEN THƯỞNG
                 </button>
                 <button className="button" onClick={handleRefresh}>
-                  LÀM MỚI TRANG
+                  VỀ THỨ TỰ CŨ
                 </button>
               </Stack>
               <DataGrid

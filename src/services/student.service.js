@@ -17,8 +17,9 @@ class StudentService {
         let totalCredits = 0;
         for (let i = 0; i < res.history.length; i++) {
           totalTPA += res.history[i].tpa;
-          totalGPA += parseFloat(res.history[i].gpa);
+          totalGPA += parseFloat(res.history[i].gpa.$numberDecimal);
           totalCredits += res.history[i].credit;
+          res.history[i].gpa = res.history[i].gpa.$numberDecimal;
         }
         res.currentGPA = totalGPA / res.history.length;
         res.currentTPA = totalTPA / res.history.length;
@@ -49,16 +50,33 @@ class StudentService {
         headers: authHeader(),
       })
       .then((res) => res.data.length);
-    return number
+    return number;
   }
 
   async getClassAverage(selectedClass) {
-    const students = await axios
+    const avg = await axios
       .get(API_URL + "/api/student/list?class=" + selectedClass, {
         headers: authHeader(),
       })
-      .then((res) => res.data);
-    console.log(students);
+      .then((res) => res.data)
+      .then((res) => {
+        let gpa = [];
+        for (let i = 0; i < res.length; i++) {
+          let totalGPA = 0;
+          for (let j = 0; j < res[i].history.length; j++) {
+            totalGPA += parseFloat(res[i].history[j].gpa.$numberDecimal);
+          }
+          let currentGPA = totalGPA / res[i].history.length;
+          gpa.push(currentGPA);
+        }
+        let avgGPA = 0;
+        for (let i = 0; i < gpa.length; i++) {
+          avgGPA += gpa[i];
+        }
+        avgGPA /= gpa.length;
+        return avgGPA.toFixed(2);
+      });
+    return avg;
   }
 
   async getNumberOfStudentsByClass() {
@@ -109,7 +127,7 @@ class StudentService {
           let totalCredits = 0;
           for (let j = 0; j < raw[i].history.length; j++) {
             totalTPA += raw[i].history[j].tpa;
-            totalGPA += parseFloat(raw[i].history[j].gpa);
+            totalGPA += parseFloat(raw[i].history[j].gpa.$numberDecimal);
             totalCredits += raw[i].history[j].credit;
           }
           raw[i].currentGPA = totalGPA / raw[i].history.length;
@@ -169,7 +187,7 @@ class StudentService {
           let totalCredits = 0;
           for (let j = 0; j < raw[i].history.length; j++) {
             totalTPA += raw[i].history[j].tpa;
-            totalGPA += parseFloat(raw[i].history[j].gpa);
+            totalGPA += parseFloat(raw[i].history[j].gpa.$numberDecimal);
             totalCredits += raw[i].history[j].credit;
           }
           raw[i].currentGPA = totalGPA / raw[i].history.length;
@@ -236,7 +254,7 @@ class StudentService {
           let totalCredits = 0;
           for (let j = 0; j < raw[i].history.length; j++) {
             totalTPA += raw[i].history[j].tpa;
-            totalGPA += parseFloat(raw[i].history[j].gpa);
+            totalGPA += parseFloat(raw[i].history[j].gpa.$numberDecimal);
             totalCredits += raw[i].history[j].credit;
           }
           raw[i].currentGPA = totalGPA / raw[i].history.length;

@@ -149,7 +149,7 @@ export default function StudentsWarningList() {
                   GỬI EMAIL CẢNH CÁO
                 </button>
                 <button className="button" onClick={handleRefresh}>
-                  LÀM MỚI TRANG
+                  VỀ THỨ TỰ CŨ
                 </button>
               </Stack>
               <DataGrid

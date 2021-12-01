@@ -15,15 +15,21 @@ export default function Dashboard() {
   const [show, setShow] = useState(false);
   const [classes, setClasses] = useState([]);
   const [currentClass, setCurrentClass] = useState("");
+  const [classAverageGPA, setClassAverageGPA] = useState(0);
   const [studentsNumber, setStudentsNumber] = useState();
 
-  const handleSetCurrentClass = (e) => {
-    setCurrentClass(e.target.dataset.value);
-    fetchStudentsNumber();
+  const handleSetCurrentClass = async (e) => {
+    await setCurrentClass(e.target.dataset.value);
+    fetchStudentsNumber(e.target.dataset.value);
+    fetchClassAverage(e.target.dataset.value);
   };
 
-  const fetchStudentsNumber = async () => {
-    setStudentsNumber(await StudentService.getClassNumber(currentClass));
+  const fetchClassAverage = async (e) => {
+    setClassAverageGPA(await StudentService.getClassAverage(e));
+  };
+
+  const fetchStudentsNumber = async (selectedClass) => {
+    setStudentsNumber(await StudentService.getClassNumber(selectedClass));
   };
 
   const fetchData = async () => {
@@ -34,6 +40,9 @@ export default function Dashboard() {
     if (classes && !currentClass) {
       await setCurrentClass(classes[0]);
       await setStudentsNumber(await StudentService.getClassNumber(classes[0]));
+      await setClassAverageGPA(
+        await StudentService.getClassAverage(classes[0])
+      );
     }
   };
 
@@ -56,7 +65,7 @@ export default function Dashboard() {
               <FeaturedInfo
                 selectedClass={currentClass}
                 studentsNumber={studentsNumber}
-                classAverage={8.5}
+                classAverage={classAverageGPA}
               />
               <Chart
                 data={gradeData}
