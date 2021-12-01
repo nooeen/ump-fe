@@ -3,16 +3,6 @@ const bcrypt = require("bcrypt");
 
 const saltRounds = 10;
 
-const historySchema = new mongoose.Schema(
-  {
-    term: { type: String },
-    gpa: { type: Number },
-    tpa: { type: Number },
-    credit: { type: Number },
-  },
-  { _id: false }
-);
-
 const UserSchema = new mongoose.Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
@@ -23,12 +13,13 @@ const UserSchema = new mongoose.Schema({
   parents_phone: { type: String },
   address: { type: String },
   avatar: { type: String },
-  history: {
+  history: [{
     term: { type: String },
     gpa: { type: Number },
     tpa: { type: Number },
     credit: { type: Number },
-  },
+    _id : false,
+  }],
   class: { type: String },
   hasPaid: { type: Boolean },
 });

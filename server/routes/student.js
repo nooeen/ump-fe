@@ -7,7 +7,7 @@ router.post(
   "/add",
   middlewares.isUser,
   middlewares.isManager,
-  studentController.add
+  studentController.addStudent
 );
 
 router.get(

@@ -1,7 +1,11 @@
 const User = require("../models/User.js");
 
+function rand_between(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
 class studentController {
-  add(req, res) {
+  addStudent(req, res) {
     const student = new User();
     student.username = req.body.username;
     student.password = req.body.password;
@@ -14,27 +18,28 @@ class studentController {
     student.avatar = req.body.avatar;
     student.hasPaid = false;
 
-    var his = new Array();
+    var his = [];
     var yearStr = "20" + student.username.substring(0, 2);
     var year = parseInt(yearStr);
     var now = parseInt(new Date().getFullYear());
     var noy = now - year;
     now = now % 100;
     for (let i = 0; i < noy; i++) {
-      var history1 = new Object();
-      history1.term = now - noy + i + "_" + (now - noy + i + 1) + "_" + "1";
-      history1.gpa = 0;
-      history1.tpa = 0;
-      history1.credit = 0;
-      var history2 = new Object();
-      history2.term = now - noy + i + "_" + (now - noy + i + 1) + "_" + "2";
-      history2.gpa = 0;
-      history2.tpa = 0;
-      history2.credit = 0;
+      var history1 = {};
+      history1.term = now - noy + i + "_" + (now - noy + i + 1) + "_1";
+      history1.gpa = (rand_between(0, 40) * 1.0) / 10;
+      history1.tpa = rand_between(0, 100);
+      history1.credit = rand_between(10, 20);
+      var history2 = {};
+      history2.term = now - noy + i + "_" + (now - noy + i + 1) + "_2";
+      history2.gpa = (rand_between(0, 40) * 1.0) / 10;
+      history2.tpa = rand_between(0, 100);
+      history2.credit = rand_between(10, 20);
       his.push(history1);
       his.push(history2);
     }
     student.history = his;
+    // res.json(student);
     student
       .save()
       .then(() => res.json(student))
@@ -95,7 +100,6 @@ class studentController {
       });
   }
 
-  // find student with username and fullname
   findStudent(req, res) {
     User.findOne({ username: req.query.username })
       .then((user, err) => {
@@ -122,12 +126,12 @@ class studentController {
           let totalGPA = 0;
           let finalGPA = 0;
           let totalCredit = 0;
-          for (let j = 0; j < users[i].history.credit.length; j++) {
-            totalCredit += users[i].history.credit[j];
+          for (let j = 0; j < users[i].history.length; j++) {
+            totalCredit += users[i].history[j].credit;
           }
-          for (let j = 0; j < users[i].history.gpa.length; j++) {
+          for (let j = 0; j < users[i].history.length; j++) {
             totalGPA += parseFloat(
-              users[i].history.gpa[j] * users[i].history.credit[j]
+              users[i].history[j].gpa * users[i].history[j].credit
             );
             finalGPA = totalGPA / totalCredit;
             finalGPA = Math.round(finalGPA * 100) / 100;
@@ -158,7 +162,7 @@ class studentController {
           let totalTPA = 0;
           let finalTPA = 0;
           for (let j = 0; j < users[i].history.tpa.length; j++) {
-            totalTPA += users[i].history.tpa[j];
+            totalTPA += users[i].history[j].tpa;
             finalTPA = totalTPA / (j + 1);
           }
           users[i] = {
@@ -185,8 +189,8 @@ class studentController {
         }
         for (let i = 0; i < users.length; i++) {
           let totalCredit = 0;
-          for (let j = 0; j < users[i].history.credit.length; j++) {
-            totalCredit += users[i].history.credit[j];
+          for (let j = 0; j < users[i].history.length; j++) {
+            totalCredit += users[i].history[j].credit;
           }
           users[i] = {
             _id: users[i]._id,
@@ -221,8 +225,8 @@ class studentController {
 
         //calculate GPA TPA
         for (let j = 0; j < user.history.gpa.length; j++) {
-          totalGPA += parseFloat(user.history.gpa[j]);
-          totalTPA += user.history.tpa[j];
+          totalGPA += parseFloat(user.history[j].gpa);
+          totalTPA += user.history[j].tpa;
         }
         totalGPA = totalGPA / user.history.gpa.length;
         totalGPA = Math.round(totalGPA * 100) / 100;
@@ -269,13 +273,13 @@ class studentController {
           let haveWarn = false;
 
           //calculate GPA TPA
-          for (let j = 0; j < users[i].history.gpa.length; j++) {
-            totalGPA += parseFloat(users[i].history.gpa[j]);
-            totalTPA += users[i].history.tpa[j];
+          for (let j = 0; j < users[i].history.length; j++) {
+            totalGPA += parseFloat(users[i].history[j].gpa);
+            totalTPA += users[i].history[j].tpa;
           }
-          totalGPA = totalGPA / users[i].history.gpa.length;
+          totalGPA = totalGPA / users[i].history.length;
           totalGPA = Math.round(totalGPA * 100) / 100;
-          totalTPA = totalTPA / users[i].history.gpa.length;
+          totalTPA = totalTPA / users[i].history.length;
 
           //check warning
           if (totalGPA < 2) {
@@ -336,13 +340,13 @@ class studentController {
         let totalTPA = 0;
 
         //calculate GPA TPA
-        for (let j = 0; j < user.history.gpa.length; j++) {
-          totalGPA += parseFloat(user.history.gpa[j]);
-          totalTPA += user.history.tpa[j];
+        for (let j = 0; j < user.history.length; j++) {
+          totalGPA += parseFloat(user.history[j].gpa);
+          totalTPA += user.history[j].tpa;
         }
-        totalGPA = totalGPA / user.history.gpa.length;
+        totalGPA = totalGPA / user.history.length;
         totalGPA = Math.round(totalGPA * 100) / 100;
-        totalTPA = totalTPA / user.history.gpa.length;
+        totalTPA = totalTPA / user.history.length;
 
         //check bonus
         if (totalGPA >= 3.6 && totalTPA >= 90) {
@@ -378,13 +382,13 @@ class studentController {
           let haveBonus = false;
 
           //calculate GPA TPA
-          for (let j = 0; j < users[i].history.gpa.length; j++) {
-            totalGPA += parseFloat(users[i].history.gpa[j]);
-            totalTPA += users[i].history.tpa[j];
+          for (let j = 0; j < users[i].history.length; j++) {
+            totalGPA += parseFloat(users[i].history[j].gpa);
+            totalTPA += users[i].history[j].tpa;
           }
-          totalGPA = totalGPA / users[i].history.gpa.length;
+          totalGPA = totalGPA / users[i].history.length;
           totalGPA = Math.round(totalGPA * 100) / 100;
-          totalTPA = totalTPA / users[i].history.gpa.length;
+          totalTPA = totalTPA / users[i].history.length;
 
           //check bonus
           if (totalGPA >= 3.6 && totalTPA >= 90) {

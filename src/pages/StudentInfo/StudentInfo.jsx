@@ -27,7 +27,7 @@ export default function StudentInfo() {
     const fetchData = async () => {
       const result = await StudentService.getStudent(username);
       await setUser(result);
-      await setUserDOB(new Date(result.dob).toLocaleDateString("vn-VN"));
+      await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
       await setBusy(false);
     };
     fetchData();
@@ -77,7 +77,9 @@ export default function StudentInfo() {
                     <span className="userShowTitle">Thông tin liên lạc</span>
                     <div className="userShowInfo">
                       <PhoneAndroid className="userShowIcon" />
-                      <span className="userShowInfoTitle">{user.student_phone}</span>
+                      <span className="userShowInfoTitle">
+                        {user.student_phone}
+                      </span>
                     </div>
                     <div className="userShowInfo">
                       <People className="userShowIcon" />
@@ -89,10 +91,78 @@ export default function StudentInfo() {
                       <LocationSearching className="userShowIcon" />
                       <span className="userShowInfoTitle">{user.address}</span>
                     </div>
+                    <span className="userShowTitle">Tình trạng</span>
+                    <div className="userShowInfo">
+                      <span>
+                        <b>GPA: </b>
+                      </span>
+                      <span className="userShowInfoTitle">
+                        {user.currentGPA}
+                      </span>
+                    </div>
+                    <div className="userShowInfo">
+                      <span>
+                        <b>Điểm chuyên cần: </b>
+                      </span>
+                      <span className="userShowInfoTitle">
+                        {user.currentTPA}
+                      </span>
+                    </div>
+                    <div className="userShowInfo">
+                      <span>
+                        <b>Số tín chỉ: </b>
+                      </span>
+                      <span className="userShowInfoTitle">
+                        {user.currentCredits}
+                      </span>
+                    </div>
                   </div>
                 </div>
+                <div className="userStatus">
+                  <h1 className="userUpdateTitle">Tình hình học tập</h1>
+                  {user
+                    ? user.history.map((term) => {
+                        const name =
+                          "20" +
+                          term.term.split("_")[0] +
+                          " - 20" +
+                          term.term.split("_")[1] +
+                          " | HK" +
+                          term.term.split("_")[2];
+                        return (
+                          <div key={term.term}>
+                            <span className="userShowTitle">{name}</span>
+                            <div className="userShowInfo">
+                              <span>
+                                <b>GPA: </b>
+                              </span>
+                              <span className="userShowInfoTitle">
+                                {term.gpa}
+                              </span>
+                            </div>
+                            <div className="userShowInfo">
+                              <span>
+                                <b>Chuyên cần: </b>
+                              </span>
+                              <span className="userShowInfoTitle">
+                                {term.tpa}
+                              </span>
+                            </div>
+                            <div className="userShowInfo">
+                              <span>
+                                <b>Số tín chỉ: </b>
+                              </span>
+                              <span className="userShowInfoTitle">
+                                {term.credits}
+                              </span>
+                            </div>
+                          </div>
+                        );
+                      })
+                    : null}
+                </div>
                 <div className="userUpdate">
-                  <span className="userUpdateTitle">Cập nhật thông tin</span>
+                  <h1 className="userUpdateTitle">Cập nhật thông tin</h1>
                   <form className="userUpdateForm">
                     <div className="userUpdateLeft">
                       <div className="userUpdateItem">
@@ -101,21 +171,22 @@ export default function StudentInfo() {
                           type="text"
                           value={user.username}
                           className="userUpdateInput"
+                          disabled
                         />
                       </div>
                       <div className="userUpdateItem">
                         <label>Họ và tên</label>
                         <input
                           type="text"
-                          value={user.fullname}
+                          defaultValue={user.fullname}
                           className="userUpdateInput"
                         />
                       </div>
                       <div className="userUpdateItem">
-                        <label>Số điện thoại</label>
+                        <label>Số điện thoại cá nhân</label>
                         <input
                           type="text"
-                          value={user.student_phone}
+                          defaultValue={user.student_phone}
                           className="userUpdateInput"
                         />
                       </div>
@@ -123,7 +194,7 @@ export default function StudentInfo() {
                         <label>Số điện thoại phụ huynh</label>
                         <input
                           type="text"
-                          value={user.parent_phone}
+                          defaultValue={user.parent_phone}
                           className="userUpdateInput"
                         />
                       </div>
@@ -131,7 +202,15 @@ export default function StudentInfo() {
                         <label>Địa chỉ</label>
                         <input
                           type="text"
-                          value={user.address}
+                          defaultValue={user.address}
+                          className="userUpdateInput"
+                        />
+                      </div>
+                      <div className="userUpdateItem">
+                        <label>Avatar URL</label>
+                        <input
+                          type="text"
+                          defaultValue={user.avatar}
                           className="userUpdateInput"
                         />
                       </div>
@@ -139,8 +218,6 @@ export default function StudentInfo() {
                         <button className="userUpdateButton">Cập nhật</button>
                       </div>
                     </div>
-
-                    <div className="userUpdateRight"></div>
                   </form>
                 </div>
               </div>

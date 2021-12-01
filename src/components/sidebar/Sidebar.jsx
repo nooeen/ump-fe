@@ -36,14 +36,24 @@ export default function Sidebar() {
   };
 
   const toManager = () => {
-    let path = '/manager';
+    let path = "/manager";
     history.push(path);
-  }
+  };
 
   const toNotifications = () => {
-    let path = '/notifications';
+    let path = "/notifications";
     history.push(path);
-  }
+  };
+
+  const toChat = () => {
+    let path = "/chat";
+    history.push(path);
+  };
+
+  const toForum = () => {
+    let path = "/forum";
+    history.push(path);
+  };
 
   return (
     <div className="sidebar">
@@ -86,15 +96,15 @@ export default function Sidebar() {
         <div className="sidebarMenu">
           <h3 className="sidebarTitle">GIAO TIẾP</h3>
           <ul className="sidebarList">
-            <li className="sidebarListItem">
-              <NotificationsNone className="sidebarIcon" onClick={toNotifications}/>
+            <li className="sidebarListItem" onClick={toNotifications}>
+              <NotificationsNone className="sidebarIcon" />
               Thông báo
             </li>
-            <li className="sidebarListItem">
+            <li className="sidebarListItem" onClick={toChat}>
               <ChatBubbleOutline className="sidebarIcon" />
               Chat
             </li>
-            <li className="sidebarListItem">
+            <li className="sidebarListItem" onClick={toForum}>
               <ForumOutlined className="sidebarIcon" />
               Diễn đàn
             </li>

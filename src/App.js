@@ -10,7 +10,7 @@ import StudentsWarningList from "pages/StudentsWarningList/StudentsWarningList";
 import StudentsBonusList from "pages/StudentsBonusList/StudentsBonusList";
 import StudentAdd from "./pages/StudentAdd/StudentAdd";
 import StudentInfo from "pages/StudentInfo/StudentInfo";
-import chatChannel from "./pages/Chat/Chat";
+import Notifications from "./pages/Notifications/Notifications";
 
 function App() {
   return (
@@ -44,10 +44,10 @@ function App() {
         <Route exact path="/student/add">
           <StudentAdd />
         </Route>
-        <Route exact path="/notifications"></Route>
-        <Route exact path="/chat">
-          <chatChannel />
+        <Route exact path="/notifications">
+          <Notifications />
         </Route>
+        <Route exact path="/chat"></Route>
       </Switch>
     </Router>
   );
