@@ -22,6 +22,8 @@ export default function StudentInfo() {
   const [user, setUser] = useState();
   const [userDOB, setUserDOB] = useState();
   const [isBusy, setBusy] = useState(true);
+  const [userWarning, setUserWarning] = useState("");
+  // const [userBonus, setUserBonus] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +31,7 @@ export default function StudentInfo() {
       console.log(result);
       await setUser(result);
       await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
+      await setUserWarning(await StudentService.getWarningContext(username));
       await setBusy(false);
     };
     fetchData();
@@ -117,6 +120,12 @@ export default function StudentInfo() {
                         {user.currentCredits} / 138
                       </span>
                     </div>
+                    {userWarning !== "" ? (
+                      <span className="userShowTitle">Cảnh báo</span>
+                    ) : null}
+                    {userWarning !== ""
+                      ? userWarning.split("\n").map((e) => <p>{e}</p>)
+                      : null}
                   </div>
                 </div>
                 <div className="userStatus">
