@@ -22,25 +22,25 @@ export default function StudentDashboard() {
   const [show, setShow] = useState(false);
   const history = useHistory();
 
-  const username = AuthService.getUsername();
   const [user, setUser] = useState();
   const [userDOB, setUserDOB] = useState();
 
   useEffect(() => {
     setShow(false);
-    if (AuthService.isStudent() && !AuthService.isManager()) {
-      setShow(true);
-    }
-    if (!AuthService.isUser()) {
-      history.push("/login");
-    }
     const fetchData = async () => {
+      const username = AuthService.getUsername();
       const result = await StudentService.getStudent(username);
       await setUser(result);
       await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
       await setBusy(false);
     };
-    fetchData();
+    if (AuthService.isStudent() && !AuthService.isManager()) {
+      setShow(true);
+      fetchData();
+    }
+    if (!AuthService.isUser()) {
+      history.push("/login");
+    }
   }, [history]);
 
   return (
