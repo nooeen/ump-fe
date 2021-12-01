@@ -43,6 +43,24 @@ class StudentService {
     return result;
   }
 
+  async getClassNumber(selectedClass) {
+    const number = await axios
+      .get(API_URL + "/api/student/list?class=" + selectedClass, {
+        headers: authHeader(),
+      })
+      .then((res) => res.data.length);
+    return number
+  }
+
+  async getClassAverage(selectedClass) {
+    const students = await axios
+      .get(API_URL + "/api/student/list?class=" + selectedClass, {
+        headers: authHeader(),
+      })
+      .then((res) => res.data);
+    console.log(students);
+  }
+
   async getNumberOfStudentsByClass() {
     const query = JSON.parse(localStorage.getItem("user"));
     const username = jwt(query.accessToken).username;
@@ -186,7 +204,7 @@ class StudentService {
           currentGPA: row.currentGPA,
           currentTPA: row.currentTPA,
           credits: row.credits,
-          warningcontext: row.warningcontext
+          warningcontext: row.warningcontext,
         }));
         return result;
       });

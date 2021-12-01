@@ -59,12 +59,12 @@ export default function StudentsList() {
     {
       field: "fullname",
       headerName: "Họ và tên",
-      width: 180,
+      width: 160,
     },
-    { field: "class", headerName: "Lớp", width: 180 },
-    { field: "currentGPA", headerName: "GPA", width: 100 },
-    { field: "currentTPA", headerName: "TPA", width: 100 },
-    { field: "credits", headerName: "Tín chỉ", width: 120 },
+    { field: "class", headerName: "Lớp", width: 160 },
+    { field: "currentGPA", headerName: "GPA", width: 110 },
+    { field: "currentTPA", headerName: "ĐRL", width: 110 },
+    { field: "credits", headerName: "Số tín chỉ", width: 140 },
     {
       field: "status",
       headerName: "Trạng thái",
@@ -82,7 +82,7 @@ export default function StudentsList() {
     {
       field: "action",
       headerName: "Hành động",
-      width: 150,
+      width: 145,
       renderCell: (params) => {
         return (
           <>
@@ -136,7 +136,7 @@ export default function StudentsList() {
                   XUẤT DỮ LIỆU
                 </button>
                 <button className="button" onClick={handleRefresh}>
-                  LÀM MỚI TRANG
+                  VỀ THỨ TỰ CŨ
                 </button>
               </Stack>
               <DataGrid

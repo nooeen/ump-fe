@@ -113,7 +113,7 @@ export default function StudentInfo() {
                         <b>Số tín chỉ: </b>
                       </span>
                       <span className="userShowInfoTitle">
-                        {user.currentCredits}
+                        {user.currentCredits} / 138
                       </span>
                     </div>
                   </div>

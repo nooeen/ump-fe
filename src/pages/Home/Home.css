@@ -12,7 +12,6 @@
 
 .homepage-img {
   display: flex;
-  width: 80%;
+  width: 55%;
   float: right;
-  text-align: right;
 }

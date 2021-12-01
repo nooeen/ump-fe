@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import Stack from "@mui/material/Stack";
 import Chart from "../../components/chart/Chart";
 import { gradeData } from "../../dummyData";
@@ -7,24 +8,42 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import { useState, useEffect } from "react";
 import StudentService from "../../services/student.service";
+import ManagerService from "../../services/manager.service";
 import AuthService from "../../services/auth.service";
 
 export default function Dashboard() {
   const [show, setShow] = useState(false);
+  const [classes, setClasses] = useState([]);
+  const [currentClass, setCurrentClass] = useState("");
   const [studentsNumber, setStudentsNumber] = useState();
 
+  const handleSetCurrentClass = (e) => {
+    setCurrentClass(e.target.dataset.value);
+    fetchStudentsNumber();
+  };
+
   const fetchStudentsNumber = async () => {
-    const raw = await StudentService.getNumberOfStudentsByClass();
-    setStudentsNumber(raw);
+    setStudentsNumber(await StudentService.getClassNumber(currentClass));
+  };
+
+  const fetchData = async () => {
+    const managerClasses = await ManagerService.getManagerClasses();
+    if (managerClasses.toString() !== classes.toString()) {
+      await setClasses(managerClasses);
+    }
+    if (classes && !currentClass) {
+      await setCurrentClass(classes[0]);
+      await setStudentsNumber(await StudentService.getClassNumber(classes[0]));
+    }
   };
 
   useEffect(() => {
     setShow(false);
     if (AuthService.isManager()) {
+      fetchData();
       setShow(true);
-      fetchStudentsNumber();
     }
-  }, []);
+  }, [classes]);
 
   return (
     <div>
@@ -35,6 +54,7 @@ export default function Dashboard() {
             <Sidebar />
             <div className="dashboard">
               <FeaturedInfo
+                selectedClass={currentClass}
                 studentsNumber={studentsNumber}
                 classAverage={8.5}
               />
@@ -45,9 +65,16 @@ export default function Dashboard() {
                 dataKey="Điểm"
               />
               <Stack direction="row" spacing={2} className="dashboard-stack">
-                <button className="button">Lớp 1</button>
-                <button className="button">Lớp 2</button>
-                <button className="button">Lớp hiện tại: Lớp 1</button>
+                {classes.map((e) => (
+                  <button
+                    className="button"
+                    key={e}
+                    data-value={e}
+                    onClick={(e) => handleSetCurrentClass(e)}
+                  >
+                    {e}
+                  </button>
+                ))}
               </Stack>
             </div>
           </div>

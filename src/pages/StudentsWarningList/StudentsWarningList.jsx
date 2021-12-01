@@ -94,7 +94,7 @@ export default function StudentsWarningList() {
     },
     {
       field: "action",
-      headerName: "Hành động",
+      headerName: "Thao tác",
       width: 150,
       renderCell: (params) => {
         return (

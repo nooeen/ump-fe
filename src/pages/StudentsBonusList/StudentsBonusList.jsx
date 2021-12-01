@@ -82,9 +82,9 @@ export default function StudentsBonusList() {
       width: 180,
     },
     { field: "class", headerName: "Lớp", width: 180 },
-    { field: "currentGPA", headerName: "GPA", width: 100 },
-    { field: "currentTPA", headerName: "TPA", width: 100 },
-    { field: "credits", headerName: "Tín chỉ", width: 120 },
+    { field: "currentGPA", headerName: "GPA", width: 110 },
+    { field: "currentTPA", headerName: "ĐRL", width: 110 },
+    { field: "credits", headerName: "Số tín chỉ", width: 140 },
     {
       field: "action",
       headerName: "Hành động",
