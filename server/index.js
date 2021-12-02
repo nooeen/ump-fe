@@ -4,8 +4,18 @@ const pino = require("express-pino-logger")();
 const route = require("./routes");
 const cors = require("cors");
 const db = require("./db");
+const { createServer } = require("http");
+const { Server } = require("socket.io");
 
 const app = express();
+const httpServer = createServer(app);
+const io = new Server(httpServer, { /* options */ });
+
+io.on("connection", (socket) => {
+  // ...
+});
+
+httpServer.listen(3002);
 
 var corsOptions = {
   origin: "http://localhost:3000",
