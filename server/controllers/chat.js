@@ -7,47 +7,47 @@ const io = require("socket.io")(8900, {
     },
   });
   
-  let users = [];
+var chatRoomData = [];
+var connectedClients = {};
   
-  const addUser = (userId, socketId) => {
-    !users.some((user) => user.userId === userId) &&
-      users.push({ userId, socketId });
-  };
-  
-  const removeUser = (socketId) => {
-    users = users.filter((user) => user.socketId !== socketId);
-  };
-  
-  const getUser = (userId) => {
-    return users.find((user) => user.userId === userId);
-  };
-  
-  io.on("connection", (socket) => {
-    //when ceonnect
-    console.log("a user connected.");
+io.on('connection', (client) => {
 
-    //take userId and socketId from user
-    socket.on("addUser", (userId) => {
-      addUser(userId, socket.id);
-      io.emit("getUsers", users);
-    });
-  
-    //send and get message
-    socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-      const user = getUser(receiverId);
-      io.to(user.socketId).emit("getMessage", {
-        senderId,
-        text,
-      });
-    });
-  
-    //when disconnect
-    socket.on("disconnect", () => {
-      console.log("a user disconnected!");
-      removeUser(socket.id);
-      io.emit("getUsers", users);
-    });
+  console.log("New client connected");
+
+  //Client Sent a message
+  client.on("SendMessage", (messageData) => {
+    chatRoomData.push(messageData)
+    sendUpdatedChatRoomData(client)
+  })
+
+  //Creating identity for new connected user
+  client.on("CreateUserData", () => {
+    let userID = uuid();
+    let username = uniqueNamesGenerator({ dictionaries: [adjectives, names] });
+    var userData = {userID: userID, username: username}
+    client.emit("SetUserData", userData)
+  })
+
+
+  //Player Disconnecting from chat room...
+  client.on('disconnecting', (data) => {
+    console.log("Client disconnecting...");
+
+    if(connectedClients[client.id]){
+      var leftRoomMessage = {message: `${connectedClients[client.id].username} has left the chat`, username: "", userID: 0, timeStamp: null}
+      chatRoomData.push(leftRoomMessage)
+      sendUpdatedChatRoomData(client)
+      delete connectedClients[client.id]
+    }
+
   });
+})
+
+//Sending update chat room data to all connected clients
+function sendUpdatedChatRoomData(client){
+  client.emit("RetrieveChatRoomData", chatRoomData)
+  client.broadcast.emit("RetrieveChatRoomData", chatRoomData)
+}
 
 
 class ChatController {
