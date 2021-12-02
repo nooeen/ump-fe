@@ -5,6 +5,11 @@ function rand_between(min, max) {
 }
 
 class studentController {
+  deleteStudent(req, res) {
+    User.find({ username: req.query.username }).deleteOne().exec();
+    res.status(200);
+  }
+
   addStudent(req, res) {
     const student = new User();
     student.username = req.body.username;

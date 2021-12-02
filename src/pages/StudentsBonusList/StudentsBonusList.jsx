@@ -35,8 +35,9 @@ export default function StudentsBonusList() {
     history.go(0);
   };
 
-  const handleDelete = (id) => {
-    console.log(id);
+  const handleDelete = async (id) => {
+    await setData(data.filter((item) => item.id !== id));
+    await StudentService.deleteStudent(id);
   };
 
   const [emailSnackbar, setEmailSnackbar] = useState(false);

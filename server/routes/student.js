@@ -11,6 +11,13 @@ router.post(
 );
 
 router.get(
+  "/delete",
+  middlewares.isUser,
+  middlewares.isManager,
+  studentController.deleteStudent
+);
+
+router.get(
   "/listAll",
   middlewares.isUser,
   middlewares.isManager,

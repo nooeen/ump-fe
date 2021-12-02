@@ -37,8 +37,9 @@ export default function StudentsList() {
     history.push(path);
   };
 
-  const handleDelete = (id) => {
-    console.log(id);
+  const handleDelete = async (id) => {
+    await setData(data.filter((item) => item.id !== id));
+    await StudentService.deleteStudent(id);
   };
 
   const handleImport = () => {

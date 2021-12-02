@@ -31,6 +31,14 @@ class StudentService {
       },
       { headers: authHeader() }
     );
+    return;
+  }
+
+  async deleteStudent(username) {
+    await axios.get(API_URL + "/api/student/delete?username=" + username, {
+      headers: authHeader(),
+    });
+    return;
   }
 
   async getStudent(username) {
