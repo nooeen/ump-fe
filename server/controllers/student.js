@@ -56,31 +56,9 @@ class studentController {
   }
 
   updateStudent(req, res, next) {
-      const student = new User();
-      student.username = req.body.username;
-      student.fullname = req.body.fullname;
-      student.dob = new Date(req.body.dob);
-      student.student_phone = req.body.student_phone;
-      student.address = req.body.address;
-      student.parent_phone = req.body.parent_phone;
-      student.avatar = req.body.avatar;
-      User.updateOne(
-          { username: req.body.username,  },
-          { username: student.username,
-           fullname: student.fullname,
-           student_phone: student.student_phone,
-           address: student.address,
-           parent_phone: student.parent_phone,
-           avatar: student.avatar })
+      User.updateOne({ username: req.body.username }, req.body)
           .then(() => res.json(req.body))
-          .catch(next)
-
-      res.redirect('back');
-      // User.updateOne({ username: req.body.username }, req.body)
-      //     .then(() => res.redirect('/api/student/update'))
-      //     .catch(next);
-
-
+          .catch(next);
   }
 
   // list students within class with role student
