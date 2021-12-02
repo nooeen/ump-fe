@@ -19,8 +19,8 @@ router.get(
 
 router.post(
     "/update",
-    // middlewares.isUser,
-    // middlewares.isManager,
+    middlewares.isUser,
+    middlewares.isManager,
     studentController.updateStudent
 );
 
