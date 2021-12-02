@@ -17,6 +17,14 @@ router.get(
   studentController.deleteStudent
 );
 
+router.post(
+    "/update",
+    // middlewares.isUser,
+    // middlewares.isManager,
+    studentController.updateStudent
+);
+
+
 router.get(
   "/listAll",
   middlewares.isUser,
