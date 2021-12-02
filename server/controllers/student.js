@@ -1,20 +1,27 @@
 const User = require("../models/User.js");
+const Post = require("../models/Forum.js");
 
 function rand_between(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
 class studentController {
+  deleteStudent(req, res) {
+    User.find({ username: req.query.username }).deleteOne().exec();
+    res.status(200);
+  }
+
   addStudent(req, res) {
     const student = new User();
     student.username = req.body.username;
     student.password = req.body.password;
     student.role = "student";
     student.fullname = req.body.fullname;
-    student.dob = req.body.dob;
+    student.dob = new Date(req.body.dob);
     student.class = req.body.class;
     student.student_phone = req.body.student_phone;
-    student.parents_phone = req.body.parents_phone;
+    student.address = req.body.address;
+    student.parent_phone = req.body.parent_phone;
     student.avatar = req.body.avatar;
     student.hasPaid = false;
 
@@ -46,6 +53,12 @@ class studentController {
       .catch((error) => {
         res.status(200).send("Username already exists");
       });
+  }
+
+  updateStudent(req, res, next) {
+      User.updateOne({ username: req.body.username }, req.body)
+          .then(() => res.json(req.body))
+          .catch(next);
   }
 
   // list students within class with role student
@@ -131,7 +144,8 @@ class studentController {
           }
           for (let j = 0; j < users[i].history.length; j++) {
             totalGPA += parseFloat(
-              users[i].history[j].gpa * users[i].history[j].credit
+              users[i].history[j].gpa.toJSON()["$numberDecimal"] *
+                users[i].history[j].credit
             );
             finalGPA = totalGPA / totalCredit;
             finalGPA = Math.round(finalGPA * 100) / 100;
@@ -224,13 +238,15 @@ class studentController {
         let totalTPA = 0;
 
         //calculate GPA TPA
-        for (let j = 0; j < user.history.gpa.length; j++) {
-          totalGPA += parseFloat(user.history[j].gpa);
+        for (let j = 0; j < user.history.length; j++) {
+          totalGPA += parseFloat(
+            user.history[j].gpa.toJSON()["$numberDecimal"]
+          );
           totalTPA += user.history[j].tpa;
         }
-        totalGPA = totalGPA / user.history.gpa.length;
+        totalGPA = totalGPA / user.history.length;
         totalGPA = Math.round(totalGPA * 100) / 100;
-        totalTPA = totalTPA / user.history.gpa.length;
+        totalTPA = totalTPA / user.history.length;
 
         //check warning
         if (totalGPA < 2) {
@@ -274,7 +290,9 @@ class studentController {
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.length; j++) {
-            totalGPA += parseFloat(users[i].history[j].gpa);
+            totalGPA += parseFloat(
+              users[i].history[j].gpa.toJSON()["$numberDecimal"]
+            );
             totalTPA += users[i].history[j].tpa;
           }
           totalGPA = totalGPA / users[i].history.length;
@@ -341,7 +359,9 @@ class studentController {
 
         //calculate GPA TPA
         for (let j = 0; j < user.history.length; j++) {
-          totalGPA += parseFloat(user.history[j].gpa);
+          totalGPA += parseFloat(
+            user.history[j].gpa.toJSON()["$numberDecimal"]
+          );
           totalTPA += user.history[j].tpa;
         }
         totalGPA = totalGPA / user.history.length;
@@ -383,7 +403,9 @@ class studentController {
 
           //calculate GPA TPA
           for (let j = 0; j < users[i].history.length; j++) {
-            totalGPA += parseFloat(users[i].history[j].gpa);
+            totalGPA += parseFloat(
+              users[i].history[j].gpa.toJSON()["$numberDecimal"]
+            );
             totalTPA += users[i].history[j].tpa;
           }
           totalGPA = totalGPA / users[i].history.length;

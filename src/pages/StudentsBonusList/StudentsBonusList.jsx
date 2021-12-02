@@ -35,8 +35,9 @@ export default function StudentsBonusList() {
     history.go(0);
   };
 
-  const handleDelete = (id) => {
-    console.log(id);
+  const handleDelete = async (id) => {
+    await setData(data.filter((item) => item.id !== id));
+    await StudentService.deleteStudent(id);
   };
 
   const [emailSnackbar, setEmailSnackbar] = useState(false);
@@ -82,9 +83,9 @@ export default function StudentsBonusList() {
       width: 180,
     },
     { field: "class", headerName: "Lớp", width: 180 },
-    { field: "currentGPA", headerName: "GPA", width: 100 },
-    { field: "currentTPA", headerName: "TPA", width: 100 },
-    { field: "credits", headerName: "Tín chỉ", width: 120 },
+    { field: "currentGPA", headerName: "GPA", width: 110 },
+    { field: "currentTPA", headerName: "ĐRL", width: 110 },
+    { field: "credits", headerName: "Số tín chỉ", width: 140 },
     {
       field: "action",
       headerName: "Hành động",
@@ -140,7 +141,7 @@ export default function StudentsBonusList() {
                   GỬI EMAIL KHEN THƯỞNG
                 </button>
                 <button className="button" onClick={handleRefresh}>
-                  LÀM MỚI TRANG
+                  VỀ THỨ TỰ CŨ
                 </button>
               </Stack>
               <DataGrid

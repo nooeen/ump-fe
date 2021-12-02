@@ -1,6 +1,7 @@
 import "./StudentAdd.css";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
+import StudentService from "../../services/student.service";
 import ManagerService from "../../services/manager.service";
 import { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
@@ -9,7 +10,6 @@ export default function StudentAdd() {
   const history = useHistory();
   const [classes, setClasses] = useState([]);
   const [isBusy, setBusy] = useState(true);
-  const [isComplete, setComplete] = useState(true);
 
   const fetchData = async () => {
     const data = await ManagerService.getManagerClasses();
@@ -32,20 +32,7 @@ export default function StudentAdd() {
     const parent_phone = event.target.parent_phone.value;
     const student_address = event.target.address.value;
     const student_avatar = event.target.avatar.value;
-    if (
-      !student_username ||
-      !student_password ||
-      !student_fullname ||
-      !student_class ||
-      !student_dob ||
-      !student_phone ||
-      !parent_phone ||
-      !student_address ||
-      !student_avatar
-    ) {
-      setComplete(false);
-      console.log(isComplete);
-    }
+
     console.log(
       student_username,
       student_password,
@@ -58,10 +45,33 @@ export default function StudentAdd() {
       student_avatar
     );
     //Gọi API tạo documents
+    await StudentService.addStudent(
+      student_username,
+      student_password,
+      student_fullname,
+      student_class,
+      student_dob,
+      student_phone,
+      parent_phone,
+      student_address,
+      student_avatar
+    );
 
     //Redirect tới trang edit
-    const path = "/student/info?username=" + student_username;
-    history.push(path);
+    if (
+      student_username !== "" &&
+      student_password !== "" &&
+      student_fullname !== "" &&
+      student_class !== "" &&
+      student_dob !== "" &&
+      student_phone !== "" &&
+      parent_phone !== "" &&
+      student_address !== "" &&
+      student_avatar !== ""
+    ) {
+      const path = "/student/info?username=" + student_username;
+      history.push(path);
+    }
   };
 
   return (

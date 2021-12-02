@@ -31,8 +31,9 @@ export default function StudentsWarningList() {
     history.push(path);
   };
 
-  const handleDelete = (id) => {
-    console.log(id);
+  const handleDelete = async (id) => {
+    await setData(data.filter((item) => item.id !== id));
+    await StudentService.deleteStudent(id);
   };
 
   const handleRefresh = () => {
@@ -94,7 +95,7 @@ export default function StudentsWarningList() {
     },
     {
       field: "action",
-      headerName: "Hành động",
+      headerName: "Thao tác",
       width: 150,
       renderCell: (params) => {
         return (
@@ -120,8 +121,6 @@ export default function StudentsWarningList() {
       },
     },
   ];
-
-  console.log(data);
 
   return (
     <div>
@@ -149,7 +148,7 @@ export default function StudentsWarningList() {
                   GỬI EMAIL CẢNH CÁO
                 </button>
                 <button className="button" onClick={handleRefresh}>
-                  LÀM MỚI TRANG
+                  VỀ THỨ TỰ CŨ
                 </button>
               </Stack>
               <DataGrid

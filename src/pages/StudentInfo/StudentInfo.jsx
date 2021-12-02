@@ -22,12 +22,16 @@ export default function StudentInfo() {
   const [user, setUser] = useState();
   const [userDOB, setUserDOB] = useState();
   const [isBusy, setBusy] = useState(true);
+  const [userWarning, setUserWarning] = useState("");
+  // const [userBonus, setUserBonus] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
       const result = await StudentService.getStudent(username);
+      console.log(result);
       await setUser(result);
       await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
+      await setUserWarning(await StudentService.getWarningContext(username));
       await setBusy(false);
     };
     fetchData();
@@ -91,7 +95,7 @@ export default function StudentInfo() {
                       <LocationSearching className="userShowIcon" />
                       <span className="userShowInfoTitle">{user.address}</span>
                     </div>
-                    <span className="userShowTitle">Tình trạng</span>
+                    <span className="userShowTitle">Tình trạng hiện tại</span>
                     <div className="userShowInfo">
                       <span>
                         <b>GPA: </b>
@@ -102,7 +106,7 @@ export default function StudentInfo() {
                     </div>
                     <div className="userShowInfo">
                       <span>
-                        <b>Điểm chuyên cần: </b>
+                        <b>Điểm rèn luyện: </b>
                       </span>
                       <span className="userShowInfoTitle">
                         {user.currentTPA}
@@ -113,9 +117,15 @@ export default function StudentInfo() {
                         <b>Số tín chỉ: </b>
                       </span>
                       <span className="userShowInfoTitle">
-                        {user.currentCredits}
+                        {user.currentCredits} / 138
                       </span>
                     </div>
+                    {userWarning !== "" ? (
+                      <span className="userShowTitle">Cảnh báo</span>
+                    ) : null}
+                    {userWarning !== ""
+                      ? userWarning.split("\n").map((e) => <p>{e}</p>)
+                      : null}
                   </div>
                 </div>
                 <div className="userStatus">
@@ -142,7 +152,7 @@ export default function StudentInfo() {
                             </div>
                             <div className="userShowInfo">
                               <span>
-                                <b>Chuyên cần: </b>
+                                <b>Điểm rèn luyện: </b>
                               </span>
                               <span className="userShowInfoTitle">
                                 {term.tpa}
@@ -153,7 +163,7 @@ export default function StudentInfo() {
                                 <b>Số tín chỉ: </b>
                               </span>
                               <span className="userShowInfoTitle">
-                                {term.credits}
+                                {term.credit}
                               </span>
                             </div>
                           </div>
