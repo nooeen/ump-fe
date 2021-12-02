@@ -9,15 +9,20 @@ const { Server } = require("socket.io");
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, { /* options */ });
-
+//const io = new Server(httpServer, { /* options */ });
+const io = require("socket.io")(3002, {
+  cors: {
+    origin: ["http://localhost:3000"],
+  }
+});
 io.on("connection", (socket) => {
   // ...
+  console.log(socket.id)
 });
 
-httpServer.listen(3002);
+//httpServer.listen(3002);
 
-var corsOptions = {
+var corsOptions = { 
   origin: "http://localhost:3000",
 };
 
