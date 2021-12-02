@@ -10,7 +10,7 @@ const UserSchema = new mongoose.Schema({
   fullname: { type: String },
   dob: { type: String },
   student_phone: { type: String },
-  parents_phone: { type: String },
+  parent_phone: { type: String },
   address: { type: String },
   avatar: { type: String },
   history: [{

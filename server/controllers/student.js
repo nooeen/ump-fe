@@ -15,7 +15,7 @@ class studentController {
     student.class = req.body.class;
     student.student_phone = req.body.student_phone;
     student.address = req.body.address;
-    student.parents_phone = req.body.parents_phone;
+    student.parent_phone = req.body.parent_phone;
     student.avatar = req.body.avatar;
     student.hasPaid = false;
 

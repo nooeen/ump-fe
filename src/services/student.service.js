@@ -5,6 +5,34 @@ import jwt from "jwt-decode";
 const API_URL = process.env.REACT_APP_URL;
 
 class StudentService {
+  async addStudent(
+    student_username,
+    student_password,
+    student_fullname,
+    student_class,
+    student_dob,
+    student_phone,
+    parent_phone,
+    student_address,
+    student_avatar
+  ) {
+    await axios.post(
+      API_URL + "/api/student/add",
+      {
+        username: student_username,
+        password: student_password,
+        fullname: student_fullname,
+        class: student_class,
+        dob: student_dob,
+        student_phone: student_phone,
+        parent_phone: parent_phone,
+        address: student_address,
+        avatar: student_avatar,
+      },
+      { headers: authHeader() }
+    );
+  }
+
   async getStudent(username) {
     const result = await axios
       .get(API_URL + "/api/student/find?username=" + username, {
