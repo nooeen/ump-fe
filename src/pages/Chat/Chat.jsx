@@ -43,6 +43,20 @@ export default function Chat() {
       socket.emit('sendMessage', "messsage 2")
   }
 
+  function joinRoom(e) {
+    e.preventDefault();
+    message1 = "join room: " + e.target.room.value
+    appendMessage( message1)
+    socket.emit("joinRoom", e.target.room.value)
+  }
+
+  function leaveRoom(e) {
+    e.preventDefault();
+    message1 = "leave room: " + e.target.leave.value
+    appendMessage( message1)
+    socket.emit("leaveRoom", e.target.leave.value)
+  }
+
   function appendMessage(message) {
     messageContainer = document.getElementById('message-container')
     const messageElement = document.createElement('div');
@@ -61,23 +75,29 @@ export default function Chat() {
       if(e.key === 'd') socket.disconnect()
   })
 
-  function connection(e){
-
-  }
-
   
      
   return (
     <div>
       <div id="message-container"></div>
-      <form method="get" name = "form1" id="form1" onSubmit = {send}>
-        <input type = "text" name = "m1"/>
-      <button type="submit" form="form1" value="S1">SendMessage</button>
-      <input type = "text" name = "join"/>
-      <button form="form1" value="S1">Join</button>
-      </form>
-      <button onClick= {send1}>message 1 </button>
-      <button onClick= {send2}>message 2 </button>
+        <form method="get" name = "form1" id="form1" onSubmit = {send}>
+          <input type = "text" name = "m1"/>
+          <button type="submit" form="form1" value="S1">Send Message To</button>
+          <input type = "text" name = "join"/>
+        </form>
+
+        <form method="get" name = "form2" id="form2" onSubmit = {joinRoom}>
+          <input type = "text" name = "room"/>
+          <button type="submit" form="form2" value="S2">join room</button>
+        </form>
+
+        <form method="get" name = "form3" id="form3" onSubmit = {leaveRoom}>
+          <input type = "text" name = "leave"/>
+          <button type="submit" form="form3" value="S3">leave room</button>
+        </form>
+
+        <button onClick= {send1}>message 1 </button>
+        <button onClick= {send2}>message 2 </button>
     </div>
   );
 }
