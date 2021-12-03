@@ -22,9 +22,17 @@ io.on("connection", (socket) => {
   console.log("\nsocket id: ", socket.id)
   console.log("count client: ", io.engine.clientsCount)
   
-  socket.on("sendMessage", message => {
+  socket.on("sendMessage", (message, join) => {
     console.log("\nsendMessage: ", message)
-    socket.broadcast.emit('receive-message', message)
+    if (join != ""){
+      socket.to(join).emit('receive-message', message)
+    } else {
+      socket.broadcast.emit('receive-message', message)
+    }
+    
+  })
+  socket.on("sendID", id => {
+    socket.emit("idconnect", id)
   })
   socket.on("confirmReceived", message => {
     console.log("confirmReceived: ", message)
