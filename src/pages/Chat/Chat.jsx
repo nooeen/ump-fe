@@ -19,28 +19,11 @@ export default function Chat() {
     message1 = "id: " + id
     appendMessage(message1)
   })
-
-  // socket.on('user-disconnected', name => {
-  //   appendMessage('${name} connected')
-  // })
-
-  function send1(e) {
-    
-    e.preventDefault();
-    message1 = "12"
-    socket.emit('sendMessage', "messsage 1")
-  }
   
   function send(e) {
       e.preventDefault();
       appendMessage( e.target.m1.value)
       socket.emit('sendMessage', e.target.m1.value, e.target.join.value)
-  }
-
-  function send2(e) {
-      e.preventDefault();
-      
-      socket.emit('sendMessage', "messsage 2")
   }
 
   function joinRoom(e) {
@@ -64,19 +47,13 @@ export default function Chat() {
     messageContainer.append(messageElement);
   }
 
-  // let count = 0;
-  // setInterval(() => {
-  //     socket.emit('ping', ++count)
-  // }, 1000)
 
   document.addEventListener('keydown', e => {
       if(e.target.matches('input')) return
       if(e.key === 'c') socket.connect()
       if(e.key === 'd') socket.disconnect()
   })
-
   
-     
   return (
     <div>
       <div id="message-container"></div>
@@ -95,9 +72,6 @@ export default function Chat() {
           <input type = "text" name = "leave"/>
           <button type="submit" form="form3" value="S3">leave room</button>
         </form>
-
-        <button onClick= {send1}>message 1 </button>
-        <button onClick= {send2}>message 2 </button>
     </div>
   );
 }
