@@ -4,6 +4,7 @@ const pino = require("express-pino-logger")();
 const route = require("./routes");
 const cors = require("cors");
 const db = require("./db");
+const { disconnect } = require("mongoose");
 // const { createServer } = require("http");
 // const { Server } = require("socket.io");
 
@@ -17,19 +18,22 @@ const io = require("socket.io")(3002, {
 });
 const users = {}
 io.on("connection", (socket) => {
-  // ...
+  console.log('\nconnected to socket io')
   console.log("\nsocket id: ", socket.id)
   console.log("count client: ", io.engine.clientsCount)
-
-
+  
   socket.on("sendMessage", message => {
     console.log("\nsendMessage: ", message)
-    io.emit('receive-message', message)
+    socket.emit('receive-message', message)
   })
   socket.on("confirmReceived", message => {
     console.log("confirmReceived: ", message)
   })
-
+  //socket.on('ping', n => console.log(n))
+  socket.on('disconnect', () => {
+    socket.emit('user-disconnected', users[socket.id])
+    console.log("disconnected from socket io")
+  })
 });
 
 
