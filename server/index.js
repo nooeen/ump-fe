@@ -4,21 +4,47 @@ const pino = require("express-pino-logger")();
 const route = require("./routes");
 const cors = require("cors");
 const db = require("./db");
-const { createServer } = require("http");
-const { Server } = require("socket.io");
+// const { createServer } = require("http");
+// const { Server } = require("socket.io");
 
 const app = express();
-const httpServer = createServer(app);
+//const httpServer = createServer(app);
 //const io = new Server(httpServer, { /* options */ });
 const io = require("socket.io")(3002, {
   cors: {
     origin: ["http://localhost:3000"],
   }
 });
+const users = {}
 io.on("connection", (socket) => {
   // ...
   console.log(socket.id)
+  console.log("count client ", io.engine.clientsCount)
+
+
+  socket.on("sendMessage", message => {
+    console.log("sendMessage: ", message)
+    io.emit('receive-message', message)
+  })
+
 });
+
+
+
+// io.on('connection', socket => {
+//   socket.on('new-user', name => {
+//     users[socket.id] = name
+//     socket.broadcast.emit('user-connected', name)
+//   })
+//   socket.on('send-chat-message', message => {
+//     socket.broadcast.emit('chat-message', { message: message, name: users[socket.id] })
+//   })
+//   socket.on('disconnect', () => {
+//     socket.broadcast.emit('user-disconnected', users[socket.id])
+//     delete users[socket.id]
+//   })
+// })
+
 
 //httpServer.listen(3002);
 

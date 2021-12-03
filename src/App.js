@@ -11,6 +11,7 @@ import StudentsBonusList from "pages/StudentsBonusList/StudentsBonusList";
 import StudentAdd from "./pages/StudentAdd/StudentAdd";
 import StudentInfo from "pages/StudentInfo/StudentInfo";
 import Notifications from "./pages/Notifications/Notifications";
+import Chat from "./pages/Chat/Chat";
 
 function App() {
   return (
@@ -47,7 +48,9 @@ function App() {
         <Route exact path="/notifications">
           <Notifications />
         </Route>
-        <Route exact path="/chat"></Route>
+        <Route exact path="/chat">
+          <Chat />
+        </Route>
       </Switch>
     </Router>
   );
