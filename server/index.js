@@ -18,13 +18,16 @@ const io = require("socket.io")(3002, {
 const users = {}
 io.on("connection", (socket) => {
   // ...
-  console.log(socket.id)
-  console.log("count client ", io.engine.clientsCount)
+  console.log("\nsocket id: ", socket.id)
+  console.log("count client: ", io.engine.clientsCount)
 
 
   socket.on("sendMessage", message => {
-    console.log("sendMessage: ", message)
+    console.log("\nsendMessage: ", message)
     io.emit('receive-message', message)
+  })
+  socket.on("confirmReceived", message => {
+    console.log("confirmReceived: ", message)
   })
 
 });
