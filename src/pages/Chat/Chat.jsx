@@ -1,9 +1,8 @@
 import {io} from "socket.io-client"
 
 export default function Chat() {
-  const messageContainer = document.getElementById('message-container');
   const socket = io('http://localhost:3002')
-  let id = 1;
+  var id = "";
   var message1 = ""
   socket.on('connect', () => {
     id = socket.id
@@ -11,12 +10,9 @@ export default function Chat() {
   })
   socket.on("receive-message", message => {
     message1 = message
+    appendMessage(message)
     socket.emit("confirmReceived", message)
   })
-
-  // socket.on('user-disconnected', name => {
-  //   appendMessage('${name} connected')
-  // })
 
   function send1(e) {
       e.preventDefault();
@@ -35,11 +31,11 @@ export default function Chat() {
   }
 
   function appendMessage(message) {
+    const messageContainer = document.getElementById('message-container')
     const messageElement = document.createElement('div');
     messageElement.innerText = message;
     messageContainer.append(messageElement);
   }
-
   // let count = 0;
   // setInterval(() => {
   //     socket.emit('ping', ++count)

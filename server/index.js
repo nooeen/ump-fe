@@ -24,7 +24,7 @@ io.on("connection", (socket) => {
   
   socket.on("sendMessage", message => {
     console.log("\nsendMessage: ", message)
-    socket.emit('receive-message', message)
+    socket.broadcast.emit('receive-message', message)
   })
   socket.on("confirmReceived", message => {
     console.log("confirmReceived: ", message)
