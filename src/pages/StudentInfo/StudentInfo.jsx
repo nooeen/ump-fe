@@ -11,7 +11,7 @@ import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
 import "./StudentInfo.css";
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -19,11 +19,11 @@ import CircularProgress from "@mui/material/CircularProgress";
 export default function StudentInfo() {
   const search = useLocation().search;
   const username = new URLSearchParams(search).get("username");
+  const history = useHistory();
   const [user, setUser] = useState();
   const [userDOB, setUserDOB] = useState();
   const [isBusy, setBusy] = useState(true);
   const [userWarning, setUserWarning] = useState("");
-  // const [userBonus, setUserBonus] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,6 +37,40 @@ export default function StudentInfo() {
     fetchData();
     return;
   }, []);
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const student_username = event.target.username.value;
+    const student_fullname = event.target.fullname.value;
+    const student_dob = event.target.dob.value;
+    const student_phone = event.target.student_phone.value;
+    const parent_phone = event.target.parent_phone.value;
+    const student_address = event.target.address.value;
+    const student_avatar = event.target.avatar.value;
+
+    //Update
+    if (
+      student_username !== "" &&
+      student_fullname !== "" &&
+      student_dob !== "" &&
+      student_phone !== "" &&
+      parent_phone !== "" &&
+      student_address !== "" &&
+      student_avatar !== ""
+    ) {
+      //Gọi API tạo documents
+      await StudentService.updateStudent(
+        student_username,
+        student_fullname,
+        student_dob,
+        student_phone,
+        parent_phone,
+        student_address,
+        student_avatar
+      );
+      history.go(0);
+    }
+  };
 
   return (
     <div>
@@ -173,13 +207,14 @@ export default function StudentInfo() {
                 </div>
                 <div className="userUpdate">
                   <h1 className="userUpdateTitle">Cập nhật thông tin</h1>
-                  <form className="userUpdateForm">
+                  <form className="userUpdateForm" onSubmit={handleSubmit}>
                     <div className="userUpdateLeft">
                       <div className="userUpdateItem">
                         <label>Mã sinh viên</label>
                         <input
                           type="text"
                           value={user.username}
+                          name="username"
                           className="userUpdateInput"
                           disabled
                         />
@@ -188,7 +223,19 @@ export default function StudentInfo() {
                         <label>Họ và tên</label>
                         <input
                           type="text"
+                          name="fullname"
                           defaultValue={user.fullname}
+                          className="userUpdateInput"
+                        />
+                      </div>
+                      <div className="userUpdateItem">
+                        <label>Ngày sinh</label>
+                        <input
+                          type="date"
+                          name="dob"
+                          defaultValue={new Date(user.dob)
+                            .toISOString()
+                            .substr(0, 10)}
                           className="userUpdateInput"
                         />
                       </div>
@@ -197,6 +244,7 @@ export default function StudentInfo() {
                         <input
                           type="text"
                           defaultValue={user.student_phone}
+                          name="student_phone"
                           className="userUpdateInput"
                         />
                       </div>
@@ -205,6 +253,7 @@ export default function StudentInfo() {
                         <input
                           type="text"
                           defaultValue={user.parent_phone}
+                          name="parent_phone"
                           className="userUpdateInput"
                         />
                       </div>
@@ -213,6 +262,7 @@ export default function StudentInfo() {
                         <input
                           type="text"
                           defaultValue={user.address}
+                          name="address"
                           className="userUpdateInput"
                         />
                       </div>
@@ -221,6 +271,7 @@ export default function StudentInfo() {
                         <input
                           type="text"
                           defaultValue={user.avatar}
+                          name="avatar"
                           className="userUpdateInput"
                         />
                       </div>
