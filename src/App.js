@@ -12,6 +12,7 @@ import StudentAdd from "./pages/StudentAdd/StudentAdd";
 import StudentInfo from "pages/StudentInfo/StudentInfo";
 import Notifications from "./pages/Notifications/Notifications";
 import Chat from "./pages/Chat/Chat";
+import ManagerInfo from "./pages/ManagerInfo/ManagerInfo";
 
 function App() {
   return (
@@ -51,6 +52,10 @@ function App() {
         <Route exact path="/chat">
           <Chat />
         </Route>
+        <Route exact path="/manager">
+          <ManagerInfo />
+        </Route>
+        <Route exact path="/chat"></Route>
       </Switch>
     </Router>
   );
