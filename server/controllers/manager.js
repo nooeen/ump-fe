@@ -52,7 +52,7 @@ class managerController {
           res.status(500).send("Internal Server Error");
           return;
         }
-        if (user.length === 0) {
+        if (user.length === 0 || user.role === "manager") {
           res.status(404).json("No manager match the name");
           return;
         }
@@ -94,6 +94,12 @@ class managerController {
       .catch(() => {
         res.status(404).send("Internal Server Error");
       });
+  }
+
+  updateManager(req, res, next) {
+    User.updateOne({ username: req.body.username }, req.body)
+      .then(() => res.json(req.body))
+      .catch(next);
   }
 }
 

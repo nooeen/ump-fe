@@ -3,6 +3,7 @@ import {
   ChatBubbleOutline,
   ForumOutlined,
   PersonOutline,
+  Person,
   NotificationsNone,
 } from "@mui/icons-material";
 import "./StudentSidebar.css";
@@ -37,7 +38,7 @@ export default function StudentSidebar() {
               Sinh viên
             </li>
             <li className="sidebarListItem" onClick={toManager}>
-              <PersonOutline className="sidebarIcon" />
+              <Person className="sidebarIcon" />
               Cố vấn
             </li>
           </ul>

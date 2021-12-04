@@ -11,6 +11,7 @@ const UserSchema = new mongoose.Schema({
   dob: { type: String },
   student_phone: { type: String },
   parent_phone: { type: String },
+  phone: {type: String},
   address: { type: String },
   avatar: { type: String },
   history: [{
