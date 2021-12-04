@@ -5,6 +5,7 @@ const student = require("./student.js");
 const manager = require("./manager.js");
 const email = require("./email.js");
 const forum = require("./forum.js");
+const chat = require("./chat.js");
 
 function route(app) {
   app.use(function (req, res, next) {
@@ -19,6 +20,7 @@ function route(app) {
   app.use("/api/data", data);
   app.use("/api/email", email);
   app.use("/api/forum", forum);
+  app.use("/api/chat", chat);
   app.use("/api", auth);
   app.use("/api", test);
 }
