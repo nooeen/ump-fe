@@ -26,6 +26,17 @@ class ManagerService {
       .then((res) => res.data);
     return result;
   }
+
+  async getCurrentManagerFromStudent() {
+    const query = JSON.parse(localStorage.getItem("user"));
+    const username = jwt(query.accessToken).username;
+    const result = await axios
+      .get(API_URL + "/api/manager/findfromstudent?username=" + username, {
+        headers: authHeader(),
+      })
+      .then((res) => res.data);
+    return result;
+  }
 }
 
 export default new ManagerService();

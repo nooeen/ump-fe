@@ -3,11 +3,13 @@ import { CalendarToday, PermIdentity, PhoneAndroid } from "@mui/icons-material";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import ManagerService from "../../services/manager.service";
+import AuthService from "../../services/auth.service";
 import "./ManagerInfo.css";
 import { useEffect, useState } from "react";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
+import StudentSidebar from "components/studentsidebar/StudentSidebar";
 
 export default function StudentInfo() {
   const [isManager, setIsManager] = useState(null);
@@ -16,15 +18,25 @@ export default function StudentInfo() {
   const [isBusy, setBusy] = useState(true);
 
   useEffect(() => {
+    if (AuthService.isStudent() && !AuthService.isManager()) {
+      setIsManager(false);
+    } else {
+      setIsManager(true);
+    }
     const fetchData = async () => {
-      const result = await ManagerService.getCurrentManager();
-      console.log(result);
-      await setUser(result);
-      await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
-      await setBusy(false);
+      if (isManager) {
+        const result = await ManagerService.getCurrentManager();
+        await setUser(result);
+        await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
+        await setBusy(false);
+      } else {
+        const result = await ManagerService.getCurrentManagerFromStudent();
+        await setUser(result);
+        await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
+        await setBusy(false);
+      }
     };
     fetchData();
-    return;
   }, []);
 
   console.log(user);
@@ -48,7 +60,7 @@ export default function StudentInfo() {
         <div>
           <Topbar />
           <div className="container">
-            <Sidebar />
+            {isManager ? <Sidebar /> : <StudentSidebar />}
             <div className="user">
               <div className="userContainer">
                 <div className="userShow">
@@ -82,49 +94,51 @@ export default function StudentInfo() {
                     ))}
                   </div>
                 </div>
-                <div className="userUpdate">
-                  <h1 className="userUpdateTitle">Cập nhật thông tin</h1>
-                  <form className="userUpdateForm">
-                    <div className="userUpdateLeft">
-                      <div className="userUpdateItem">
-                        <label>Tên đăng nhập</label>
-                        <input
-                          type="text"
-                          value={user.username}
-                          className="userUpdateInput"
-                          disabled
-                        />
+                {isManager ? (
+                  <div className="userUpdate">
+                    <h1 className="userUpdateTitle">Cập nhật thông tin</h1>
+                    <form className="userUpdateForm">
+                      <div className="userUpdateLeft">
+                        <div className="userUpdateItem">
+                          <label>Tên đăng nhập</label>
+                          <input
+                            type="text"
+                            value={user.username}
+                            className="userUpdateInput"
+                            disabled
+                          />
+                        </div>
+                        <div className="userUpdateItem">
+                          <label>Họ và tên</label>
+                          <input
+                            type="text"
+                            defaultValue={user.fullname}
+                            className="userUpdateInput"
+                          />
+                        </div>
+                        <div className="userUpdateItem">
+                          <label>Số điện thoại cá nhân</label>
+                          <input
+                            type="text"
+                            defaultValue={user.phone}
+                            className="userUpdateInput"
+                          />
+                        </div>
+                        <div className="userUpdateItem">
+                          <label>Avatar URL</label>
+                          <input
+                            type="text"
+                            defaultValue={user.avatar}
+                            className="userUpdateInput"
+                          />
+                        </div>
+                        <div className="userUpdateItem">
+                          <button className="userUpdateButton">Cập nhật</button>
+                        </div>
                       </div>
-                      <div className="userUpdateItem">
-                        <label>Họ và tên</label>
-                        <input
-                          type="text"
-                          defaultValue={user.fullname}
-                          className="userUpdateInput"
-                        />
-                      </div>
-                      <div className="userUpdateItem">
-                        <label>Số điện thoại cá nhân</label>
-                        <input
-                          type="text"
-                          defaultValue={user.phone}
-                          className="userUpdateInput"
-                        />
-                      </div>                      
-                      <div className="userUpdateItem">
-                        <label>Avatar URL</label>
-                        <input
-                          type="text"
-                          defaultValue={user.avatar}
-                          className="userUpdateInput"
-                        />
-                      </div>
-                      <div className="userUpdateItem">
-                        <button className="userUpdateButton">Cập nhật</button>
-                      </div>
-                    </div>
-                  </form>
-                </div>
+                    </form>
+                  </div>
+                ) : null}
               </div>
             </div>
           </div>

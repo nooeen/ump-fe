@@ -6,6 +6,8 @@ router.get("/list", managerController.listManager);
 
 router.get("/find", managerController.findManager);
 
+router.get("/findfromstudent", managerController.findManagerFromStudent);
+
 router.get("/list/classes", managerController.listManagerClasses);
 
 module.exports = router;

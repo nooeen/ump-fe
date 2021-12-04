@@ -16,6 +16,11 @@ export default function StudentSidebar() {
     history.push(path);
   };
 
+  const toManager = () => {
+    let path = `/manager`;
+    history.push(path);
+  };
+
   const toNotifications = () => {
     let path = "/notifications";
     history.push(path);
@@ -25,11 +30,15 @@ export default function StudentSidebar() {
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">HỒ SƠ SINH VIÊN</h3>
+          <h3 className="sidebarTitle">HỒ SƠ</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem" onClick={toStudentHome}>
               <PersonOutline className="sidebarIcon" />
-              Hồ sơ
+              Sinh viên
+            </li>
+            <li className="sidebarListItem" onClick={toManager}>
+              <PersonOutline className="sidebarIcon" />
+              Cố vấn
             </li>
           </ul>
         </div>
