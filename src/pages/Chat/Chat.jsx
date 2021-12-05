@@ -1,5 +1,9 @@
 import {io} from "socket.io-client"
+import "./Chat.css";
 import ChatService from "../../services/chat.service";
+import Topbar from "../../components/topbar/Topbar";
+import Conversation from "../../components/chat/conversation";
+import Message from "../../components/chat/message";
 import axios from "axios";
 
 const API_URL = process.env.REACT_APP_URL;
@@ -107,7 +111,7 @@ export default function Chat() {
 
     return (
         <div>
-            <div id="message-container"></div>
+            {/* <div id="message-container"></div>
             <form method="get" name="form1" id="form1" onSubmit={send}>
                 <input type="text" name="m1"/>
                 <button type="submit" form="form1" value="S1">Send Message To</button>
@@ -126,7 +130,63 @@ export default function Chat() {
             <form method="get" name="api" id="api" onSubmit={getUserInfor}>
                 <input type="text" name="api"/>
                 <button type="submit" form="api" value="S2">api test</button>
-            </form>
+            </form> */}
+            <Topbar />
+            <div className="messenger">
+                <div className="chatMenu">
+                    <div class="chatMenuWrapper">
+                        <input placeholder="search for someone" className="chatMenuInput"/>
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation />
+                        <Conversation /> 
+                    </div>
+                </div>
+                <div className="chatBox">
+                    <div class="chatBoxWrapper">
+                        <div className="chatBoxTop">
+                            <Message />
+                            <Message own={true}/>
+                            <Message />
+                            <Message />
+                            <Message own={true}/>
+                            <Message own={true}/>
+                            <Message />
+                            <Message own={true}/>
+                            <Message />
+                            <Message own={true}/>
+                            <Message own={true}/>
+                            <Message />
+                            <Message own={true}/>
+                        </div>
+                        <div className="chatBoxBottom">
+                            <textarea className="chatMessageInput" placeholder="write something"></textarea>
+                            <button className="chatSubmitButton">Send</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     );
 }
