@@ -1,4 +1,3 @@
-const Conversation = require("../models/Conversation");
 const Message = require("../models/Message.js");
 
 class ChatController {
@@ -29,12 +28,21 @@ class ChatController {
     }
 
     //api/chat/getListMessage?sender=ngocnd
-    getListMessage(req, res) {
+    getListMessager(req, res) {
         Message.find({
             sender: req.query.sender,
         })
         .then((messages, err) => {
-            res.status(200).json(messages);
+            var receiver = [];
+            for(let i = 0; i< messages.length; i++) {
+                receiver.push(messages[i].receiver)
+                messages[i] = {
+                    receiver: messages[i].receiver,
+                };
+            }
+            const unique = Array.from(new Set(receiver))
+            //res.status(200).json(messages);
+            res.status(200).send(unique);
         })
         .catch((err) => {
             res.status(500).json(err);
