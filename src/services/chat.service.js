@@ -1,7 +1,19 @@
-import socketIOClient from "socket.io-client";
-const serverEndpoint = "http://localhost:3000";
+import axios from "axios";
+import authHeader from "./auth-header";
+import jwt from "jwt-decode";
 
+const API_URL = process.env.REACT_APP_URL;
 
-export const socket = socketIOClient(serverEndpoint, {
-    transports: ['websocket']
-});
+class ChatService {
+    async userConv(userID) {
+        const res = await axios
+        .get(API_URL + "/api/chat/userConv?userId=" + userID)
+        .then((res) => {
+            return res
+        })
+        
+        return res
+    }
+  }
+  
+  export default new ChatService();

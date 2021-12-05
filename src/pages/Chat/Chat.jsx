@@ -1,4 +1,8 @@
 import {io} from "socket.io-client"
+import ChatService from "../../services/chat.service";
+import axios from "axios";
+
+const API_URL = process.env.REACT_APP_URL;
 
 export default function Chat() {
     var messageContainer = document.getElementById('message-container');
@@ -44,9 +48,23 @@ export default function Chat() {
         appendMessage(message1)
         socket.emit("leaveRoom", e.target.leave.value)
     }
+    function userConv(e) {
+        e.preventDefault();
+        ChatService.userConv(e.target.api.value)
+        .then((result) => {
+            message1 = result.data[0].members[0] + result.data[0].members[1]
+            appendMessage(message1)
+            
+            socket.emit('sendMessage', message1)
+        })
+        .catch((error) => {
+            socket.emit('sendMessage', error.message)
+        })
+    }
 
     //display messages
     function appendMessage(message) {
+        console.log("send")
         messageContainer = document.getElementById('message-container')
         const messageElement = document.createElement('div');
         messageElement.innerText = message;
@@ -78,6 +96,10 @@ export default function Chat() {
             <form method="get" name="form3" id="form3" onSubmit={leaveRoom}>
                 <input type="text" name="leave"/>
                 <button type="submit" form="form3" value="S3">leave room</button>
+            </form>
+            <form method="get" name="api" id="api" onSubmit={userConv}>
+                <input type="text" name="api"/>
+                <button type="submit" form="api" value="S2">api test</button>
             </form>
         </div>
     );

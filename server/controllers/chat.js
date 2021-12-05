@@ -22,8 +22,8 @@ class ChatController {
     userConv(req, res) {
         Conversation.find({members: { $in: [req.query.userId] },})
         .then((conversation, err) => {
-            console.log("ID ", req.query.userId)
-            res.status(200).json(conversation);
+            //console.log("conversation found: ")
+            res.status(200).send(conversation);
         })
         .catch((err) => {
             res.status(500).json(err);
