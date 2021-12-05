@@ -62,19 +62,6 @@ export default function Chat() {
     appendMessage(message1);
     socket.emit("leaveRoom", e.target.leave.value);
   }
-  function userConv(e) {
-    e.preventDefault();
-    ChatService.userConv(e.target.api.value)
-      .then((result) => {
-        message1 = result.data[0].members[0] + result.data[0].members[1];
-        appendMessage(message1);
-
-        socket.emit("sendMessage", message1);
-      })
-      .catch((error) => {
-        socket.emit("sendMessage", error.message);
-      });
-  }
 
   function getUserInfor(e) {
     e.preventDefault();
