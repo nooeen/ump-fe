@@ -36,12 +36,8 @@ class ChatController {
             var receiver = [];
             for(let i = 0; i< messages.length; i++) {
                 receiver.push(messages[i].receiver)
-                messages[i] = {
-                    receiver: messages[i].receiver,
-                };
             }
             const unique = Array.from(new Set(receiver))
-            //res.status(200).json(messages);
             res.status(200).send(unique);
         })
         .catch((err) => {
