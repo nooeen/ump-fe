@@ -62,6 +62,18 @@ export default function Chat() {
         })
     }
 
+    function getUserInfor(e){
+        e.preventDefault();
+        ChatService.getUserInfor()
+        .then((user) => {
+            appendMessage(user)
+            socket.emit('sendMessage',user)
+        })
+        .catch((error) => {
+            socket.emit('sendMessage', error.message)
+        })
+    }
+
     //display messages
     function appendMessage(message) {
         console.log("send")
@@ -70,6 +82,7 @@ export default function Chat() {
         messageElement.innerText = message;
         messageContainer.append(messageElement);
     }
+
 
     //hotkeys for disconnect and reconnect (testing purpose)
     document.addEventListener('keydown', e => {
@@ -97,7 +110,7 @@ export default function Chat() {
                 <input type="text" name="leave"/>
                 <button type="submit" form="form3" value="S3">leave room</button>
             </form>
-            <form method="get" name="api" id="api" onSubmit={userConv}>
+            <form method="get" name="api" id="api" onSubmit={getUserInfor}>
                 <input type="text" name="api"/>
                 <button type="submit" form="api" value="S2">api test</button>
             </form>

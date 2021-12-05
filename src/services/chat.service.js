@@ -14,6 +14,11 @@ class ChatService {
         
         return res
     }
+    async getUserInfor() {
+        const query = JSON.parse(localStorage.getItem("user"));
+        const username = jwt(query.accessToken).username;
+        return username
+    }
   }
   
   export default new ChatService();
