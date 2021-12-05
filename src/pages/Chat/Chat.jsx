@@ -107,7 +107,6 @@ export default function Chat() {
 
   return (
     <div>
-      <div id="message-container"></div>
       <form method="get" name="form1" id="form1" onSubmit={send}>
         <input type="text" name="m1" />
         <button type="submit" form="form1" value="S1">
@@ -157,7 +156,7 @@ export default function Chat() {
           <div className="chatBoxWrapper">
             <div className="chatBoxTop">
               {/* <Message />
-              <Message own={true} />
+              <Message own={true} content="jdifjsiofdj" />
               <Message />
               <Message />
               <Message own={true} />
@@ -169,6 +168,7 @@ export default function Chat() {
               <Message own={true} />
               <Message />
               <Message own={true} /> */}
+              <div id="message-container"></div>
             </div>
             <div className="chatBoxBottom">
               <textarea
