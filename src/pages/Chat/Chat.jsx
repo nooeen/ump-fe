@@ -107,9 +107,9 @@ export default function Chat() {
 
   return (
     <div>
-      <form method="get" name="form1" id="form1" onSubmit={send}>
-        <input type="text" name="m1" />
-        <button type="submit" form="form1" value="S1">
+      {/* <form method="get" name="form1" id="form1" onSubmit={send}>
+        <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
+        <button className="chatSubmitButton" type="submit" form="form1" value="S1">
           Send Message To
         </button>
         <input type="text" name="join" />
@@ -119,13 +119,12 @@ export default function Chat() {
         <button type="submit" form="api" value="S2">
           api test
         </button>
-      </form>
+      </form> */}
       <Topbar />
       <div className="messenger">
         <div className="chatMenu">
           <div className="chatMenuWrapper">
             <input placeholder="search for someone" className="chatMenuInput" />
-            {/* <Conversation />
             <Conversation />
             <Conversation />
             <Conversation />
@@ -149,7 +148,8 @@ export default function Chat() {
             <Conversation />
             <Conversation />
             <Conversation />
-            <Conversation /> */}
+            <Conversation />
+            <Conversation />
           </div>
         </div>
         <div className="chatBox">
@@ -171,11 +171,15 @@ export default function Chat() {
               <div id="message-container"></div>
             </div>
             <div className="chatBoxBottom">
-              <textarea
-                className="chatMessageInput"
-                placeholder="write something"
-              ></textarea>
-              <button className="chatSubmitButton">Send</button>
+              {/* <textarea className="chatMessageInput" placeholder="write something"></textarea>
+              <button className="chatSubmitButton">Send</button> */}
+              <form method="get" name="form1" id="form1" onSubmit={send}>
+                <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
+                <button className="chatSubmitButton" type="submit" form="form1" value="S1">
+                  Send Message To
+                </button>
+                <input type="text" name="join" />
+              </form>
             </div>
           </div>
         </div>
