@@ -45,6 +45,38 @@ class managerController {
       });
   }
 
+  findManagerFromStudent(req, res) {
+    User.findOne({ username: req.query.username })
+      .then((user, err) => {
+        if (err) {
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        if (user.length === 0 || user.role === "manager") {
+          res.status(404).json("No manager match the name");
+          return;
+        }
+        User.findOne({ classes: user.class, role: "manager" })
+          .then((user, err) => {
+            if (err) {
+              res.status(500).send("Internal Server Error");
+              return;
+            }
+            if (user.length === 0) {
+              res.status(404).json("No manager match the name");
+              return;
+            }
+            res.status(200).json(user);
+          })
+          .catch(() => {
+            res.status(404).send("Internal Server Error");
+          });
+      })
+      .catch(() => {
+        res.status(404).send("Internal Server Error");
+      });
+  }
+
   listManagerClasses(req, res) {
     User.findOne({ username: req.query.username })
       .select({ classes: 1, _id: 0 })
@@ -62,6 +94,12 @@ class managerController {
       .catch(() => {
         res.status(404).send("Internal Server Error");
       });
+  }
+
+  updateManager(req, res, next) {
+    User.updateOne({ username: req.body.username }, req.body)
+      .then(() => res.json(req.body))
+      .catch(next);
   }
 }
 

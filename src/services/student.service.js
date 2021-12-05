@@ -34,6 +34,31 @@ class StudentService {
     return;
   }
 
+  async updateStudent(
+    student_username,
+    student_fullname,
+    student_dob,
+    student_phone,
+    parent_phone,
+    student_address,
+    student_avatar
+  ) {
+    await axios.post(
+      API_URL + "/api/student/update",
+      {
+        username: student_username,
+        fullname: student_fullname,
+        dob: student_dob,
+        student_phone: student_phone,
+        parent_phone: parent_phone,
+        address: student_address,
+        avatar: student_avatar,
+      },
+      { headers: authHeader() }
+    );
+    return;
+  }
+
   async deleteStudent(username) {
     await axios.get(API_URL + "/api/student/delete?username=" + username, {
       headers: authHeader(),
