@@ -15,10 +15,13 @@ class ChatController {
 
     //api/chat/getMessage?sender=ngocnd&receiver=minhpv
     getMessage(req, res) {
-        Message.find({
+        Message.find({$or: [{
             sender: req.query.sender,
             receiver: req.query.receiver,
-        })
+        }, {
+            receiver: req.query.sender,
+            sender: req.query.receiver,
+        }]})
         .then((messages, err) => {
             res.status(200).json(messages);
         })
