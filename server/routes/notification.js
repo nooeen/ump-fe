@@ -1,13 +1,13 @@
 const express = require("express");
 const router = express.Router();
 const notificationController = require("../controllers/notification");
-const middlewares = require("../middlewares");
+// const middlewares = require("../middlewares");
 
 router.get("/list", notificationController.list);
 
-// router.post("/add", notificationController.add);
+router.post("/add", notificationController.add);
 
-// router.get("/delete", notificationController.delete);
+router.get("/delete", notificationController.delete);
 
 // router.get("/email", notificationController.email);
 

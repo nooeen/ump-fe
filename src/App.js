@@ -11,6 +11,7 @@ import StudentsBonusList from "pages/StudentsBonusList/StudentsBonusList";
 import StudentAdd from "./pages/StudentAdd/StudentAdd";
 import StudentInfo from "pages/StudentInfo/StudentInfo";
 import Notifications from "./pages/Notifications/Notifications";
+import NotificationAdd from "./pages/NotificationAdd/NotificationAdd";
 import Chat from "./pages/Chat/Chat";
 import ManagerInfo from "./pages/ManagerInfo/ManagerInfo";
 
@@ -49,6 +50,9 @@ function App() {
         <Route exact path="/notifications">
           <Notifications />
         </Route>
+        <Route exact path="/notification/add">
+          <NotificationAdd />
+          </Route>
         <Route exact path="/chat">
           <Chat />
         </Route>
