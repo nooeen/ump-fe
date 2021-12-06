@@ -14,6 +14,7 @@ import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
 import EmailService from "../../services/email.service";
+import AuthService from "../../services/auth.service";
 
 export default function StudentsBonusList() {
   const [data, setData] = useState([]);
@@ -71,7 +72,11 @@ export default function StudentsBonusList() {
   };
 
   useEffect(() => {
-    fetchData();
+    if (!AuthService.isManager()) {
+      history.push("/login");
+    } else {
+      fetchData();
+    }
     return;
   }, []);
 

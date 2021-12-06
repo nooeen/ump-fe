@@ -12,12 +12,15 @@ import StudentService from "../../services/student.service";
 import "./StudentInfo.css";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
+import AuthService from "../../services/auth.service";
 
 export default function StudentInfo() {
   const search = useLocation().search;
+  const history = useHistory();
   const username = new URLSearchParams(search).get("username");
   const [user, setUser] = useState();
   const [userDOB, setUserDOB] = useState();
@@ -26,15 +29,19 @@ export default function StudentInfo() {
   // const [userBonus, setUserBonus] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
-      const result = await StudentService.getStudent(username);
-      console.log(result);
-      await setUser(result);
-      await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
-      await setUserWarning(await StudentService.getWarningContext(username));
-      await setBusy(false);
-    };
-    fetchData();
+    if (!AuthService.isManager()) {
+      history.push("/login");
+    } else {
+      const fetchData = async () => {
+        const result = await StudentService.getStudent(username);
+        console.log(result);
+        await setUser(result);
+        await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
+        await setUserWarning(await StudentService.getWarningContext(username));
+        await setBusy(false);
+      };
+      fetchData();
+    }
     return;
   }, []);
 

@@ -11,6 +11,7 @@ import CircularProgress from "@mui/material/CircularProgress";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentService from "../../services/student.service";
+import AuthService from "../../services/auth.service";
 
 export default function StudentsList() {
   const [data, setData] = useState([]);
@@ -51,7 +52,11 @@ export default function StudentsList() {
   };
 
   useEffect(() => {
-    fetchData();
+    if (!AuthService.isManager()) {
+      history.push("/login");
+    } else {
+      fetchData();
+    }
     return;
   }, []);
 

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import "./Notifications.css";
 import Notification from "../../components/notification/notification";
 import Topbar from "../../components/topbar/Topbar";
@@ -9,9 +10,13 @@ import AuthService from "../../services/auth.service";
 
 export default function Notifications() {
   const [isManager, setIsManager] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     setIsManager(false);
+    if (!AuthService.isUser()) {
+      history.push("/login");
+    }
     if (AuthService.isManager()) {
       setIsManager(true);
     }
