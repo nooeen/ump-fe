@@ -5,6 +5,7 @@ import Topbar from "../../components/topbar/Topbar";
 import Conversation from "../../components/chat/conversation";
 import Message from "../../components/chat/message";
 import axios from "axios";
+import { useEffect, useState } from "react";
 
 const API_URL = process.env.REACT_APP_URL;
 const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
@@ -14,6 +15,24 @@ export default function Chat() {
   const socket = io(SOCKET_URL);
   var id;
   var message1;
+
+  const [user, setUser] = useState();
+  const [conversations, setConversations] = useState();
+
+
+  useEffect(()=>{
+    const fetchData = async () => {
+      const result = await ChatService.getUserInfor();
+      await setUser(result);
+      await setConversations(await ChatService.getListMessager(result.username));
+    };
+    fetchData();
+    return;
+  }, []);
+
+  if(user){
+    console.log(conversations);
+  }
 
   //display client's ID
   socket.on("connect", () => {
@@ -95,19 +114,6 @@ export default function Chat() {
 
   return (
     <div>
-      {/* <form method="get" name="form1" id="form1" onSubmit={send}>
-        <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
-        <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-          Send Message To
-        </button>
-        <input type="text" name="join" />
-      </form>
-      <form method="get" name="api" id="api" onSubmit={getUserInfor}>
-        <input type="text" name="api" />
-        <button type="submit" form="api" value="S2">
-          api test
-        </button>
-      </form> */}
       <Topbar />
       <div>
         <div className="messenger">
