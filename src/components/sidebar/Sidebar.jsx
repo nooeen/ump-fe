@@ -104,10 +104,10 @@ export default function Sidebar() {
               <ChatBubbleOutline className="sidebarIcon" />
               Chat
             </li>
-            <li className="sidebarListItem" onClick={toForum}>
+            {/* <li className="sidebarListItem" onClick={toForum}>
               <ForumOutlined className="sidebarIcon" />
               Diễn đàn
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

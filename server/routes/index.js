@@ -6,6 +6,7 @@ const manager = require("./manager.js");
 const email = require("./email.js");
 const forum = require("./forum.js");
 const chat = require("./chat.js");
+const notification = require("./notification.js");
 
 function route(app) {
   app.use(function (req, res, next) {
@@ -21,6 +22,7 @@ function route(app) {
   app.use("/api/email", email);
   app.use("/api/forum", forum);
   app.use("/api/chat", chat);
+  app.use("/api/notification", notification);
   app.use("/api", auth);
   app.use("/api", test);
 }

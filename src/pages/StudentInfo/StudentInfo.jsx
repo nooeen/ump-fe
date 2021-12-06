@@ -158,7 +158,7 @@ export default function StudentInfo() {
                       <span className="userShowTitle">Cảnh báo</span>
                     ) : null}
                     {userWarning !== ""
-                      ? userWarning.split("\n").map((e) => <p>{e}</p>)
+                      ? userWarning.split("\n").map((e) => <p key={e}>{e}</p>)
                       : null}
                   </div>
                 </div>
