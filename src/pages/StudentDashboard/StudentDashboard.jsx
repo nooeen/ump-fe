@@ -179,7 +179,7 @@ export default function StudentDashboard() {
                                   <b>Số tín chỉ: </b>
                                 </span>
                                 <span className="userShowInfoTitle">
-                                  {user.currentCredits}
+                                  {user.currentCredits} / 138
                                 </span>
                               </div>
                             </div>
@@ -223,7 +223,7 @@ export default function StudentDashboard() {
                                           <b>Số tín chỉ: </b>
                                         </span>
                                         <span className="userShowInfoTitle">
-                                          {term.credits}
+                                          {term.credit}
                                         </span>
                                       </div>
                                     </div>
