@@ -22,7 +22,7 @@ export default function Chat() {
   });
   socket.on("idconnect", (id) => {
     message1 = "id: " + id;
-    appendMessage(message1);
+    //appendMessage(message1);
   });
   //send and receive user
   socket.on("receive-message", (message) => {
@@ -130,7 +130,7 @@ export default function Chat() {
 
   return (
     <div>
-      <div id="message-container"></div>
+      {/* <div id="message-container"></div>
       <form method="get" name="form1" id="form1" onSubmit={send}>
         <input type="text" name="m1"/>
         <button type="submit" form="form1" value="S1">Send Message To</button>
@@ -150,67 +150,37 @@ export default function Chat() {
       <form method="get" name="getMessage" id="getMessage" onSubmit={getMessage}>
         <input type="text" name="user"/>
         <button type="submit" form="getMessage" value="S3">get message</button>
-      </form>
-
-  </div>
+      </form> */}
+      <Topbar />
+      <div>
+        <div className="messenger">
+          <div className="chatMenu">
+            <div className="chatMenuWrapper">
+              {/* <input placeholder="search for someone" className="chatMenuInput" /> */}
+              <Conversation name="người 1"/>
+              <Conversation name="người 2"/>
+            </div>
+            </div>
+          <div className="chatBox">
+            <div className="chatBoxWrapper">
+              <div id="message-container" className="chatBoxTop">
+                <Message own={true} content="i am the sender" time="2 hour ago" />
+                <Message content="i am the receiver" time="1 hour ago"></Message>
+              </div>
+                <div className="chatBoxBottom">
+                  <form method="get" name="form1" id="form1" onSubmit={send}>
+                    <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
+                    <button className="chatSubmitButton" type="submit" form="form1" value="S1">
+                      Send Message
+                    </button>
+                  </form>
+                </div>
+              </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }
 
 
-{/* <div> */}
-      {/* <form method="get" name="form1" id="form1" onSubmit={send}>
-        <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
-        <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-          Send Message To
-        </button>
-        <input type="text" name="join" />
-      </form>
-      <form method="get" name="api" id="api" onSubmit={getUserInfor}>
-        <input type="text" name="api" />
-        <button type="submit" form="api" value="S2">
-          api test
-        </button>
-      </form> */}
-    //   <Topbar />
-    //   <div className="messenger">
-    //     <div className="chatMenu">
-    //       <div className="chatMenuWrapper">
-    //         <input placeholder="search for someone" className="chatMenuInput" />
-    //         <Conversation />
-    //         <Conversation />
-    //       </div>
-    //     </div>
-    //     <div className="chatBox">
-    //       <div className="chatBoxWrapper">
-    //         <div id="message-container" className="chatBoxTop">
-    //           <Message own={true} content="i am the sender" />
-    //           <Message content="i am the receiver"></Message>
-    //         </div>
-    //         <div className="chatBoxBottom">
-    //           <form method="get" name="form1" id="form1" onSubmit={send}>
-    //             <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
-    //             <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-    //               Send Message
-    //             </button>
-    //           </form>
-    //         </div>
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-
-
-
-{/* <div>
-            <div id="message-container"></div>
-            <form method="get" name="form1" id="form1" onSubmit={send}>
-                <input type="text" name="m1"/>
-                <button type="submit" form="form1" value="S1">Send Message To</button>
-                <input type="text" name="join"/>
-            </form>
-
-            <form method="get" name="api" id="api" onSubmit={getUserInfor}>
-                <input type="text" name="api"/>
-                <button type="submit" form="api" value="S2">api test</button>
-            </form>
-        </div> */}
