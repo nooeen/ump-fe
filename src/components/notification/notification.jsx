@@ -31,7 +31,7 @@ export default function Notification(props) {
       </CardContent>
       {props.isManager ? (
         <CardActions>
-          <Button size="small">Gửi Email</Button>
+          {/* <Button size="small">Gửi Email</Button> */}
           <Button size="small" onClick={handleDelete}>
             Xóa thông báo
           </Button>
