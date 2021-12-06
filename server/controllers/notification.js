@@ -11,9 +11,27 @@ class notificationController {
     });
   }
 
-  add(req, res) {}
+  add(req, res) {
+    const notification = new Notification();
+    notification.title = req.body.title;
+    notification.class = req.body.class;
+    notification.content = req.body.content;
+    notification
+      .save()
+      .then(() => res.json(notification))
+      .catch((error) => {
+        res.status(200).send("Username already exists");
+      });
+  }
 
-  delete(req, res) {}
+  delete(req, res) {
+    Notification.findOneAndRemove({ _id: req.query.id }, (err, docs) => {
+      if (err) {
+        console.log(err);
+      }
+    });
+    res.status(200);
+  }
 }
 
 module.exports = new notificationController();

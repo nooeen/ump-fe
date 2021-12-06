@@ -1,5 +1,5 @@
 const User = require("../models/User.js");
-const Post = require("../models/Forum.js");
+// const Post = require("../models/Forum.js");
 
 function rand_between(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);

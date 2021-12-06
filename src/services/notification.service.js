@@ -41,9 +41,23 @@ class NotificationService {
     return result;
   }
 
-  async add() {}
+  async add(noti_title, noti_class, noti_content) {
+    const result = await axios.post(
+      API_URL + '/api/notification/add',
+      { title: noti_title, class: noti_class, content: noti_content },
+      {
+        headers: authHeader(),
+      }
+    ).then((res) => res.data);
+    return result;
+  }
 
-  async delete() {}
+  async delete(id) {
+    await axios.get(API_URL + "/api/notification/delete?id=" + id, {
+      headers: authHeader(),
+    });
+    return;
+  }
 }
 
 export default new NotificationService();

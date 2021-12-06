@@ -9,10 +9,12 @@ import StudentSidebar from "../../components/studentsidebar/StudentSidebar";
 // import StudentService from "../../services/student.service";
 import AuthService from "../../services/auth.service";
 import NotificationService from "../../services/notification.service";
+import { useHistory } from "react-router-dom";
 
 export default function Notifications() {
   const [isManager, setIsManager] = useState(false);
   const [notifications, setNotifications] = useState([]);
+  const history = useHistory();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +31,11 @@ export default function Notifications() {
     fetchData();
   }, []);
 
+  const toAddNotification = () => {
+    const path = "/notification/add";
+    history.push(path);
+  };
+
   return (
     <div>
       <Topbar />
@@ -39,12 +46,15 @@ export default function Notifications() {
           {isManager ? (
             <div>
               <Stack direction="row" spacing={2} className="stack">
-                <button className="button">THÊM THÔNG BÁO</button>
+                <button className="button" onClick={toAddNotification}>
+                  THÊM THÔNG BÁO
+                </button>
               </Stack>
             </div>
           ) : null}
           {notifications.map((e) => (
             <Notification
+              noti_id={e._id}
               title={e.title}
               class={e.class}
               content={e.content}
