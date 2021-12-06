@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React from "react";
 import "./StudentsList.css";
 import { DataGrid } from "@mui/x-data-grid";

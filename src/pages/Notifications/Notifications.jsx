@@ -10,7 +10,6 @@ import StudentSidebar from "../../components/studentsidebar/StudentSidebar";
 // import StudentService from "../../services/student.service";
 import AuthService from "../../services/auth.service";
 import NotificationService from "../../services/notification.service";
-import { useHistory } from "react-router-dom";
 
 export default function Notifications() {
   const [isManager, setIsManager] = useState(false);
