@@ -23,6 +23,13 @@ class ChatController {
             sender: req.query.receiver,
         }]})
         .then((messages, err) => {
+            for(let i = 0; i < messages.length; i++){
+                messages[i] = {
+                    sender: messages[i].sender,
+                    receiver: messages[i].receiver,
+                    text: messages[i].text,
+                }
+            }
             res.status(200).json(messages);
         })
         .catch((err) => {
@@ -40,7 +47,7 @@ class ChatController {
             for(let i = 0; i< messages.length; i++) {
                 receiver.push(messages[i].receiver)
             }
-            const unique = Array.from(new Set(receiver))
+            const unique = Array.from(new Set(receiver)).reverse()
             res.status(200).send(unique);
         })
         .catch((err) => {
