@@ -11,7 +11,7 @@ export default function Message(props) {
                 <p className="messageText">{props.content}</p>
             </div>
             <div className="messageBottom">
-                1 hour ago
+                {props.time}
             </div>
         </div>
     )
