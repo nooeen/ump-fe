@@ -1,7 +1,7 @@
 import React from "react";
 import {
   ChatBubbleOutline,
-  ForumOutlined,
+  // ForumOutlined,
   PersonOutline,
   Person,
   NotificationsNone,
@@ -54,10 +54,10 @@ export default function StudentSidebar() {
               <ChatBubbleOutline className="sidebarIcon" />
               Chat
             </li>
-            <li className="sidebarListItem">
+            {/* <li className="sidebarListItem">
               <ForumOutlined className="sidebarIcon" />
               Diễn đàn
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

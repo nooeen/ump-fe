@@ -2,7 +2,7 @@ import React from "react";
 import {
   LineStyle,
   ChatBubbleOutline,
-  ForumOutlined,
+  // ForumOutlined,
   GradeOutlined,
   PersonOutline,
   NotInterested,
@@ -50,10 +50,10 @@ export default function Sidebar() {
     history.push(path);
   };
 
-  const toForum = () => {
-    let path = "/forum";
-    history.push(path);
-  };
+  // const toForum = () => {
+  //   let path = "/forum";
+  //   history.push(path);
+  // };
 
   return (
     <div className="sidebar">
@@ -104,10 +104,10 @@ export default function Sidebar() {
               <ChatBubbleOutline className="sidebarIcon" />
               Chat
             </li>
-            <li className="sidebarListItem" onClick={toForum}>
+            {/* <li className="sidebarListItem" onClick={toForum}>
               <ForumOutlined className="sidebarIcon" />
               Diễn đàn
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

@@ -21,6 +21,7 @@ export default function StudentInfo() {
   const username = new URLSearchParams(search).get("username");
   const history = useHistory();
   const [user, setUser] = useState();
+  const [QRURL, setQRURL] = useState("");
   const [userDOB, setUserDOB] = useState();
   const [isBusy, setBusy] = useState(true);
   const [userWarning, setUserWarning] = useState("");
@@ -28,10 +29,13 @@ export default function StudentInfo() {
   useEffect(() => {
     const fetchData = async () => {
       const result = await StudentService.getStudent(username);
-      console.log(result);
       await setUser(result);
       await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
       await setUserWarning(await StudentService.getWarningContext(username));
+      await setQRURL(
+        "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://localhost:3000/student/info?username=" +
+          username
+      );
       await setBusy(false);
     };
     fetchData();
@@ -103,6 +107,16 @@ export default function StudentInfo() {
                     </div>
                   </div>
                   <div className="userShowBottom">
+                    <span className="userShowTitle">Mã QR</span>
+                    <div className="userShowInfo">
+                      <img
+                        src={QRURL}
+                        style={{ width: "30%" }}
+                        alt="qrcode"
+                      />
+                      <br />
+                    </div>
+
                     <span className="userShowTitle">Thông tin cơ bản</span>
                     <div className="userShowInfo">
                       <PermIdentity className="userShowIcon" />
@@ -158,7 +172,7 @@ export default function StudentInfo() {
                       <span className="userShowTitle">Cảnh báo</span>
                     ) : null}
                     {userWarning !== ""
-                      ? userWarning.split("\n").map((e) => <p>{e}</p>)
+                      ? userWarning.split("\n").map((e) => <p key={e}>{e}</p>)
                       : null}
                   </div>
                 </div>
