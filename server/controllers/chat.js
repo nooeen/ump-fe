@@ -44,10 +44,10 @@ class ChatController {
         })
         .then((messages, err) => {
             var receiver = [];
-            for(let i = 0; i< messages.length; i++) {
+            for(let i = messages.length - 1; i >= 0; i--) {
                 receiver.push(messages[i].receiver)
             }
-            const unique = Array.from(new Set(receiver)).reverse()
+            const unique = Array.from(new Set(receiver))
             res.status(200).send(unique);
         })
         .catch((err) => {

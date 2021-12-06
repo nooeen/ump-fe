@@ -82,6 +82,32 @@ export default function Chat() {
       });
   }
 
+  function getListMessager(e) {
+    e.preventDefault()
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.getListMessager(info.username)
+      .then((messages) => {
+        for(let i = 0; i < messages.data.length; i++) {
+          appendMessage(messages.data[i])
+        }
+      })
+    })
+  }
+
+  function getMessage(e) {
+    e.preventDefault()
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.getMessage(info.username)
+      .then((messages) => {
+        for(let i = 0; i < messages.data.length; i++) {
+          appendMessage(messages.data[i])
+        }
+      })
+    })
+  }
+
   //display messages
   function appendMessage(message) {
     console.log("send");
@@ -102,15 +128,26 @@ export default function Chat() {
     <div>
       <div id="message-container"></div>
       <form method="get" name="form1" id="form1" onSubmit={send}>
-          <input type="text" name="m1"/>
-          <button type="submit" form="form1" value="S1">Send Message To</button>
-          <input type="text" name="name"/>
+        <input type="text" name="m1"/>
+        <button type="submit" form="form1" value="S1">Send Message To</button>
+        <input type="text" name="name"/>
       </form>
 
       <form method="get" name="api" id="api" onSubmit={getUserInfor}>
-                <input type="text" name="api"/>
-                <button type="submit" form="api" value="S2">api test</button>
-            </form>
+        <input type="text" name="api"/>
+        <button type="submit" form="api" value="S2">user name</button>
+      </form>
+
+      <form method="get" name="getListMessager" id="getListMessager" onSubmit={getListMessager}>
+        <input type="text" name="message"/>
+        <button type="submit" form="getListMessager" value="S3">get list message user</button>
+      </form>
+
+      <form method="get" name="getMessage" id="getMessage" onSubmit={getMessage}>
+        <input type="text" name="user"/>
+        <button type="submit" form="getMessage" value="S3">get message</button>
+      </form>
+
   </div>
   );
 }
