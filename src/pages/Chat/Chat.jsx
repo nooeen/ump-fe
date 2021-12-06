@@ -5,34 +5,15 @@ import Topbar from "../../components/topbar/Topbar";
 import Conversation from "../../components/chat/conversation";
 import Message from "../../components/chat/message";
 import axios from "axios";
-import { useEffect, useState } from "react";
 
 const API_URL = process.env.REACT_APP_URL;
 const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 export default function Chat() {
   var messageContainer = document.getElementById("message-container");
-  const socket = io(SOCKET_URL);
+  const socket = io('http://localhost:3002');
   var id;
   var message1;
-
-  const [user, setUser] = useState();
-  const [conversations, setConversations] = useState();
-
-
-  useEffect(()=>{
-    const fetchData = async () => {
-      const result = await ChatService.getUserInfor();
-      await setUser(result);
-      await setConversations(await ChatService.getListMessager(result.username));
-    };
-    fetchData();
-    return;
-  }, []);
-
-  if(user){
-    console.log(conversations);
-  }
 
   //display client's ID
   socket.on("connect", () => {
@@ -64,7 +45,12 @@ export default function Chat() {
   function send(e) {
     e.preventDefault();
     appendMessage("send: " + e.target.m1.value);
-    socket.emit("sendMessageName", e.target.m1.value);
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.saveMessage(e.target.name.value, info.username, e.target.m1.value )
+    socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
+    })
+    
   }
 
   //join room
@@ -96,6 +82,32 @@ export default function Chat() {
       });
   }
 
+  function getListMessager(e) {
+    e.preventDefault()
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.getListMessager(info.username)
+      .then((messages) => {
+        for(let i = 0; i < messages.data.length; i++) {
+          appendMessage(messages.data[i])
+        }
+      })
+    })
+  }
+
+  function getMessage(e) {
+    e.preventDefault()
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.getMessage(info.username)
+      .then((messages) => {
+        for(let i = 0; i < messages.data.length; i++) {
+          appendMessage(messages.data[i])
+        }
+      })
+    })
+  }
+
   //display messages
   function appendMessage(message) {
     console.log("send");
@@ -114,35 +126,29 @@ export default function Chat() {
 
   return (
     <div>
-      <Topbar />
-      <div>
-        <div className="messenger">
-          <div className="chatMenu">
-            <div className="chatMenuWrapper">
-              {/* <input placeholder="search for someone" className="chatMenuInput" /> */}
-              <Conversation name="người 1"/>
-              <Conversation name="người 2"/>
-            </div>
-          </div>
-          <div className="chatBox">
-            <div className="chatBoxWrapper">
-              <div id="message-container" className="chatBoxTop">
-                <Message own={true} content="i am the sender" time="2 hour ago" />
-                <Message content="i am the receiver" time="1 hour ago"></Message>
-              </div>
-              <div className="chatBoxBottom">
-                <form method="get" name="form1" id="form1" onSubmit={send}>
-                  <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
-                  <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-                    Send Message
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+      <div id="message-container"></div>
+      <form method="get" name="form1" id="form1" onSubmit={send}>
+        <input type="text" name="m1"/>
+        <button type="submit" form="form1" value="S1">Send Message To</button>
+        <input type="text" name="name"/>
+      </form>
+
+      <form method="get" name="api" id="api" onSubmit={getUserInfor}>
+        <input type="text" name="api"/>
+        <button type="submit" form="api" value="S2">user name</button>
+      </form>
+
+      <form method="get" name="getListMessager" id="getListMessager" onSubmit={getListMessager}>
+        <input type="text" name="message"/>
+        <button type="submit" form="getListMessager" value="S3">get list message user</button>
+      </form>
+
+      <form method="get" name="getMessage" id="getMessage" onSubmit={getMessage}>
+        <input type="text" name="user"/>
+        <button type="submit" form="getMessage" value="S3">get message</button>
+      </form>
+
+  </div>
   );
 }
 
@@ -199,13 +205,8 @@ export default function Chat() {
                 <input type="text" name="join"/>
             </form>
 
-            <form method="get" name="form2" id="form2" onSubmit={joinRoom}>
-                <input type="text" name="room"/>
-                <button type="submit" form="form2" value="S2">join room</button>
-            </form>
-
-            <form method="get" name="form3" id="form3" onSubmit={leaveRoom}>
-                <input type="text" name="leave"/>
-                <button type="submit" form="form3" value="S3">leave room</button>
+            <form method="get" name="api" id="api" onSubmit={getUserInfor}>
+                <input type="text" name="api"/>
+                <button type="submit" form="api" value="S2">api test</button>
             </form>
         </div> */}
