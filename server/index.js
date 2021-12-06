@@ -34,9 +34,9 @@ io.on("connection", (socket) => {
             socket.broadcast.emit("getUsername", name,message) 
         }
     })
-    socket.on("confirmUsername", (roomID, message) => {
-        console.log("\nconfirmUsername: ", roomID, message)
-        io.to(roomID).emit('receive-message', message)
+    socket.on("confirmUsername", (receiverID, message) => {
+        console.log("\nconfirmUsername: ", receiverID, message)
+        io.to(receiverID).emit('receive-message', message)
     })
 
     socket.on("confirmReceived", message => {

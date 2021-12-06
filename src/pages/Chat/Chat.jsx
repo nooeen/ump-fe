@@ -17,8 +17,7 @@ export default function Chat() {
 
   //display client's ID
   socket.on("connect", () => {
-    id = socket.id;
-    socket.emit("sendID", id);
+    // socket.emit("sendID", id);
   });
   socket.on("idconnect", (id) => {
     message1 = "id: " + id;
@@ -34,9 +33,7 @@ export default function Chat() {
     ChatService.getUserInfor().then((info) => {
       if (info.username == name) {
         socket.emit("confirmUsername", socket.id, message);
-        //socket.emit("sendMessage", socket.id + " success" + name)
       } else {
-        socket.emit("sendMessage", socket.id + " fail" + name);
       }
     });
   });
@@ -44,7 +41,7 @@ export default function Chat() {
   function send(e) {
     e.preventDefault();
     appendMessage(e.target.m1.value);
-    socket.emit("sendMessageName", e.target.m1.value, e.target.join.value);
+    socket.emit("sendMessageName", e.target.m1.value, e.target.receiverName.value);
   }
 
   //join room
@@ -69,10 +66,8 @@ export default function Chat() {
       .then((user) => {
         message1 = user.username;
         appendMessage(message1);
-        socket.emit("sendMessage", message1);
       })
       .catch((error) => {
-        socket.emit("sendMessage", error.message);
       });
   }
 
@@ -165,7 +160,7 @@ export default function Chat() {
                 <button className="chatSubmitButton" type="submit" form="form1" value="S1">
                   Send Message To
                 </button>
-                <input type="text" name="join" />
+                <input type="text" name="receiverName" />
               </form>
             </div>
           </div>
