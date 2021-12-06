@@ -102,7 +102,11 @@ export default function Chat() {
       ChatService.getMessage(info.username, e.target.user.value)
       .then((user) => {
         for(let i = 0; i < user.data.length; i++) {
-          appendMessage(user.data[i].text)
+          if(user.data[i].sender == info.username){
+            appendMessage(info.username + ": " + user.data[i].text)
+          } else {
+            appendMessage(e.target.user.value + ": " + user.data[i].text)
+          }
         }
       })
     })
