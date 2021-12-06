@@ -1,8 +1,9 @@
 import React from "react";
 import {
   ChatBubbleOutline,
-  ForumOutlined,
+  // ForumOutlined,
   PersonOutline,
+  Person,
   NotificationsNone,
 } from "@mui/icons-material";
 import "./StudentSidebar.css";
@@ -12,24 +13,38 @@ export default function StudentSidebar() {
   const history = useHistory();
 
   const toStudentHome = () => {
-    let path = `/dashboard`;
+    const path = `/dashboard`;
+    history.push(path);
+  };
+
+  const toManager = () => {
+    const path = `/manager`;
     history.push(path);
   };
 
   const toNotifications = () => {
-    let path = "/notifications";
+    const path = "/notifications";
     history.push(path);
   };
+
+  const toChat = () => {
+    const path = "/chat";
+    history.push(path); 
+  }
 
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
         <div className="sidebarMenu">
-          <h3 className="sidebarTitle">HỒ SƠ SINH VIÊN</h3>
+          <h3 className="sidebarTitle">HỒ SƠ</h3>
           <ul className="sidebarList">
             <li className="sidebarListItem" onClick={toStudentHome}>
               <PersonOutline className="sidebarIcon" />
-              Hồ sơ
+              Sinh viên
+            </li>
+            <li className="sidebarListItem" onClick={toManager}>
+              <Person className="sidebarIcon" />
+              Cố vấn
             </li>
           </ul>
         </div>
@@ -40,14 +55,14 @@ export default function StudentSidebar() {
               <NotificationsNone className="sidebarIcon" />
               Thông báo
             </li>
-            <li className="sidebarListItem">
+            <li className="sidebarListItem" onClick={toChat}>
               <ChatBubbleOutline className="sidebarIcon" />
               Chat
             </li>
-            <li className="sidebarListItem">
+            {/* <li className="sidebarListItem">
               <ForumOutlined className="sidebarIcon" />
               Diễn đàn
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

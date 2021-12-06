@@ -56,9 +56,9 @@ class studentController {
   }
 
   updateStudent(req, res, next) {
-      User.updateOne({ username: req.body.username }, req.body)
-          .then(() => res.json(req.body))
-          .catch(next);
+    User.updateOne({ username: req.body.username }, req.body)
+      .then(() => res.json(req.body))
+      .catch(next);
   }
 
   // list students within class with role student

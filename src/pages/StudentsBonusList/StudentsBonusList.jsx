@@ -93,7 +93,7 @@ export default function StudentsBonusList() {
     { field: "credits", headerName: "Số tín chỉ", width: 140 },
     {
       field: "action",
-      headerName: "Hành động",
+      headerName: "Thao tác",
       width: 150,
       renderCell: (params) => {
         return (

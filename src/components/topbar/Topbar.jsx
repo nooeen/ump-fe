@@ -7,7 +7,7 @@ export default function Topbar() {
   const history = useHistory();
 
   const toHome = () => {
-    const path = "/";
+    const path = "/dashboard";
     history.push(path);
   };
 

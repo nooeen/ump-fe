@@ -87,7 +87,7 @@ export default function StudentsList() {
     },
     {
       field: "action",
-      headerName: "Hành động",
+      headerName: "Thao tác",
       width: 145,
       renderCell: (params) => {
         return (

@@ -43,6 +43,40 @@ export default function StudentDashboard() {
     }
   }, [history]);
 
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const student_username = event.target.username.value;
+    const student_fullname = event.target.fullname.value;
+    const student_dob = event.target.dob.value;
+    const student_phone = event.target.student_phone.value;
+    const parent_phone = event.target.parent_phone.value;
+    const student_address = event.target.address.value;
+    const student_avatar = event.target.avatar.value;
+
+    //Update
+    if (
+      student_username !== "" &&
+      student_fullname !== "" &&
+      student_dob !== "" &&
+      student_phone !== "" &&
+      parent_phone !== "" &&
+      student_address !== "" &&
+      student_avatar !== ""
+    ) {
+      //Gọi API tạo documents
+      await StudentService.updateStudent(
+        student_username,
+        student_fullname,
+        student_dob,
+        student_phone,
+        parent_phone,
+        student_address,
+        student_avatar
+      );
+      history.go(0);
+    }
+  };
+
   return (
     <div>
       {show ? (
@@ -145,7 +179,7 @@ export default function StudentDashboard() {
                                   <b>Số tín chỉ: </b>
                                 </span>
                                 <span className="userShowInfoTitle">
-                                  {user.currentCredits}
+                                  {user.currentCredits} / 138
                                 </span>
                               </div>
                             </div>
@@ -189,7 +223,7 @@ export default function StudentDashboard() {
                                           <b>Số tín chỉ: </b>
                                         </span>
                                         <span className="userShowInfoTitle">
-                                          {term.credits}
+                                          {term.credit}
                                         </span>
                                       </div>
                                     </div>
@@ -201,13 +235,17 @@ export default function StudentDashboard() {
                             <h1 className="userUpdateTitle">
                               Cập nhật thông tin
                             </h1>
-                            <form className="userUpdateForm">
+                            <form
+                              className="userUpdateForm"
+                              onSubmit={handleSubmit}
+                            >
                               <div className="userUpdateLeft">
                                 <div className="userUpdateItem">
                                   <label>Mã sinh viên</label>
                                   <input
                                     type="text"
                                     value={user.username}
+                                    name="username"
                                     className="userUpdateInput"
                                     disabled
                                   />
@@ -216,7 +254,19 @@ export default function StudentDashboard() {
                                   <label>Họ và tên</label>
                                   <input
                                     type="text"
+                                    name="fullname"
                                     defaultValue={user.fullname}
+                                    className="userUpdateInput"
+                                  />
+                                </div>
+                                <div className="userUpdateItem">
+                                  <label>Ngày sinh</label>
+                                  <input
+                                    type="date"
+                                    name="dob"
+                                    defaultValue={new Date(user.dob)
+                                      .toISOString()
+                                      .substr(0, 10)}
                                     className="userUpdateInput"
                                   />
                                 </div>
@@ -225,6 +275,7 @@ export default function StudentDashboard() {
                                   <input
                                     type="text"
                                     defaultValue={user.student_phone}
+                                    name="student_phone"
                                     className="userUpdateInput"
                                   />
                                 </div>
@@ -233,6 +284,7 @@ export default function StudentDashboard() {
                                   <input
                                     type="text"
                                     defaultValue={user.parent_phone}
+                                    name="parent_phone"
                                     className="userUpdateInput"
                                   />
                                 </div>
@@ -241,6 +293,7 @@ export default function StudentDashboard() {
                                   <input
                                     type="text"
                                     defaultValue={user.address}
+                                    name="address"
                                     className="userUpdateInput"
                                   />
                                 </div>
@@ -249,6 +302,7 @@ export default function StudentDashboard() {
                                   <input
                                     type="text"
                                     defaultValue={user.avatar}
+                                    name="avatar"
                                     className="userUpdateInput"
                                   />
                                 </div>
