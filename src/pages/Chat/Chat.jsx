@@ -17,7 +17,8 @@ export default function Chat() {
 
   //display client's ID
   socket.on("connect", () => {
-    // socket.emit("sendID", id);
+    id = socket.id;
+    socket.emit("sendID", id);
   });
   socket.on("idconnect", (id) => {
     message1 = "id: " + id;
@@ -27,21 +28,24 @@ export default function Chat() {
   socket.on("receive-message", (message) => {
     message1 = "received: " + message;
     appendMessage(message1);
+    console.log(message1);
     socket.emit("confirmReceived", message);
   });
   socket.on("getUsername", (name, message) => {
     ChatService.getUserInfor().then((info) => {
       if (info.username == name) {
         socket.emit("confirmUsername", socket.id, message);
+        //socket.emit("sendMessage", socket.id + " success" + name)
       } else {
+        socket.emit("sendMessage", socket.id + " fail" + name);
       }
     });
   });
 
   function send(e) {
     e.preventDefault();
-    appendMessage(e.target.m1.value);
-    socket.emit("sendMessageName", e.target.m1.value, e.target.receiverName.value);
+    appendMessage("send: " + e.target.m1.value);
+    socket.emit("sendMessageName", e.target.m1.value);
   }
 
   //join room
@@ -66,8 +70,10 @@ export default function Chat() {
       .then((user) => {
         message1 = user.username;
         appendMessage(message1);
+        socket.emit("sendMessage", message1);
       })
       .catch((error) => {
+        socket.emit("sendMessage", error.message);
       });
   }
 
@@ -109,58 +115,20 @@ export default function Chat() {
             <input placeholder="search for someone" className="chatMenuInput" />
             <Conversation />
             <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
-            <Conversation />
           </div>
         </div>
         <div className="chatBox">
           <div className="chatBoxWrapper">
-            <div className="chatBoxTop">
-              {/* <Message />
-              <Message own={true} content="jdifjsiofdj" />
-              <Message />
-              <Message />
-              <Message own={true} />
-              <Message own={true} />
-              <Message />
-              <Message own={true} />
-              <Message />
-              <Message own={true} />
-              <Message own={true} />
-              <Message />
-              <Message own={true} /> */}
-              <div id="message-container"></div>
+            <div id="message-container" className="chatBoxTop">
+              <Message own={true} content="i am the sender" />
+              <Message content="i am the receiver"></Message>
             </div>
             <div className="chatBoxBottom">
-              {/* <textarea className="chatMessageInput" placeholder="write something"></textarea>
-              <button className="chatSubmitButton">Send</button> */}
               <form method="get" name="form1" id="form1" onSubmit={send}>
                 <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
                 <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-                  Send Message To
+                  Send Message
                 </button>
-                <input type="text" name="receiverName" />
               </form>
             </div>
           </div>

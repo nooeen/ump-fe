@@ -1,5 +1,5 @@
 .messenger {
-  height: calc(100vh - 70px);
+  height: calc(100vh - 80px);
   display: flex;
 }
 
@@ -26,7 +26,6 @@
 
 .chatBoxBottom {
   margin-top: 5px;
-  display: flex;
   align-items: center;
   justify-content: space-between;
 }
@@ -38,13 +37,14 @@
 }
 
 .chatSubmitButton {
-  width: 70px;
-  height: 40px;
+  width: 150px;
+  height: 90px;
   border: none;
   border-radius: 5px;
   cursor: pointer;
-  background-color: teal;
+  background-color: blue;
   color: white;
+  margin-left: 40px;
 }
 
 .chatBoxWrapper {
@@ -65,11 +65,11 @@
   padding-right: 10px;
 }
 
-#message-container div {
+/* #message-container div {
   padding: 10px;
   border-radius: 20px;
   background-color: #1877f2;
   color: white;
   max-width: 300px;
   margin-bottom: 10px;
-}
+} */
