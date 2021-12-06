@@ -1,7 +1,7 @@
 import React from "react";
 import {
   ChatBubbleOutline,
-  ForumOutlined,
+  // ForumOutlined,
   PersonOutline,
   Person,
   NotificationsNone,
