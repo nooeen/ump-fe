@@ -24,7 +24,7 @@ export default function Chat() {
     message1 = "id: " + id;
     appendMessage(message1);
   });
-  //send and receive messages
+  //send and receive user
   socket.on("receive-message", (message) => {
     message1 = "received: " + message;
     appendMessage(message1);
@@ -87,9 +87,9 @@ export default function Chat() {
     ChatService.getUserInfor()
     .then((info) => {
       ChatService.getListMessager(info.username)
-      .then((messages) => {
-        for(let i = 0; i < messages.data.length; i++) {
-          appendMessage(messages.data[i])
+      .then((user) => {
+        for(let i = 0; i < user.data.length; i++) {
+          appendMessage(user.data[i])
         }
       })
     })
@@ -99,16 +99,16 @@ export default function Chat() {
     e.preventDefault()
     ChatService.getUserInfor()
     .then((info) => {
-      ChatService.getMessage(info.username)
-      .then((messages) => {
-        for(let i = 0; i < messages.data.length; i++) {
-          appendMessage(messages.data[i])
+      ChatService.getMessage(info.username, e.target.user.value)
+      .then((user) => {
+        for(let i = 0; i < user.data.length; i++) {
+          appendMessage(user.data[i].text)
         }
       })
     })
   }
 
-  //display messages
+  //display user
   function appendMessage(message) {
     console.log("send");
     messageContainer = document.getElementById("message-container");
