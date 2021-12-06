@@ -45,7 +45,12 @@ export default function Chat() {
   function send(e) {
     e.preventDefault();
     appendMessage("send: " + e.target.m1.value);
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.saveMessage(e.target.name.value, info.username, e.target.m1.value )
     socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
+    })
+    
   }
 
   //join room
@@ -100,16 +105,6 @@ export default function Chat() {
           <input type="text" name="m1"/>
           <button type="submit" form="form1" value="S1">Send Message To</button>
           <input type="text" name="name"/>
-      </form>
-
-      <form method="get" name="form2" id="form2" onSubmit={joinRoom}>
-          <input type="text" name="room"/>
-          <button type="submit" form="form2" value="S2">join room</button>
-      </form>
-
-      <form method="get" name="form3" id="form3" onSubmit={leaveRoom}>
-          <input type="text" name="leave"/>
-          <button type="submit" form="form3" value="S3">leave room</button>
       </form>
 
       <form method="get" name="api" id="api" onSubmit={getUserInfor}>
@@ -171,16 +166,6 @@ export default function Chat() {
                 <input type="text" name="m1"/>
                 <button type="submit" form="form1" value="S1">Send Message To</button>
                 <input type="text" name="join"/>
-            </form>
-
-            <form method="get" name="form2" id="form2" onSubmit={joinRoom}>
-                <input type="text" name="room"/>
-                <button type="submit" form="form2" value="S2">join room</button>
-            </form>
-
-            <form method="get" name="form3" id="form3" onSubmit={leaveRoom}>
-                <input type="text" name="leave"/>
-                <button type="submit" form="form3" value="S3">leave room</button>
             </form>
 
             <form method="get" name="api" id="api" onSubmit={getUserInfor}>
