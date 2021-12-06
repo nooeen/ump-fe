@@ -11,7 +11,7 @@ const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 export default function Chat() {
   var messageContainer = document.getElementById("message-container");
-  const socket = io(SOCKET_URL);
+  const socket = io('http://localhost:3002');
   var id;
   var message1;
 
@@ -45,7 +45,7 @@ export default function Chat() {
   function send(e) {
     e.preventDefault();
     appendMessage("send: " + e.target.m1.value);
-    socket.emit("sendMessageName", e.target.m1.value);
+    socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
   }
 
   //join room
@@ -95,48 +95,28 @@ export default function Chat() {
 
   return (
     <div>
-      {/* <form method="get" name="form1" id="form1" onSubmit={send}>
-        <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
-        <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-          Send Message To
-        </button>
-        <input type="text" name="join" />
+      <div id="message-container"></div>
+      <form method="get" name="form1" id="form1" onSubmit={send}>
+          <input type="text" name="m1"/>
+          <button type="submit" form="form1" value="S1">Send Message To</button>
+          <input type="text" name="name"/>
       </form>
+
+      <form method="get" name="form2" id="form2" onSubmit={joinRoom}>
+          <input type="text" name="room"/>
+          <button type="submit" form="form2" value="S2">join room</button>
+      </form>
+
+      <form method="get" name="form3" id="form3" onSubmit={leaveRoom}>
+          <input type="text" name="leave"/>
+          <button type="submit" form="form3" value="S3">leave room</button>
+      </form>
+
       <form method="get" name="api" id="api" onSubmit={getUserInfor}>
-        <input type="text" name="api" />
-        <button type="submit" form="api" value="S2">
-          api test
-        </button>
-      </form> */}
-      <Topbar />
-      <div>
-        <div className="messenger">
-          <div className="chatMenu">
-            <div className="chatMenuWrapper">
-              {/* <input placeholder="search for someone" className="chatMenuInput" /> */}
-              <Conversation name="người 1"/>
-              <Conversation name="người 2"/>
-            </div>
-          </div>
-          <div className="chatBox">
-            <div className="chatBoxWrapper">
-              <div id="message-container" className="chatBoxTop">
-                <Message own={true} content="i am the sender" time="2 hour ago" />
-                <Message content="i am the receiver" time="1 hour ago"></Message>
-              </div>
-              <div className="chatBoxBottom">
-                <form method="get" name="form1" id="form1" onSubmit={send}>
-                  <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
-                  <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-                    Send Message
-                  </button>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+                <input type="text" name="api"/>
+                <button type="submit" form="api" value="S2">api test</button>
+            </form>
+  </div>
   );
 }
 
@@ -201,5 +181,10 @@ export default function Chat() {
             <form method="get" name="form3" id="form3" onSubmit={leaveRoom}>
                 <input type="text" name="leave"/>
                 <button type="submit" form="form3" value="S3">leave room</button>
+            </form>
+
+            <form method="get" name="api" id="api" onSubmit={getUserInfor}>
+                <input type="text" name="api"/>
+                <button type="submit" form="api" value="S2">api test</button>
             </form>
         </div> */}
