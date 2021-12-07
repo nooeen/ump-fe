@@ -12,7 +12,6 @@ const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 export default function Chat() {
   var messageContainer = document.getElementById("message-container");
-
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState([null]);
 
@@ -36,6 +35,7 @@ export default function Chat() {
     console.log(message1);
     socket.emit("confirmReceived", message);
   });
+
   socket.on("getUsername", (name, message) => {
     ChatService.getUserInfor().then((info) => {
       if (info.username == name) {
@@ -46,49 +46,32 @@ export default function Chat() {
     });
   });
 
-  const send = (e) => {
+  const send = async (e) => {
     e.preventDefault();
     appendMessage("send: " + e.target.m1.value);
-
-    ChatService.getUserInfor()
-    .then((info) => {
-      ChatService.getListMessager(info.username)
-      .then((users) =>{
-        setConversations( users.data)
-        ChatService.saveMessage("quanvm", info.username, e.target.m1.value )
-        socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
-      })
-    })
+    const info = await ChatService.getUserInfor()
+    const save = await ChatService.saveMessage(currentChat, info.username, e.target.m1.value )
+    const users = await ChatService.getListMessager(info.username)
+    setConversations( users.data)
+    socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
   }
 
-  function getListMessager(e) {
-    e.preventDefault()
-    ChatService.getUserInfor()
-    .then((info) => {
-      ChatService.getListMessager(info.username)
-      .then((user) => {
-        appendMessage("send1: " + user.data);
-        return user
-      })
-    })
-  }
-
-  function getMessage(e) {
-    e.preventDefault()
-    ChatService.getUserInfor()
-    .then((info) => {
-      ChatService.getMessage(info.username, e.target.user.value)
-      .then((user) => {
-        for(let i = 0; i < user.data.length; i++) {
-          if(user.data[i].sender == info.username){
-            appendMessage(info.username + ": " + user.data[i].text)
-          } else {
-            appendMessage(e.target.user.value + ": " + user.data[i].text)
-          }
-        }
-      })
-    })
-  }
+  // function getMessage(e) {
+  //   e.preventDefault()
+  //   ChatService.getUserInfor()
+  //   .then((info) => {
+  //     ChatService.getMessage(info.username, e.target.user.value)
+  //     .then((user) => {
+  //       for(let i = 0; i < user.data.length; i++) {
+  //         if(user.data[i].sender == info.username){
+  //           appendMessage(info.username + ": " + user.data[i].text)
+  //         } else {
+  //           appendMessage(e.target.user.value + ": " + user.data[i].text)
+  //         }
+  //       }
+  //     })
+  //   })
+  // }
 
   //display user
   function appendMessage(message) {
@@ -99,6 +82,17 @@ export default function Chat() {
     messageContainer.append(messageElement);
   }
 
+  const getListConv = async () => {
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.getListMessager(info.username)
+      .then((users) => {
+        setConversations( users.data)
+      })
+    })
+  }
+
+
   //hotkeys for disconnect and reconnect (testing purpose)
   document.addEventListener("keydown", (e) => {
     if (e.target.matches("input")) return;
@@ -107,6 +101,10 @@ export default function Chat() {
   });
 
   console.log(currentChat);
+
+  useEffect(() => {
+    getListConv();
+  }, []);
 
   return (
     <div>
@@ -137,8 +135,7 @@ export default function Chat() {
           <div className="chatMenu">
             <div className="chatMenuWrapper" id="conv">
             {conversations.map((e) => (
-              // <Conversation name = {e}></Conversation>
-              <div onClick={() => setCurrentChat(e)}>
+              <div key={e} onClick= {() => setCurrentChat(e)} >
                 <Conversation name = {e}></Conversation>
               </div>
             ))}
