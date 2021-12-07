@@ -46,7 +46,7 @@ export default function Home() {
           className="homepage-grid"
         >
           <Grid item xs={4}>
-            <h1>Quản lý sinh viên</h1>
+            <h1>Nền tảng cố vấn học tập</h1>
             <p>
               UET Management Platform là một nền tảng giúp cố vấn học tập quản
               lý sinh viên thuộc phạm vi quản lý của mình. Với việc xây dựng
