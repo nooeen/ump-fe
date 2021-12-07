@@ -5,12 +5,16 @@ import Topbar from "../../components/topbar/Topbar";
 import Conversation from "../../components/chat/conversation";
 import Message from "../../components/chat/message";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 const API_URL = process.env.REACT_APP_URL;
 const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 export default function Chat() {
   var messageContainer = document.getElementById("message-container");
+  const [conversations, setConversations] = useState([]);
+  const [currentChat, setCurrentChat] = useState([null]);
+
   const socket = io('http://localhost:3002');
   var id;
   var message1;
@@ -31,86 +35,43 @@ export default function Chat() {
     console.log(message1);
     socket.emit("confirmReceived", message);
   });
+
   socket.on("getUsername", (name, message) => {
     ChatService.getUserInfor().then((info) => {
       if (info.username == name) {
         socket.emit("confirmUsername", socket.id, message);
-        //socket.emit("sendMessage", socket.id + " success" + name)
       } else {
         socket.emit("sendMessage", socket.id + " fail" + name);
       }
     });
   });
 
-  function send(e) {
+  const send = async (e) => {
     e.preventDefault();
     appendMessage("send: " + e.target.m1.value);
-    ChatService.getUserInfor()
-    .then((info) => {
-      ChatService.saveMessage(e.target.name.value, info.username, e.target.m1.value )
+    const info = await ChatService.getUserInfor()
+    const save = await ChatService.saveMessage(currentChat, info.username, e.target.m1.value )
+    const users = await ChatService.getListMessager(info.username)
+    setConversations( users.data)
     socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
-    })
-    
   }
 
-  //join room
-  function joinRoom(e) {
-    e.preventDefault();
-    message1 = "join room: " + e.target.room.value;
-    appendMessage(message1);
-    socket.emit("joinRoom", e.target.room.value);
-  }
-
-  //leave room
-  function leaveRoom(e) {
-    e.preventDefault();
-    message1 = "leave room: " + e.target.leave.value;
-    appendMessage(message1);
-    socket.emit("leaveRoom", e.target.leave.value);
-  }
-
-  function getUserInfor(e) {
-    e.preventDefault();
-    ChatService.getUserInfor()
-      .then((user) => {
-        message1 = user.username;
-        appendMessage(message1);
-        socket.emit("sendMessage", message1);
-      })
-      .catch((error) => {
-        socket.emit("sendMessage", error.message);
-      });
-  }
-
-  function getListMessager(e) {
-    e.preventDefault()
-    ChatService.getUserInfor()
-    .then((info) => {
-      ChatService.getListMessager(info.username)
-      .then((user) => {
-        for(let i = 0; i < user.data.length; i++) {
-          appendMessage(user.data[i])
-        }
-      })
-    })
-  }
-
-  function getMessage(e) {
-    e.preventDefault()
-    ChatService.getUserInfor()
-    .then((info) => {
-      ChatService.getMessage(info.username, e.target.user.value)
-      .then((user) => {
-        for(let i = 0; i < user.data.length; i++) {
-          if(user.data[i].sender == info.username){
-            appendMessage(info.username + ": " + user.data[i].text)
-          } else {
-            appendMessage(e.target.user.value + ": " + user.data[i].text)
-          }
-        }
-      })
-    })
-  }
+  // function getMessage(e) {
+  //   e.preventDefault()
+  //   ChatService.getUserInfor()
+  //   .then((info) => {
+  //     ChatService.getMessage(info.username, e.target.user.value)
+  //     .then((user) => {
+  //       for(let i = 0; i < user.data.length; i++) {
+  //         if(user.data[i].sender == info.username){
+  //           appendMessage(info.username + ": " + user.data[i].text)
+  //         } else {
+  //           appendMessage(e.target.user.value + ": " + user.data[i].text)
+  //         }
+  //       }
+  //     })
+  //   })
+  // }
 
   //display user
   function appendMessage(message) {
@@ -121,12 +82,29 @@ export default function Chat() {
     messageContainer.append(messageElement);
   }
 
+  const getListConv = async () => {
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.getListMessager(info.username)
+      .then((users) => {
+        setConversations( users.data)
+      })
+    })
+  }
+
+
   //hotkeys for disconnect and reconnect (testing purpose)
   document.addEventListener("keydown", (e) => {
     if (e.target.matches("input")) return;
     if (e.key === "c") socket.connect();
     if (e.key === "d") socket.disconnect();
   });
+
+  console.log(currentChat);
+
+  useEffect(() => {
+    getListConv();
+  }, []);
 
   return (
     <div>
@@ -155,28 +133,38 @@ export default function Chat() {
       <div>
         <div className="messenger">
           <div className="chatMenu">
-            <div className="chatMenuWrapper">
-              {/* <input placeholder="search for someone" className="chatMenuInput" /> */}
-              <Conversation name="người 1"/>
-              <Conversation name="người 2"/>
+            <div className="chatMenuWrapper" id="conv">
+            {conversations.map((e) => (
+              <div key={e} onClick= {() => setCurrentChat(e)} >
+                <Conversation name = {e}></Conversation>
+              </div>
+            ))}
             </div>
             </div>
           <div className="chatBox">
             <div className="chatBoxWrapper">
-              <div id="message-container" className="chatBoxTop">
-                <Message own={true} content="i am the sender" time="2 hour ago" />
-                <Message content="i am the receiver" time="1 hour ago"></Message>
+              {currentChat ? (
+                <>
+                  <div id="message-container" className="chatBoxTop">
+                    <Message own={true} content="i am the sender" time="2 hour ago" />
+                    <Message content="i am the receiver" time="1 hour ago"></Message>
+                  </div>
+                  <div className="chatBoxBottom">
+                    <form method="get" name="form1" id="form1" onSubmit={send}>
+                      <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
+                      <button className="chatSubmitButton" type="submit" form="form1" value="S1">
+                        Send Message
+                      </button>
+                    </form>
+                  </div>
+                </>
+              ) : (
+              <span className="noConversationText">
+                Open a conversation to start a chat.
+              </span>
+              )}
               </div>
-                <div className="chatBoxBottom">
-                  <form method="get" name="form1" id="form1" onSubmit={send}>
-                    <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
-                    <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-                      Send Message
-                    </button>
-                  </form>
-                </div>
-              </div>
-          </div>
+            </div>
         </div>
       </div>
     </div>
