@@ -35,8 +35,8 @@ class forumController {
 
     // [PUT] /api/forum/post/:id/update
     update(req, res, next) {
-        Post.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.json(Post.findById(req.params.id)))
+        Post.findOneAndUpdate({ _id: req.params.id }, req.body)
+            .then((post) => res.json({post: mongooseToObject(post)}))
             .catch(next);
     }
 
@@ -58,17 +58,9 @@ class forumController {
         // content.created_at = Date.now();
         Post.findOneAndUpdate(
             { _id: req.params.id }, 
-            { $push: { contents: content } },
-            function (error, success) {
-                    if (error) {
-                        console.log(error);
-                    } else {
-                        console.log(success);
-                    }
-            }
-        );
-        res.json(Post.findById(req.params.id));
-        // res.redirect('back');
+            { $push: { contents: content } })
+        .then((post) => res.json({post: mongooseToObject(post)}))
+        .catch(next);
     }
 
     // [GET] api/forum/listPosts
@@ -85,21 +77,21 @@ class forumController {
     // [DELETE] /api/forum/post/:id/delete
     destroy(req, res, next) {
         Post.delete({ _id: req.params.id })
-            .then(() => res.json(Post.findById(req.params.id)))
+            .then(() => res.json("Mới giả xóa thôi, yên tâm"))
             .catch(next);
     }
 
     // [DELETE] /api/forum/post/:id/force
     forceDestroy(req, res, next) {
-        Post.deleteOne({ _id: req.params.id })
-            .then(() => res.redirect('back'))
+        Post.findOneAndDelete({ _id: req.params.id })
+            .then(() => res.json("Xóa thật rồi, yên tâm"))
             .catch(next);
     }
 
     // [PATCH] /api/forum/post/:id/restore
     restore(req, res, next) {
         Post.restore({ _id: req.params.id })
-            .then(() => res.json(Post.findById(req.params.id)))
+            .then(() => res.json("Chắc là khôi phục rồi"))
             .catch(next);
     }
 
