@@ -181,7 +181,7 @@ export default function Chat() {
                   </div>
                   <div className="chatBoxBottom">
                     <form method="get" name="form1" id="form1" onSubmit={send}>
-                      <input className="chatMessageInput" placeholder="write something" type="text" name="m1" autocomplete="off" />
+                      <input className="chatMessageInput" placeholder="write something" type="text" name="m1" autoComplete="off" />
                       <button className="chatSubmitButton" type="submit" form="form1" value="S1">
                         Send Message
                       </button>

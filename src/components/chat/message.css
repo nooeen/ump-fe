@@ -30,11 +30,11 @@
     margin-top: 10px;
 }
 
-.true{
+.message.true{
     align-items: flex-end;
 }
 
-.true .messageText{
+.message.true .messageText{
     background-color: #1877f2;
     color: white;
 }
