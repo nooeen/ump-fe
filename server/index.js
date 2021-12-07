@@ -27,10 +27,21 @@ io.on("connection", (socket) => {
             socket.broadcast.emit('receive-message', message)
         }
     })
+
+    socket.on("sendMessageName", (message, name) => {
+        console.log("\nsendMessage: ", message, name)
+        if (name != "") {
+            socket.broadcast.emit("getUsername", name,message) 
+        }
+    })
+    socket.on("confirmUsername", (receiverID, message) => {
+        console.log("\nconfirmUsername: ", receiverID, message)
+        io.to(receiverID).emit('receive-message', message)
+    })
+
     socket.on("confirmReceived", message => {
         console.log("confirmReceived: ", message)
     })
-
     //display ID
     socket.on("sendID", id => {
         socket.emit("idconnect", id)

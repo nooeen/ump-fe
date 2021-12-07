@@ -3,11 +3,11 @@ const bcrypt = require("bcrypt");
 
 
 const messageSchema = new mongoose.Schema({
-    conversationId: {
-        type: String,
-      },
       sender: {
         type: String,
+      },
+      receiver: { 
+        type: String
       },
       text: {
         type: String,
