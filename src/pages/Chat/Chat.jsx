@@ -39,7 +39,6 @@ export default function Chat() {
     ChatService.getUserInfor().then((info) => {
       if (info.username == name) {
         socket.emit("confirmUsername", socket.id, message);
-        //socket.emit("sendMessage", socket.id + " success" + name)
       } else {
         socket.emit("sendMessage", socket.id + " fail" + name);
       }
@@ -50,44 +49,15 @@ export default function Chat() {
     e.preventDefault();
     appendMessage("send: " + e.target.m1.value);
 
-    const data = ['user1', 'user2']
-    setConversations(data)
-
     ChatService.getUserInfor()
     .then((info) => {
-      ChatService.saveMessage(e.target.name.value, info.username, e.target.m1.value )
-    socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
-    })
-    
-  }
-
-  //join room
-  function joinRoom(e) {
-    e.preventDefault();
-    message1 = "join room: " + e.target.room.value;
-    appendMessage(message1);
-    socket.emit("joinRoom", e.target.room.value);
-  }
-
-  //leave room
-  function leaveRoom(e) {
-    e.preventDefault();
-    message1 = "leave room: " + e.target.leave.value;
-    appendMessage(message1);
-    socket.emit("leaveRoom", e.target.leave.value);
-  }
-
-  function getUserInfor(e) {
-    e.preventDefault();
-    ChatService.getUserInfor()
-      .then((user) => {
-        message1 = user.username;
-        appendMessage(message1);
-        socket.emit("sendMessage", message1);
+      ChatService.getListMessager(info.username)
+      .then((users) =>{
+        setConversations( users.data)
+        ChatService.saveMessage("quanvm", info.username, e.target.m1.value )
+        socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
       })
-      .catch((error) => {
-        socket.emit("sendMessage", error.message);
-      });
+    })
   }
 
   function getListMessager(e) {
@@ -96,9 +66,8 @@ export default function Chat() {
     .then((info) => {
       ChatService.getListMessager(info.username)
       .then((user) => {
-        for(let i = 0; i < user.data.length; i++) {
-          appendMessage(user.data[i])
-        }
+        appendMessage("send1: " + user.data);
+        return user
       })
     })
   }
@@ -170,9 +139,6 @@ export default function Chat() {
              name = {e}
             ></Conversation>
           ))}
-
-              <Conversation name="người 1"/>
-              <Conversation name="người 2"/>
             </div>
             </div>
           <div className="chatBox">

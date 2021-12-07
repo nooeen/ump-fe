@@ -39,15 +39,27 @@ class ChatController {
 
     //api/chat/getListMessage?sender=ngocnd
     getListMessager(req, res) {
-        Message.find({
+        // Message.find({
+        //     sender: req.query.sender,
+        // })
+        Message.find({$or: [{
             sender: req.query.sender,
-        })
+        }, {
+            receiver: req.query.sender,
+
+        }]})
         .then((messages, err) => {
             var receiver = [];
             for(let i = messages.length - 1; i >= 0; i--) {
-                receiver.push(messages[i].receiver)
+                if(req.query.sender == messages[i].sender){
+                    receiver.push(messages[i].receiver)
+                } else {
+                    receiver.push(messages[i].sender)
+                }
+                
             }
             const unique = Array.from(new Set(receiver))
+            console.log(unique)
             res.status(200).send(unique);
         })
         .catch((err) => {
