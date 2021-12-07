@@ -91,7 +91,7 @@ class forumController {
     // [PATCH] /api/forum/post/:id/restore
     restore(req, res, next) {
         Post.restore({ _id: req.params.id })
-            .then(() => res.json("Chắc là khôi phục rồi"))
+            .then(() => res.redirect(`/api/forum/post/${req.params.id}`))
             .catch(next);
     }
 
