@@ -5,12 +5,19 @@ import Topbar from "../../components/topbar/Topbar";
 import Conversation from "../../components/chat/conversation";
 import Message from "../../components/chat/message";
 import axios from "axios";
+import { useState, useEffect } from "react";
 
 const API_URL = process.env.REACT_APP_URL;
 const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 export default function Chat() {
   var messageContainer = document.getElementById("message-container");
+  var convContainer = document.getElementById("conv");
+  const convElement = document.createElement("div");
+  convElement.innerHTML = '<Conversation name="người 2"/>';
+
+  const [notifications, setNotifications] = useState([]);
+
   const socket = io('http://localhost:3002');
   var id;
   var message1;
@@ -42,9 +49,13 @@ export default function Chat() {
     });
   });
 
-  function send(e) {
+  const send = (e) => {
     e.preventDefault();
     appendMessage("send: " + e.target.m1.value);
+
+    const data = ['user1', 'user2']
+    setNotifications(data)
+
     ChatService.getUserInfor()
     .then((info) => {
       ChatService.saveMessage(e.target.name.value, info.username, e.target.m1.value )
@@ -121,6 +132,19 @@ export default function Chat() {
     messageContainer.append(messageElement);
   }
 
+  function test(e) {
+    e.preventDefault()
+    appendConv(e.target.user.value)
+  }
+
+  function appendConv(user) {
+    console.log("send");
+    convContainer = document.getElementById("conv");
+    const convElement = document.createElement("div");
+    convElement.innerHTML = '<Conversation name="người 2"/>';
+    convContainer.append(convElement);
+  }
+
   //hotkeys for disconnect and reconnect (testing purpose)
   document.addEventListener("keydown", (e) => {
     if (e.target.matches("input")) return;
@@ -155,8 +179,12 @@ export default function Chat() {
       <div>
         <div className="messenger">
           <div className="chatMenu">
-            <div className="chatMenuWrapper">
-              {/* <input placeholder="search for someone" className="chatMenuInput" /> */}
+            <div className="chatMenuWrapper" id="conv">
+            {notifications.map((e) => (
+            <Conversation
+             name = {e}
+            ></Conversation>
+          ))}
               <Conversation name="người 1"/>
               <Conversation name="người 2"/>
             </div>
@@ -178,6 +206,12 @@ export default function Chat() {
               </div>
           </div>
         </div>
+
+        <form method="get" name="getMessage" id="getMessage" onSubmit={test}>
+        <input type="text" name="user"/>
+        <button type="submit" form="getMessage" value="S3">test</button>
+
+      </form>
       </div>
     </div>
   );
