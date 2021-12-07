@@ -14,6 +14,7 @@ export default function Chat() {
   var messageContainer = document.getElementById("message-container");
 
   const [conversations, setConversations] = useState([]);
+  const [currentChat, setCurrentChat] = useState([null]);
 
   const socket = io('http://localhost:3002');
   var id;
@@ -105,6 +106,8 @@ export default function Chat() {
     if (e.key === "d") socket.disconnect();
   });
 
+  console.log(currentChat);
+
   return (
     <div>
       {/* <div id="message-container"></div>
@@ -133,30 +136,38 @@ export default function Chat() {
         <div className="messenger">
           <div className="chatMenu">
             <div className="chatMenuWrapper" id="conv">
-
             {conversations.map((e) => (
-            <Conversation
-             name = {e}
-            ></Conversation>
-          ))}
+              // <Conversation name = {e}></Conversation>
+              <div onClick={() => setCurrentChat(e)}>
+                <Conversation name = {e}></Conversation>
+              </div>
+            ))}
             </div>
             </div>
           <div className="chatBox">
             <div className="chatBoxWrapper">
-              <div id="message-container" className="chatBoxTop">
-                <Message own={true} content="i am the sender" time="2 hour ago" />
-                <Message content="i am the receiver" time="1 hour ago"></Message>
+              {currentChat ? (
+                <>
+                  <div id="message-container" className="chatBoxTop">
+                    <Message own={true} content="i am the sender" time="2 hour ago" />
+                    <Message content="i am the receiver" time="1 hour ago"></Message>
+                  </div>
+                  <div className="chatBoxBottom">
+                    <form method="get" name="form1" id="form1" onSubmit={send}>
+                      <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
+                      <button className="chatSubmitButton" type="submit" form="form1" value="S1">
+                        Send Message
+                      </button>
+                    </form>
+                  </div>
+                </>
+              ) : (
+              <span className="noConversationText">
+                Open a conversation to start a chat.
+              </span>
+              )}
               </div>
-                <div className="chatBoxBottom">
-                  <form method="get" name="form1" id="form1" onSubmit={send}>
-                    <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
-                    <button className="chatSubmitButton" type="submit" form="form1" value="S1">
-                      Send Message
-                    </button>
-                  </form>
-                </div>
-              </div>
-          </div>
+            </div>
         </div>
       </div>
     </div>

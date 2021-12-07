@@ -65,11 +65,10 @@
   padding-right: 10px;
 }
 
-/* #message-container div {
-  padding: 10px;
-  border-radius: 20px;
-  background-color: #1877f2;
-  color: white;
-  max-width: 300px;
-  margin-bottom: 10px;
-} */
+.noConversationText {
+  position: absolute;
+  top: 10%;
+  font-size: 50px;
+  color: rgb(224, 220, 220);
+  cursor: default;
+}
