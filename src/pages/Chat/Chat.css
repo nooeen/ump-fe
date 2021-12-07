@@ -73,3 +73,7 @@
   max-width: 300px;
   margin-bottom: 10px;
 } */
+
+#message-container div {
+  align-items: left;
+}

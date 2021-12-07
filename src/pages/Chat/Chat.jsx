@@ -160,7 +160,7 @@ export default function Chat() {
               <Conversation name="người 1"/>
               <Conversation name="người 2"/>
             </div>
-            </div>
+          </div>
           <div className="chatBox">
             <div className="chatBoxWrapper">
               <div id="message-container" className="chatBoxTop">
@@ -184,3 +184,31 @@ export default function Chat() {
 }
 
 
+    // <Topbar />
+    //   <div>
+    //     <div className="messenger">
+    //       <div className="chatMenu">
+    //         <div className="chatMenuWrapper">
+    //           {/* <input placeholder="search for someone" className="chatMenuInput" /> */}
+    //           <Conversation name="người 1"/>
+    //           <Conversation name="người 2"/>
+    //         </div>
+    //       </div>
+    //       <div className="chatBox">
+    //         <div className="chatBoxWrapper">
+    //           <div id="message-container" className="chatBoxTop">
+    //             <Message own={true} content="i am the sender" time="2 hour ago" />
+    //             <Message content="i am the receiver" time="1 hour ago"></Message>
+    //           </div>
+    //             <div className="chatBoxBottom">
+    //               <form method="get" name="form1" id="form1" onSubmit={send}>
+    //                 <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
+    //                 <button className="chatSubmitButton" type="submit" form="form1" value="S1">
+    //                   Send Message
+    //                 </button>
+    //               </form>
+    //             </div>
+    //           </div>
+    //       </div>
+    //     </div>
+    //   </div>
