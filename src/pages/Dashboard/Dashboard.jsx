@@ -1,7 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import Stack from "@mui/material/Stack";
 import Chart from "../../components/chart/Chart";
-import { gradeData } from "../../dummyData";
 import FeaturedInfo from "../../components/featuredInfo/FeaturedInfo";
 import "./Dashboard.css";
 import Topbar from "../../components/topbar/Topbar";
@@ -17,11 +16,13 @@ export default function Dashboard() {
   const [currentClass, setCurrentClass] = useState("");
   const [classAverageGPA, setClassAverageGPA] = useState(0);
   const [studentsNumber, setStudentsNumber] = useState();
+  const [statistic, setStatistic] = useState([]);
 
   const handleSetCurrentClass = async (e) => {
     await setCurrentClass(e.target.dataset.value);
     fetchStudentsNumber(e.target.dataset.value);
     fetchClassAverage(e.target.dataset.value);
+    fetchStatistic(e.target.dataset.value);
   };
 
   const fetchClassAverage = async (e) => {
@@ -31,6 +32,10 @@ export default function Dashboard() {
   const fetchStudentsNumber = async (selectedClass) => {
     setStudentsNumber(await StudentService.getClassNumber(selectedClass));
   };
+
+  const fetchStatistic = async (selectedClass) => {
+    setStatistic(await StudentService.getStatistic(selectedClass));
+  }
 
   const fetchData = async () => {
     const managerClasses = await ManagerService.getManagerClasses();
@@ -43,6 +48,8 @@ export default function Dashboard() {
       await setClassAverageGPA(
         await StudentService.getClassAverage(classes[0])
       );
+      await setStatistic(await StudentService.getStatistic(classes[0]));
+      console.log(statistic);
     }
   };
 
@@ -68,7 +75,7 @@ export default function Dashboard() {
                 classAverage={classAverageGPA}
               />
               <Chart
-                data={gradeData}
+                data={statistic}
                 title="Điểm trung bình lớp theo thời gian"
                 grid
                 dataKey="Điểm"
