@@ -33,6 +33,7 @@ class ChatController {
                 } else {
                     messages[i] = {
                         own: false,
+                        sender: messages[i].sender,
                         text: messages[i].text,
                         createdAt: messages[i].createdAt,
                     }

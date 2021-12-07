@@ -5,7 +5,9 @@ import Topbar from "../../components/topbar/Topbar";
 import Conversation from "../../components/chat/conversation";
 import Message from "../../components/chat/message";
 import axios from "axios";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import * as timeago from 'timeago.js';
+
 
 const API_URL = process.env.REACT_APP_URL;
 const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
@@ -15,15 +17,10 @@ export default function Chat() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState([null]);
   const [currentMessage, setCurrentMessage] = useState([{own : true, text : "....", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "....", createdAt: "2021-12-07T15:17:20.198+00:00"}]);
+  const scrollRef = useRef();
   // if(currentMessage == null){
   //   currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
   // }
-  
-
-  
-    currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
-
-
 
   const socket = io('http://localhost:3002');
   var id;
@@ -64,7 +61,7 @@ export default function Chat() {
       if (info.username == name) {
         socket.emit("confirmUsername", socket.id, message);
       } else {
-        socket.emit("sendMessage", socket.id + " fail" + name);
+        // socket.emit("sendMessage", socket.id + " fail" + name);
       }
     });
   });
@@ -158,6 +155,10 @@ export default function Chat() {
     //getMessages();
   }, []);
 
+  useEffect(() => {
+    scrollRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [currentMessage]);
+
   return (
     <div>
       {/* <div id="message-container"></div>
@@ -199,7 +200,10 @@ export default function Chat() {
                 <>
                   <div id="message-container" className="chatBoxTop">
                   {currentMessage.map((e) => (
-                      <Message own = {e.own} content={e.text} time={e.createdAt}></Message>
+                    <div ref={scrollRef}>
+                      <Message own = {e.own} name={e.sender} content={e.text} time={timeago.format(e.createdAt)}></Message>
+                    </div>
+                      
                    ))}
                    
                   </div>
