@@ -12,11 +12,8 @@ const SOCKET_URL = process.env.REACT_APP_SOCKET_URL;
 
 export default function Chat() {
   var messageContainer = document.getElementById("message-container");
-  var convContainer = document.getElementById("conv");
-  const convElement = document.createElement("div");
-  convElement.innerHTML = '<Conversation name="người 2"/>';
 
-  const [notifications, setNotifications] = useState([]);
+  const [conversations, setConversations] = useState([]);
 
   const socket = io('http://localhost:3002');
   var id;
@@ -54,7 +51,7 @@ export default function Chat() {
     appendMessage("send: " + e.target.m1.value);
 
     const data = ['user1', 'user2']
-    setNotifications(data)
+    setConversations(data)
 
     ChatService.getUserInfor()
     .then((info) => {
@@ -132,19 +129,6 @@ export default function Chat() {
     messageContainer.append(messageElement);
   }
 
-  function test(e) {
-    e.preventDefault()
-    appendConv(e.target.user.value)
-  }
-
-  function appendConv(user) {
-    console.log("send");
-    convContainer = document.getElementById("conv");
-    const convElement = document.createElement("div");
-    convElement.innerHTML = '<Conversation name="người 2"/>';
-    convContainer.append(convElement);
-  }
-
   //hotkeys for disconnect and reconnect (testing purpose)
   document.addEventListener("keydown", (e) => {
     if (e.target.matches("input")) return;
@@ -180,11 +164,13 @@ export default function Chat() {
         <div className="messenger">
           <div className="chatMenu">
             <div className="chatMenuWrapper" id="conv">
-            {notifications.map((e) => (
+
+            {conversations.map((e) => (
             <Conversation
              name = {e}
             ></Conversation>
           ))}
+
               <Conversation name="người 1"/>
               <Conversation name="người 2"/>
             </div>
@@ -206,12 +192,6 @@ export default function Chat() {
               </div>
           </div>
         </div>
-
-        <form method="get" name="getMessage" id="getMessage" onSubmit={test}>
-        <input type="text" name="user"/>
-        <button type="submit" form="getMessage" value="S3">test</button>
-
-      </form>
       </div>
     </div>
   );
