@@ -36,7 +36,7 @@ io.on("connection", (socket) => {
     })
     socket.on("confirmUsername", (receiverID, message) => {
         console.log("\nconfirmUsername: ", receiverID, message)
-        io.to(receiverID).emit('receive-message', message)
+        socket.to(receiverID).emit('receive-message', message)
     })
 
     socket.on("confirmReceived", message => {

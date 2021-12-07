@@ -18,26 +18,13 @@ export default function Chat() {
   // if(currentMessage == null){
   //   currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
   // }
-  
-
-  
-    currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
-
 
 
   const socket = io('http://localhost:3002');
   var id;
   var message1;
 
-  //display client's ID
-  socket.on("connect", () => {
-    id = socket.id;
-    socket.emit("sendID", id);
-  });
-  socket.on("idconnect", (id) => {
-    message1 = "id: " + id;
-    //appendMessage(message1);
-  });
+  
   //send and receive user
   socket.on("receive-message", (message) => {
     message1 = "received: " + message;
@@ -62,9 +49,19 @@ export default function Chat() {
   socket.on("getUsername", (name, message) => {
     ChatService.getUserInfor().then((info) => {
       if (info.username == name) {
+        console.log("confirmUsername")
         socket.emit("confirmUsername", socket.id, message);
+        ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.getMessage(info.username, currentChat)
+      .then((messages) => {
+        console.log("Not confirmUsername")
+        console.log("received message: ")
+        setCurrentMessage(messages.data)
+      })
+    })
       } else {
-        socket.emit("sendMessage", socket.id + " fail" + name);
+        //socket.emit("sendMessage", socket.id + " fail" + name);
       }
     });
   });
@@ -78,7 +75,7 @@ export default function Chat() {
     setConversations( users.data)
     const messages = await ChatService.getMessage(info.username, currentChat)
     setCurrentMessage(messages.data)
-    socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
+    socket.emit("sendMessageName", e.target.m1.value, currentChat);
   }
 
   // function getMessage(e) {
@@ -144,9 +141,23 @@ export default function Chat() {
   const sc = async(e) => {
     setCurrentChat(e)
     const info = await ChatService.getUserInfor()
-    const messages = await ChatService.getMessage(info.username, currentChat)
+    const messages = await ChatService.getMessage(info.username, e)
+    console.log("check: ", messages)
     setCurrentMessage(messages.data)
     console.log(currentMessage)
+  }
+  
+  const socketInit = async() => {
+    //display client's ID
+  socket.on("connect", () => {
+    id = socket.id;
+    socket.emit("sendID", id);
+  });
+  socket.on("idconnect", (id) => {
+    message1 = "id: " + id;
+    //appendMessage(message1);
+    console.log(message1)
+  });
   }
 
 
@@ -155,6 +166,7 @@ export default function Chat() {
 
   useEffect(() => {
     getListConv();
+    socketInit();
     //getMessages();
   }, []);
 

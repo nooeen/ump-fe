@@ -33,12 +33,13 @@ class ChatController {
                 } else {
                     messages[i] = {
                         own: false,
+                        sender: messages[i].sender,
                         text: messages[i].text,
                         createdAt: messages[i].createdAt,
                     }
                 }
             }
-            console.log(messages)
+            //console.log(messages)
             res.status(200).json(messages);
         })
         .catch((err) => {
@@ -68,7 +69,7 @@ class ChatController {
                 
             }
             const unique = Array.from(new Set(receiver))
-            console.log(unique)
+            //console.log(unique)
             res.status(200).send(unique);
         })
         .catch((err) => {
