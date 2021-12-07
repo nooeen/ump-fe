@@ -14,10 +14,10 @@ export default function Chat() {
   var messageContainer = document.getElementById("message-container");
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState([null]);
-  var [currentMessage, setCurrentMessage] = useState([null]);
-  if(currentMessage == null){
-    currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
-  }
+  const [currentMessage, setCurrentMessage] = useState([{own : true, text : "....", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "....", createdAt: "2021-12-07T15:17:20.198+00:00"}]);
+  // if(currentMessage == null){
+  //   currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
+  // }
   
 
   
@@ -41,7 +41,20 @@ export default function Chat() {
   socket.on("receive-message", (message) => {
     message1 = "received: " + message;
     appendMessage(message1);
-    console.log(message1);
+    console.log("message1: :", message1);
+
+    // const info = await ChatService.getUserInfor()
+    // const messages = await ChatService.getMessage(info.username, currentChat)
+    // setCurrentMessage(messages.data)
+
+    ChatService.getUserInfor()
+    .then((info) => {
+      ChatService.getMessage(info.username, currentChat)
+      .then((messages) => {
+        console.log("received message: ")
+        setCurrentMessage(messages.data)
+      })
+    })
     socket.emit("confirmReceived", message);
   });
 
@@ -62,6 +75,8 @@ export default function Chat() {
     const save = await ChatService.saveMessage(currentChat, info.username, e.target.m1.value )
     const users = await ChatService.getListMessager(info.username)
     setConversations( users.data)
+    const messages = await ChatService.getMessage(info.username, currentChat)
+    setCurrentMessage(messages.data)
     socket.emit("sendMessageName", e.target.m1.value, e.target.name.value);
   }
 
@@ -84,11 +99,11 @@ export default function Chat() {
 
   //display user
   function appendMessage(message) {
-    console.log("send");
-    messageContainer = document.getElementById("message-container");
-    const messageElement = document.createElement("div");
-    messageElement.innerText = message;
-    messageContainer.append(messageElement);
+    // console.log("send");
+    // messageContainer = document.getElementById("message-container");
+    // const messageElement = document.createElement("div");
+    // messageElement.innerText = message;
+    // messageContainer.append(messageElement);
   }
 
   // const getListConv = async () => {
@@ -112,16 +127,15 @@ export default function Chat() {
 
   const getListConv = async () => {
     const info = await ChatService.getUserInfor()
-    console.log("username: ", info.username)
+
     const users = await ChatService.getListMessager(info.username)
-    console.log("v: ", users.data)
+
     await setConversations( users.data)
-    console.log("conversation: ",  users.data )
-    console.log("conversation[0]: ",  users.data[0])
+
     setCurrentChat(users.data[0])
     const messages = await ChatService.getMessage(info.username, currentChat)
-    console.log("messages: ", messages)
-    // currentMessage = messages.data
+
+
     setCurrentMessage(messages.data)
     console.log("currentMessage: ", currentMessage)
   }
@@ -131,7 +145,6 @@ export default function Chat() {
     const info = await ChatService.getUserInfor()
     const messages = await ChatService.getMessage(info.username, currentChat)
     setCurrentMessage(messages.data)
-    currentMessage = messages.data
     console.log(currentMessage)
   }
 
