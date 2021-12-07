@@ -1,4 +1,4 @@
-const Post = require("../models/Forum.js");
+const Post = require("../models/Post.js");
 const { mongooseToObject, mutipleMongooseToObject } = require("../util/mongoose.js");
 
 class forumController {
@@ -36,7 +36,7 @@ class forumController {
     // [PUT] /api/forum/post/:id/update
     update(req, res, next) {
         Post.updateOne({ _id: req.params.id }, req.body)
-            .then(() => res.json(req.body))
+            .then(() => res.json(Post.findById(req.params.id)))
             .catch(next);
     }
 
@@ -55,9 +55,7 @@ class forumController {
     // [PATCH] /api/forum/post/:id/comment
     comment(req, res, next) {
         var content = req.body;
-        content.created_at = Date.now();
-        console.log(req.params.id);
-        console.log(content);
+        // content.created_at = Date.now();
         Post.findOneAndUpdate(
             { _id: req.params.id }, 
             { $push: { contents: content } },
@@ -69,12 +67,12 @@ class forumController {
                     }
             }
         );
-        res.redirect('back');
+        res.json(Post.findById(req.params.id));
+        // res.redirect('back');
     }
 
     // [GET] api/forum/listPosts
     listPosts(req, res, next) {
-        console.log(req.query);
         Post.find({class: req.query.class})
             .sort({ created_at: -1})
             .then((posts) =>
@@ -82,6 +80,27 @@ class forumController {
             )
             .catch(next);
 
+    }
+
+    // [DELETE] /api/forum/post/:id/delete
+    destroy(req, res, next) {
+        Post.delete({ _id: req.params.id })
+            .then(() => res.json(Post.findById(req.params.id)))
+            .catch(next);
+    }
+
+    // [DELETE] /api/forum/post/:id/force
+    forceDestroy(req, res, next) {
+        Post.deleteOne({ _id: req.params.id })
+            .then(() => res.redirect('back'))
+            .catch(next);
+    }
+
+    // [PATCH] /api/forum/post/:id/restore
+    restore(req, res, next) {
+        Post.restore({ _id: req.params.id })
+            .then(() => res.json(Post.findById(req.params.id)))
+            .catch(next);
     }
 
 }
