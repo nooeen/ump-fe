@@ -15,7 +15,10 @@ export default function Chat() {
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState([null]);
   var [currentMessage, setCurrentMessage] = useState([null]);
-  currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
+  if(currentMessage == null){
+    currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
+  }
+  
 
   
 
@@ -111,19 +114,25 @@ export default function Chat() {
     const info = await ChatService.getUserInfor()
     console.log("username: ", info.username)
     const users = await ChatService.getListMessager(info.username)
-
-    const messages = await ChatService.getMessage(info.username, users.data[0])
-    console.log("messages: ", messages)
-    currentMessage = messages.data
-    setCurrentMessage(messages.data)
-    console.log("currentMessage: ", currentMessage)
-    
-
     console.log("v: ", users.data)
     await setConversations( users.data)
     console.log("conversation: ",  users.data )
     console.log("conversation[0]: ",  users.data[0])
     setCurrentChat(users.data[0])
+    const messages = await ChatService.getMessage(info.username, currentChat)
+    console.log("messages: ", messages)
+    // currentMessage = messages.data
+    setCurrentMessage(messages.data)
+    console.log("currentMessage: ", currentMessage)
+  }
+
+  const sc = async(e) => {
+    setCurrentChat(e)
+    const info = await ChatService.getUserInfor()
+    const messages = await ChatService.getMessage(info.username, currentChat)
+    setCurrentMessage(messages.data)
+    currentMessage = messages.data
+    console.log(currentMessage)
   }
 
 
@@ -164,7 +173,7 @@ export default function Chat() {
           <div className="chatMenu">
             <div className="chatMenuWrapper" id="conv">
             {conversations.map((e) => (
-              <div key={e} onClick= {() => setCurrentChat(e)} >
+              <div key={e} onClick= {() => sc(e)} >
                 <Conversation name = {e}></Conversation>
               </div>
             ))}
