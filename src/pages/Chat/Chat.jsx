@@ -21,6 +21,7 @@ export default function Chat() {
   
 
   
+    currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
 
 
 
@@ -200,6 +201,7 @@ export default function Chat() {
                   {currentMessage.map((e) => (
                       <Message own = {e.own} content={e.text} time={e.createdAt}></Message>
                    ))}
+                   
                   </div>
                   <div className="chatBoxBottom">
                     <form method="get" name="form1" id="form1" onSubmit={send}>
