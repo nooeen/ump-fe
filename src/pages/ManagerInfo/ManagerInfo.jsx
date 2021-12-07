@@ -20,33 +20,29 @@ export default function StudentInfo() {
   const [isBusy, setBusy] = useState(true);
 
   useEffect(() => {
-    if (!AuthService.isUser()) {
-      history.push("/login");
-    } else {
-      const fetchManager = async () => {
-        const managerStatus = await AuthService.isManager();
-        if (managerStatus === false) {
-          setIsManager(false);
-        } else if (managerStatus === true) {
-          setIsManager(true);
-        }
-      };
-      const fetchData = async () => {
-        if (isManager === true) {
-          const result = await ManagerService.getCurrentManager();
-          await setUser(result);
-          await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
-          await setBusy(false);
-        } else if (isManager === false) {
-          const result = await ManagerService.getCurrentManagerFromStudent();
-          await setUser(result);
-          await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
-          await setBusy(false);
-        }
-      };
-      fetchManager();
-      fetchData();    
-    }
+    const fetchManager = async () => {
+      const managerStatus = await AuthService.isManager();
+      if (managerStatus === false) {
+        setIsManager(false);
+      } else if (managerStatus === true) {
+        setIsManager(true);
+      }
+    };
+    const fetchData = async () => {
+      if (isManager === true) {
+        const result = await ManagerService.getCurrentManager();
+        await setUser(result);
+        await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
+        await setBusy(false);
+      } else if (isManager === false) {
+        const result = await ManagerService.getCurrentManagerFromStudent();
+        await setUser(result);
+        await setUserDOB(new Date(result.dob).toLocaleDateString("vi-VN"));
+        await setBusy(false);
+      }
+    };
+    fetchManager();
+    fetchData();
   }, [isManager]);
 
   const handleSubmit = async (event) => {

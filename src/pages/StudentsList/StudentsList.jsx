@@ -1,4 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
+import axios from "axios";
 import React from "react";
 import "./StudentsList.css";
 import { DataGrid } from "@mui/x-data-grid";
@@ -44,12 +45,20 @@ export default function StudentsList() {
     await StudentService.deleteStudent(id);
   };
 
-  const handleImport = () => {
-    history.go(0);
-  };
+  // const handleImport = () => {
+  //   history.go(0);
+  // };
 
-  const handleExport = () => {
-    history.go(0);
+  const handleExport = async () => {
+    await axios
+      .get("http://localhost:3001/api/data/export?class=QH-2020-I/CQ-E")
+      .then((res) => res.data);
+    const response = {
+      file: "http://localhost:3000/users.xlsx",
+    };
+    // server sent the url to the file!
+    // now, let's download:
+    window.open(response.file);
   };
 
   useEffect(() => {
@@ -136,9 +145,9 @@ export default function StudentsList() {
                 <button className="button" onClick={handleAdd}>
                   THÊM SINH VIÊN
                 </button>
-                <button className="button" onClick={handleImport}>
+                {/* <button className="button" onClick={handleImport}>
                   NHẬP DỮ LIỆU
-                </button>
+                </button> */}
                 <button className="button" onClick={handleExport}>
                   XUẤT DỮ LIỆU
                 </button>
