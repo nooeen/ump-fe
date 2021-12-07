@@ -69,4 +69,6 @@ router.get("/calTPA", studentController.studentTPA);
 
 router.get("/credits", studentController.studentCredit);
 
+router.get("/statistic", studentController.getStudentStatistic);
+
 module.exports = router;

@@ -6,6 +6,50 @@ function rand_between(min, max) {
 }
 
 class studentController {
+  getStudentStatistic(req, res) {
+    if (req.query.class === "undefined") {
+      return;
+    }
+    User.find({ class: req.query.class })
+      .then((users, err) => {
+        if (err) {
+          res.status(500).send("Internal Server Error");
+          return;
+        }
+        let terms = [];
+        for (let i = 0; i < users[0].history.length; i++) {
+          terms.push(users[0].history[i].term);
+        }
+        let result = [];
+        for (let i = 0; i < terms.length; i++) {
+          let term = {};
+          term.name = terms[i];
+          let gpa = 0;
+          for (let j = 0; j < users.length; j++) {
+            for (let k = 0; k < users[j].history.length; k++) {
+              if (users[j].history[k].term === term.name) {
+                gpa += parseFloat(users[j].history[k].gpa);
+              }
+            }
+          }
+          term.Điểm = (gpa / users.length);
+          term.name =
+            "20" +
+            term.name.split("_")[0] +
+            " - 20" +
+            term.name.split("_")[1] +
+            " | HK" +
+            term.name.split("_")[2];
+          result.push(term);
+        }
+        res.json(result);
+      })
+      .catch((error) => {
+        res.status(404).json(error);
+        throw error;
+      });
+  }
+
   deleteStudent(req, res) {
     User.find({ username: req.query.username }).deleteOne().exec();
     res.status(200);
