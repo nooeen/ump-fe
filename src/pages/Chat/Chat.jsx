@@ -14,6 +14,12 @@ export default function Chat() {
   var messageContainer = document.getElementById("message-container");
   const [conversations, setConversations] = useState([]);
   const [currentChat, setCurrentChat] = useState([null]);
+  var [currentMessage, setCurrentMessage] = useState([null]);
+  currentMessage = [{own : true, text : "true", createdAt: "2021-12-07T15:17:20.198+00:00"}, {own : false, text : "false", createdAt: "2021-12-07T15:17:20.198+00:00"}]
+
+  
+
+
 
   const socket = io('http://localhost:3002');
   var id;
@@ -82,28 +88,51 @@ export default function Chat() {
     messageContainer.append(messageElement);
   }
 
+  // const getListConv = async () => {
+  //   ChatService.getUserInfor()
+  //   .then((info) => {
+  //     console.log("username: ", info.username)
+  //     ChatService.getListMessager(info.username)
+  //     .then((users) => {
+  //       console.log("v: ", users)
+  //       setConversations( users.data)
+  //       .then(() => {
+  //         console.log("conversation: ", conversations )
+  //         console.log("conversation[0]: ", conversations[0] )
+  //       })
+        
+  //       //setCurrentChat(conversations[0])
+  //       //console.log("currentChat: ", currentChat )
+  //     })
+  //   })
+  // }
+
   const getListConv = async () => {
-    ChatService.getUserInfor()
-    .then((info) => {
-      ChatService.getListMessager(info.username)
-      .then((users) => {
-        setConversations( users.data)
-      })
-    })
+    const info = await ChatService.getUserInfor()
+    console.log("username: ", info.username)
+    const users = await ChatService.getListMessager(info.username)
+
+    const messages = await ChatService.getMessage(info.username, users.data[0])
+    console.log("messages: ", messages)
+    currentMessage = messages.data
+    setCurrentMessage(messages.data)
+    console.log("currentMessage: ", currentMessage)
+    
+
+    console.log("v: ", users.data)
+    await setConversations( users.data)
+    console.log("conversation: ",  users.data )
+    console.log("conversation[0]: ",  users.data[0])
+    setCurrentChat(users.data[0])
   }
 
 
-  //hotkeys for disconnect and reconnect (testing purpose)
-  document.addEventListener("keydown", (e) => {
-    if (e.target.matches("input")) return;
-    if (e.key === "c") socket.connect();
-    if (e.key === "d") socket.disconnect();
-  });
 
   console.log(currentChat);
 
   useEffect(() => {
     getListConv();
+    //getMessages();
   }, []);
 
   return (
@@ -146,12 +175,13 @@ export default function Chat() {
               {currentChat ? (
                 <>
                   <div id="message-container" className="chatBoxTop">
-                    <Message own={true} content="i am the sender" time="2 hour ago" />
-                    <Message content="i am the receiver" time="1 hour ago"></Message>
+                  {currentMessage.map((e) => (
+                      <Message own = {e.own} content={e.text} time={e.createdAt}></Message>
+                   ))}
                   </div>
                   <div className="chatBoxBottom">
                     <form method="get" name="form1" id="form1" onSubmit={send}>
-                      <input className="chatMessageInput" placeholder="write something" type="text" name="m1" />
+                      <input className="chatMessageInput" placeholder="write something" type="text" name="m1" autocomplete="off" />
                       <button className="chatSubmitButton" type="submit" form="form1" value="S1">
                         Send Message
                       </button>

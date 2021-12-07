@@ -30,11 +30,11 @@
     margin-top: 10px;
 }
 
-.message.own{
+.true{
     align-items: flex-end;
 }
 
-.message.own .messageText{
+.true .messageText{
     background-color: #1877f2;
     color: white;
 }

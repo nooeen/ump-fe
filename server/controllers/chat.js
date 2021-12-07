@@ -24,12 +24,21 @@ class ChatController {
         }]})
         .then((messages, err) => {
             for(let i = 0; i < messages.length; i++){
-                messages[i] = {
-                    sender: messages[i].sender,
-                    receiver: messages[i].receiver,
-                    text: messages[i].text,
+                if(req.query.sender == messages[i].sender) {
+                    messages[i] = {
+                        own: true,
+                        text: messages[i].text,
+                        createdAt: messages[i].createdAt,
+                    }
+                } else {
+                    messages[i] = {
+                        own: false,
+                        text: messages[i].text,
+                        createdAt: messages[i].createdAt,
+                    }
                 }
             }
+            console.log(messages)
             res.status(200).json(messages);
         })
         .catch((err) => {
