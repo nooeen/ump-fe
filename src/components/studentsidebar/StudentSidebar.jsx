@@ -1,7 +1,7 @@
 import React from "react";
 import {
   ChatBubbleOutline,
-  // ForumOutlined,
+  ForumOutlined,
   PersonOutline,
   Person,
   NotificationsNone,
@@ -29,8 +29,13 @@ export default function StudentSidebar() {
 
   const toChat = () => {
     const path = "/chat";
-    history.push(path); 
-  }
+    history.push(path);
+  };
+
+  const toForum = () => {
+    const path = "/forum";
+    history.push(path);
+  };
 
   return (
     <div className="sidebar">
@@ -59,7 +64,7 @@ export default function StudentSidebar() {
               <ChatBubbleOutline className="sidebarIcon" />
               Chat
             </li>
-            {/* <li className="sidebarListItem">
+            {/* <li className="sidebarListItem" onClick={toForum}>
               <ForumOutlined className="sidebarIcon" />
               Diễn đàn
             </li> */}

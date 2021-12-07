@@ -13,6 +13,7 @@ import StudentInfo from "pages/StudentInfo/StudentInfo";
 import Notifications from "./pages/Notifications/Notifications";
 import NotificationAdd from "./pages/NotificationAdd/NotificationAdd";
 import Chat from "./pages/Chat/Chat";
+import Forum from "./pages/Forum/Forum";
 import ManagerInfo from "./pages/ManagerInfo/ManagerInfo";
 
 function App() {
@@ -59,7 +60,9 @@ function App() {
         <Route exact path="/manager">
           <ManagerInfo />
         </Route>
-        <Route exact path="/chat"></Route>
+        <Route exact path="/forum">
+          <Forum />
+        </Route>
       </Switch>
     </Router>
   );

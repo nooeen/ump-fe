@@ -1,0 +1,7 @@
+.container {
+  display: flex;
+}
+
+.forum {
+  flex: 4;
+}
