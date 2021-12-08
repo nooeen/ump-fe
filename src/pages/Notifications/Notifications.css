@@ -5,3 +5,46 @@
 .notifications {
   flex: 4;
 }
+
+.newItem {
+  width: 500px;
+  display: inline;
+  flex-direction: column;
+  margin-top: 10px;
+  margin-right: 20px;
+}
+
+.newItem > label {
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgb(151, 150, 150);
+}
+
+.newItem > input {
+  height: 20px;
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.newItem > select {
+  padding: 10px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+
+.newButton {
+  display: inline-block;
+  width: 50px;
+  border: none;
+  background-color: darkblue;
+  color: white;
+  padding: 7px 10px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  font-weight: 600;
+  border-radius: 10px;
+  margin-left: 3px;
+  cursor: pointer;
+}

@@ -5,7 +5,16 @@ import jwt from "jwt-decode";
 const API_URL = process.env.REACT_APP_URL;
 
 class ForumService {
-  async list(selectedClass) {
+  async listformanager(selectedClass) {
+    const result = await axios
+      .get(API_URL + "/api/forum/listPosts?class=" + selectedClass, {
+        headers: authHeader(),
+      })
+      .then((res) => res.data);
+    return result;
+  }
+
+  async listforstudent(selectedClass) {
     const result = await axios
       .get(API_URL + "/api/forum/listPosts?class=" + selectedClass, {
         headers: authHeader(),
