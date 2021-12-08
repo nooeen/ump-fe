@@ -13,6 +13,7 @@ import StudentSidebar from "../../components/studentsidebar/StudentSidebar";
 // import StudentService from "../../services/student.service";
 import AuthService from "../../services/auth.service";
 import NotificationService from "../../services/notification.service";
+import jwt from "jwt-decode";
 
 export default function Notifications() {
   const [isManager, setIsManager] = useState(false);
@@ -43,6 +44,16 @@ export default function Notifications() {
     history.push(path);
   };
 
+  const handleComment = (event) => {
+    event.preventDefault();
+    const id = event.target.id.value;
+    const query = JSON.parse(localStorage.getItem("user"));
+    const username = jwt(query.accessToken).username;
+    const content = event.target.content.value;
+    console.log(id, username, content);
+    history.go(0);
+  };
+
   return (
     <div>
       <Topbar />
@@ -70,7 +81,7 @@ export default function Notifications() {
               ></Notification>
               {e.comments
                 ? e.comments.map((e) => (
-                    <div key={e}>
+                    <div key={e.content}>
                       <Paper
                         variant="elevation"
                         sx={{
@@ -88,8 +99,8 @@ export default function Notifications() {
                   ))
                 : null}
               <div sx={{ marginBottom: "5px" }}>
-                <form>
-                  <span sx={{display: "inline"}}>
+                <form onSubmit={handleComment}>
+                  <span sx={{ display: "inline" }}>
                     <input type="hidden" name="id" value={e._id} />
                     <div className="newItem">
                       <input
