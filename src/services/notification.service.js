@@ -6,7 +6,11 @@ const API_URL = process.env.REACT_APP_URL;
 
 class NotificationService {
   async comment(id, username, content) {
-    
+    await axios.post(API_URL + "/api/notification/comment", {
+      id: id,
+      username: username,
+      content: content,
+    });
   }
 
   async listformanager() {
@@ -46,13 +50,15 @@ class NotificationService {
   }
 
   async add(noti_title, noti_class, noti_content) {
-    const result = await axios.post(
-      API_URL + '/api/notification/add',
-      { title: noti_title, class: noti_class, content: noti_content },
-      {
-        headers: authHeader(),
-      }
-    ).then((res) => res.data);
+    const result = await axios
+      .post(
+        API_URL + "/api/notification/add",
+        { title: noti_title, class: noti_class, content: noti_content },
+        {
+          headers: authHeader(),
+        }
+      )
+      .then((res) => res.data);
     return result;
   }
 

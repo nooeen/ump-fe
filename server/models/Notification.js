@@ -11,6 +11,7 @@ const notificationSchema = new mongoose.Schema({
   class: {
     type: String,
   },
+  comments: { type: [] },
 });
 
 module.exports = mongoose.model("notifications", notificationSchema);

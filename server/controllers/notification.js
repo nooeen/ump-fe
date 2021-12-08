@@ -2,6 +2,21 @@ const Notification = require("../models/Notification.js");
 
 class notificationController {
   comment(req, res) {
+    const comment = {
+      username: req.body.username,
+      content: req.body.content,
+    };
+    Notification.findOneAndUpdate(
+      { _id: req.body.id },
+      { $push: { comments: comment } },
+      { new: true }
+    ).then((notification, err) => {
+      if (err) {
+        res.status(500).send("Internal Server Error");
+        return;
+      }
+      res.status(200).json(notification);
+    });
   }
 
   list(req, res) {

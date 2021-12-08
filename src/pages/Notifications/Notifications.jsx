@@ -4,9 +4,9 @@ import { useHistory } from "react-router-dom";
 import "./Notifications.css";
 import Notification from "../../components/notification/notification";
 import Stack from "@mui/material/Stack";
-import Card from "@mui/material/Card";
+// import Card from "@mui/material/Card";
+// import CardContent from "@mui/material/CardContent";
 import Paper from "@mui/material/Paper";
-import CardContent from "@mui/material/CardContent";
 import Topbar from "../../components/topbar/Topbar";
 import Sidebar from "../../components/sidebar/Sidebar";
 import StudentSidebar from "../../components/studentsidebar/StudentSidebar";
@@ -44,13 +44,14 @@ export default function Notifications() {
     history.push(path);
   };
 
-  const handleComment = (event) => {
+  const handleComment = async (event) => {
     event.preventDefault();
     const id = event.target.id.value;
     const query = JSON.parse(localStorage.getItem("user"));
     const username = jwt(query.accessToken).username;
     const content = event.target.content.value;
     console.log(id, username, content);
+    await NotificationService.comment(id, username, content);
     history.go(0);
   };
 

@@ -9,6 +9,8 @@ router.post("/add", notificationController.add);
 
 router.get("/delete", notificationController.delete);
 
+router.post("/comment", notificationController.comment);
+
 // router.get("/email", notificationController.email);
 
 module.exports = router;
