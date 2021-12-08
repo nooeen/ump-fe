@@ -5,6 +5,10 @@ import jwt from "jwt-decode";
 const API_URL = process.env.REACT_APP_URL;
 
 class NotificationService {
+  async comment(id, username, content) {
+    
+  }
+
   async listformanager() {
     const query = JSON.parse(localStorage.getItem("user"));
     const username = jwt(query.accessToken).username;

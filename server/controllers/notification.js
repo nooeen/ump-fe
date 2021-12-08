@@ -1,6 +1,9 @@
 const Notification = require("../models/Notification.js");
 
 class notificationController {
+  comment(req, res) {
+  }
+
   list(req, res) {
     Notification.find({ class: req.query.class }).then((notifications, err) => {
       if (err) {
