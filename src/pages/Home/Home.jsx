@@ -53,8 +53,18 @@ export default function Home() {
               trên nền tảng công nghệ hiện đại, UMP mang lại cho các cố vấn học
               tập sự tiện lợi trong việc quản lý quá trình học tập của sinh
               viên.
+              <p>
+                <b>Demo Teacher Account:</b> neeoon - 07032001
+              </p>
+              <p>
+                <b>Demo Student Account:</b> 19021341 - 07032001
+              </p>
             </p>
-            <Button href="/dashboard" variant="outlined" sx={{ marginTop: "7px" }}>
+            <Button
+              href="/dashboard"
+              variant="outlined"
+              sx={{ marginTop: "7px" }}
+            >
               Vào trang quản lý
             </Button>
           </Grid>
