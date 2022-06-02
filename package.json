@@ -46,11 +46,10 @@
     "xlsx": "^0.17.3"
   },
   "scripts": {
-    "client": "set PORT=3000 && react-scripts start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "server": "node-env-run server --exec nodemon | pino-colada",
     "dev": "run-p server start"
   },
   "eslintConfig": {
