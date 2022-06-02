@@ -54,7 +54,7 @@ export default function Home() {
               tập sự tiện lợi trong việc quản lý quá trình học tập của sinh
               viên.
               <p>
-                <b>Demo Teacher Account:</b> neeoon - 07032001
+                <b>Demo Teacher Account:</b> ngocnd - 07032001
               </p>
               <p>
                 <b>Demo Student Account:</b> 19021341 - 07032001
