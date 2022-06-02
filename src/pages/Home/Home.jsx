@@ -60,6 +60,11 @@ export default function Home() {
                 <b>Demo Student Account:</b> 19021341 - 07032001
               </p>
             </p>
+            <p>
+              Vì lý do thiếu kinh phí duy trì, máy chủ sẽ chỉ hoạt động khi có
+              người dùng yêu cầu đăng nhập. Trong trường hợp web không chuyển
+              trang, vui lòng đợi 1 phút trước khi gửi lại lệnh.
+            </p>
             <Button
               href="/dashboard"
               variant="outlined"
